@@ -14,6 +14,14 @@ public class Helpers {
        public final static double inToMeters(double inches) {
            return inches * 0.0254;
        }
+
+       /** This function takes encoder ticks and returns radians
+        * @param ticks integer value in encoder ticks
+        * @return value in radians
+        */
+        public final static double ticksToRadians(int ticks) {
+            return (ticks * Math.PI / (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
+        }
     }
     public static final class OI {
         private static Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);

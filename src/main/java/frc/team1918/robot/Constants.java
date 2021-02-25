@@ -46,6 +46,7 @@ public class Constants {
         public final static double DT_TURN_I = 0.0;
         public final static double DT_TURN_D = 80.0;
         public final static int DT_TURN_IZONE = 0;
+        public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
 
         public final static int DT_FL_DRIVE_MC_ID = 2; //Front Left Drive Motor Controller ID //SPARKMAX
         public final static int DT_FL_TURN_MC_ID = 7; //Front Left Turn Motor Controller ID //TALONSRX
