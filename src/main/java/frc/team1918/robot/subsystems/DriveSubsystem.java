@@ -3,6 +3,9 @@ package frc.team1918.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
@@ -24,8 +27,6 @@ import java.io.IOException;
 public class DriveSubsystem extends SubsystemBase {
 
 	private static DriveSubsystem instance;
-	private static SwerveModule dtFL, dtFR, dtRL, dtRR;
-	private static AHRS gyro;
 	private static int flHome = Constants.DriveTrain.DT_FL_MECHZERO;
 	private static int frHome = Constants.DriveTrain.DT_FR_MECHZERO;
 	private static int rlHome = Constants.DriveTrain.DT_RL_MECHZERO;
@@ -39,10 +40,39 @@ public class DriveSubsystem extends SubsystemBase {
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
 
-	// private final Translation2d m_FL_LOCATION = new Translation2d(Helpers.General.inToMeters(Constants.Global.ROBOT_WIDTH/2), Helpers.General.inToMeters(Constants.Global.ROBOT_LENGTH/2));
-	// private final Translation2d m_FR_LOCATION = new Translation2d(Helpers.General.inToMeters(Constants.Global.ROBOT_WIDTH/2), -Helpers.General.inToMeters(Constants.Global.ROBOT_LENGTH/2));
-	// private final Translation2d m_RL_LOCATION = new Translation2d(-Helpers.General.inToMeters(Constants.Global.ROBOT_WIDTH/2), Helpers.General.inToMeters(Constants.Global.ROBOT_LENGTH/2));
-	// private final Translation2d m_RR_LOCATION = new Translation2d(-Helpers.General.inToMeters(Constants.Global.ROBOT_WIDTH/2), -Helpers.General.inToMeters(Constants.Global.ROBOT_LENGTH/2));
+	private static SwerveModule dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_FL_TURN_MC_ID, 
+		Constants.DriveTrain.DT_TURN_P, 
+		Constants.DriveTrain.DT_TURN_I, 
+		Constants.DriveTrain.DT_TURN_D, 
+		Constants.DriveTrain.DT_TURN_IZONE, "dtFL",
+		Constants.DriveTrain.DT_FL_WHEEL_DIAM_OFFSET_MM); // Front Left
+	private static SwerveModule dtFR = new SwerveModule(Constants.DriveTrain.DT_FR_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_FR_TURN_MC_ID, 
+		Constants.DriveTrain.DT_TURN_P, 
+		Constants.DriveTrain.DT_TURN_I, 
+		Constants.DriveTrain.DT_TURN_D, 
+		Constants.DriveTrain.DT_TURN_IZONE, "dtFR",
+		Constants.DriveTrain.DT_FR_WHEEL_DIAM_OFFSET_MM); // Front Right
+	private static SwerveModule dtRL = new SwerveModule(Constants.DriveTrain.DT_RL_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_RL_TURN_MC_ID, 
+		Constants.DriveTrain.DT_TURN_P, 
+		Constants.DriveTrain.DT_TURN_I, 
+		Constants.DriveTrain.DT_TURN_D, 
+		Constants.DriveTrain.DT_TURN_IZONE, "dtRL",
+		Constants.DriveTrain.DT_RL_WHEEL_DIAM_OFFSET_MM); // Rear Left
+	private static SwerveModule dtRR = new SwerveModule(Constants.DriveTrain.DT_RR_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_RR_TURN_MC_ID, 
+		Constants.DriveTrain.DT_TURN_P,
+		Constants.DriveTrain.DT_TURN_I, 
+		Constants.DriveTrain.DT_TURN_D, 
+		Constants.DriveTrain.DT_TURN_IZONE, "dtRR",
+		Constants.DriveTrain.DT_RR_WHEEL_DIAM_OFFSET_MM); // Rear Right
+
+	private static AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+	// Odometry class for tracking robot pose
+	SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(Constants.Swerve.kDriveKinematics, gyro.getRotation2d());
 
 	public static DriveSubsystem getInstance() {
 		if (instance == null)
@@ -50,34 +80,49 @@ public class DriveSubsystem extends SubsystemBase {
 		return instance;
 	}
 
-	public DriveSubsystem() {
-	    dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
-				Constants.DriveTrain.DT_FL_TURN_MC_ID, 
-				Constants.DriveTrain.DT_TURN_P, 
-				Constants.DriveTrain.DT_TURN_I, 
-				Constants.DriveTrain.DT_TURN_D, 
-				Constants.DriveTrain.DT_TURN_IZONE, "dtFL"); // Front Left
-		dtFR = new SwerveModule(Constants.DriveTrain.DT_FR_DRIVE_MC_ID,
-				Constants.DriveTrain.DT_FR_TURN_MC_ID, 
-				Constants.DriveTrain.DT_TURN_P, 
-				Constants.DriveTrain.DT_TURN_I, 
-				Constants.DriveTrain.DT_TURN_D, 
-				Constants.DriveTrain.DT_TURN_IZONE, "dtFR"); // Front Right
-		dtRL = new SwerveModule(Constants.DriveTrain.DT_RL_DRIVE_MC_ID,
-				Constants.DriveTrain.DT_RL_TURN_MC_ID, 
-				Constants.DriveTrain.DT_TURN_P, 
-				Constants.DriveTrain.DT_TURN_I, 
-				Constants.DriveTrain.DT_TURN_D, 
-				Constants.DriveTrain.DT_TURN_IZONE, "dtRL"); // Rear Left
-		dtRR = new SwerveModule(Constants.DriveTrain.DT_RR_DRIVE_MC_ID,
-				Constants.DriveTrain.DT_RR_TURN_MC_ID, 
-				Constants.DriveTrain.DT_TURN_P,
-				Constants.DriveTrain.DT_TURN_I, 
-				Constants.DriveTrain.DT_TURN_D, 
-				Constants.DriveTrain.DT_TURN_IZONE, "dtRR"); // Rear Right
-
-		gyro = new AHRS(SPI.Port.kMXP);
+	public DriveSubsystem() { //initialize the class
+		setAllConversionFactor();
 	}
+
+	@Override
+	public void periodic() {
+		// Update the odometry in the periodic block
+		m_odometry.update(
+			new Rotation2d(getHeading()),
+			dtFL.getState(),
+			dtFR.getState(),
+			dtRL.getState(),
+			dtRR.getState()
+		);
+	}
+  
+	/**
+	 * Returns the currently-estimated pose of the robot.
+	 *
+	 * @return The pose.
+	 */
+	public Pose2d getPose() {
+	  return m_odometry.getPoseMeters();
+	}
+
+	  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from -180 to 180
+   */
+  public double getHeading() {
+    return gyro.getRotation2d().getDegrees();
+  }
+
+	/**
+	 * Resets the odometry to the specified pose.
+	 *
+	 * @param pose The pose to which to set the odometry.
+	 */
+	public void resetOdometry(Pose2d pose) {
+	  m_odometry.resetPosition(pose, gyro.getRotation2d());
+	}
+  
 
 	public static AHRS getgyro() {
         return gyro;
@@ -147,6 +192,13 @@ public class DriveSubsystem extends SubsystemBase {
 		dtFR.stopDrive();
 		dtRL.stopDrive();
 		dtRR.stopDrive();
+	}
+
+	public static void setAllConversionFactor() {
+		dtFL.setDriveConversionFactor();
+		dtFR.setDriveConversionFactor();
+		dtRL.setDriveConversionFactor();
+		dtRR.setDriveConversionFactor();
 	}
 
 	public void resetGyro() {

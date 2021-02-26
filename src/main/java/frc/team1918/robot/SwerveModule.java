@@ -22,10 +22,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 public class SwerveModule {
     private WPI_TalonSRX turn; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
     private CANSparkMax drive; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
-    private final double FULL_ROTATION = 4096d, TURN_P, TURN_I, TURN_D;
+    private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION, TURN_P, TURN_I, TURN_D;
+    private final double FULL_ROT_RADS = (2 * Math.PI);
     private final int TURN_IZONE;
     private boolean isDrivePowerInverted = false;
     private String moduleName;
+    private double wheelOffsetMM = 0;
     private boolean absEncoderEnabled = false;
 
 //SparkMAX Java API Doc: https://www.revrobotics.com/content/sw/max/sw-docs/java/index.html
@@ -39,7 +41,7 @@ public class SwerveModule {
 	 * @param tD The D constant (double) for the turning PID
 	 * @param tIZone The IZone value (int) for the turning PID
 	 */
-    public SwerveModule(int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, String name){
+    public SwerveModule(int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, String name, double wheelOffsetMM){
         drive = new CANSparkMax(driveMC_ID, MotorType.kBrushless);
         turn = new WPI_TalonSRX(turnMC_ID);
         moduleName = name;
@@ -71,58 +73,50 @@ public class SwerveModule {
      * @return The current state of the module.
      */
     public SwerveModuleState getState() {
-        return new SwerveModuleState(m_driveEncoder.getRate(), new Rotation2d(m_turningEncoder.get()));
+        // return new SwerveModuleState(m_driveEncoder.getRate(), new Rotation2d(m_turningEncoder.get()));
+
+        double rawRpm = drive.getEncoder().getVelocity();
+        double wheelRpm = Helpers.General.gearCalcDouble(rawRpm,Constants.DriveTrain.DT_DRIVE_FIRST_GEARONE,
+            Constants.DriveTrain.DT_DRIVE_FIRST_GEARTWO,
+            Constants.DriveTrain.DT_DRIVE_SECOND_GEARONE,
+            Constants.DriveTrain.DT_DRIVE_SECOND_GEARTWO);
+        double wheelDiam = Constants.DriveTrain.DT_WHEEL_DIAM_MM - this.wheelOffsetMM;
+        double angle = Helpers.General.ticksToRadians(getTurnRelPos());
+        return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), new Rotation2d(angle));
     }
 
   /**
    * Minimize the change in heading the desired swerve module state would require by potentially
-   * reversing the direction the wheel spins. If this is used with the PIDController class's
-   * continuous input functionality, the furthest a wheel will ever rotate is 90 degrees.
+   * reversing the direction the wheel spins. 
    *
    * @param desiredState The desired state.
-   * @param currentAngle The current module angle.
    */
   public SwerveModuleState optimize(SwerveModuleState desiredState) {
-    var delta = desiredState.angle.minus(currentAngle);
-    if (Math.abs(delta.getDegrees()) > 90.0) {
-      return new SwerveModuleState(
-          -desiredState.speedMetersPerSecond,
-          desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
-    } else {
-      return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
-    }
- //TODO - need to keep this math in radians to generate the desiredState.angle
-    double wa = desiredState.angle.getRadians();
-    int currentAngle = getTurnRelPos();
-    this.isDrivePowerInverted = false; //Should we store this in a local variable and set it at the end to prevent changing this while in operation?
-    int targetAngle = (int) (wa / Math.PI * (FULL_ROTATION * 0.5)); //full rotation * .5 to give us half encoder counts rotation to match with pi
-    int currentNumRotations = (int) (currentAngle / FULL_ROTATION);
-    targetAngle += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROTATION : (currentNumRotations + 1) * FULL_ROTATION;
+    double wheelSpeed = desiredState.speedMetersPerSecond;
+    double waRads = desiredState.angle.getRadians(); //need to get this from desiredState.angle
+    double currentAngleRads = Helpers.General.ticksToRadians(getTurnRelPos());
+    double targetAngleRads = waRads; 
+    int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
+    targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS; //add current rotations to target
     
-    if ((targetAngle > currentAngle + FULL_ROTATION * 0.25) || (targetAngle < currentAngle - FULL_ROTATION * 0.25)) { //if target is more than 25% of a rotation either way
-        if (currentAngle < targetAngle) { //left strafe
-            if (targetAngle - currentAngle > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                targetAngle -= FULL_ROTATION;
+    if ((targetAngleRads > currentAngleRads + FULL_ROT_RADS * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROT_RADS * 0.25)) { //if target is more than 25% of a rotation either way
+        if (currentAngleRads < targetAngleRads) { //left strafe
+            if (targetAngleRads - currentAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                targetAngleRads -= FULL_ROT_RADS;
             } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                targetAngle -= FULL_ROTATION * 0.5;
-                this.isDrivePowerInverted = true;
-                -desiredState.speedMetersPerSecond;
+                targetAngleRads -= FULL_ROT_RADS * 0.5;
+                wheelSpeed *= -1;
             }
         } else { //right strafe
-            if ( currentAngle - targetAngle > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                targetAngle += FULL_ROTATION;
+            if ( currentAngleRads - targetAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                targetAngleRads += FULL_ROT_RADS;
             } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                targetAngle += FULL_ROTATION * 0.5;
-                this.isDrivePowerInverted = true;
-                -desiredState.speedMetersPerSecond;
+                targetAngleRads += FULL_ROT_RADS * 0.5;
+                wheelSpeed *= -1;
             }
         }
     }
-    desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
-    return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
-    // turn.set(ControlMode.Position,targetAngle);
-
-
+    return new SwerveModuleState(wheelSpeed, new Rotation2d(targetAngleRads));
 }
  
     /**
@@ -132,20 +126,19 @@ public class SwerveModule {
      */
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
-        SwerveModuleState state =
-            SwerveModuleState.optimize(desiredState, new Rotation2d(m_turningEncoder.get()));
+        // This could set a new angle from desired state and invert the speed
+        SwerveModuleState state = optimize(desiredState);
 
-        // Calculate the drive output from the drive PID controller.
-        final double driveOutput =
-            m_drivePIDController.calculate(m_driveEncoder.getRate(), state.speedMetersPerSecond);
+        //make the controllers go to the de
+        drive.set(state.speedMetersPerSecond);
+        turn.set(state.angle.getRadians());
+    }
 
-        // Calculate the turning motor output from the turning PID controller.
-        final var turnOutput =
-            m_turningPIDController.calculate(m_turningEncoder.get(), state.angle.getRadians());
-
-        // Calculate the turning motor output from the turning PID controller.
-        drive.set(driveOutput);
-        turn.set(turnOutput);
+    /**
+     * This function sets the conversion factor on the SparkMAX from the constants DT_DRIVE_CONVERSION_FACTOR
+     */
+    public void setDriveConversionFactor() {
+        drive.getEncoder().setVelocityConversionFactor(Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR);
     }
 
     /**
@@ -259,31 +252,30 @@ public class SwerveModule {
 	 * Set turn to pos from 0 to 1 using PID using shortest turn to get the wheels aimed the right way
 	 * @param wa wheel angle location to set to in radians
 	 */	
-	public void setTurnLocation(double wa) {
-        int currentAngle = getTurnRelPos();
-        this.isDrivePowerInverted = false; //Should we store this in a local variable and set it at the end to prevent changing this while in operation?
-        int targetAngle = (int) (wa / Math.PI * (FULL_ROTATION * 0.5)); //full rotation * .5 to give us half encoder counts rotation to match with pi
-        int currentNumRotations = (int) (currentAngle / FULL_ROTATION);
-        targetAngle += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROTATION : (currentNumRotations + 1) * FULL_ROTATION;
+	public void setTurnLocation(double waRads) {
+        double currentAngleRads = Helpers.General.ticksToRadians(getTurnRelPos());
+        double targetAngleRads = waRads; 
+        int currentNumRotations = (int) (currentAngleRads / FULL_ROTATION);
+        targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROTATION : (currentNumRotations + 1) * FULL_ROTATION;
         
-        if ((targetAngle > currentAngle + FULL_ROTATION * 0.25) || (targetAngle < currentAngle - FULL_ROTATION * 0.25)) { //if target is more than 25% of a rotation either way
-            if (currentAngle < targetAngle) { //left strafe
-                if (targetAngle - currentAngle > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngle -= FULL_ROTATION;
+        if ((targetAngleRads > currentAngleRads + FULL_ROTATION * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROTATION * 0.25)) { //if target is more than 25% of a rotation either way
+            if (currentAngleRads < targetAngleRads) { //left strafe
+                if (targetAngleRads - currentAngleRads > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads -= FULL_ROTATION;
                 } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngle -= FULL_ROTATION * 0.5;
+                    targetAngleRads -= FULL_ROTATION * 0.5;
                     this.isDrivePowerInverted = true;
                 }
             } else { //right strafe
-                if ( currentAngle - targetAngle > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngle += FULL_ROTATION;
+                if ( currentAngleRads - targetAngleRads > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads += FULL_ROTATION;
                 } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngle += FULL_ROTATION * 0.5;
+                    targetAngleRads += FULL_ROTATION * 0.5;
                     this.isDrivePowerInverted = true;
                 }
             }
         }
-        turn.set(ControlMode.Position,targetAngle);
+        turn.set(ControlMode.Position,targetAngleRads);
         // System.out.println(moduleName + " setTurnLocation="+targetAngle+"; isDrivePowerInverted="+this.isDrivePowerInverted);
     }
     

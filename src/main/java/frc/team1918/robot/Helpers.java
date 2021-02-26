@@ -15,13 +15,47 @@ public class Helpers {
            return inches * 0.0254;
        }
 
-       /** This function takes encoder ticks and returns radians
-        * @param ticks integer value in encoder ticks
-        * @return value in radians
-        */
+        /** 
+         * This function takes encoder ticks and returns radians
+         * @param ticks integer value in encoder ticks
+         * @return value in radians
+         */
         public final static double ticksToRadians(int ticks) {
             return (ticks * Math.PI / (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
         }
+
+        /** 
+         * This function takes a value and modifies it by a gear reduction (or multiplication) for a single reduction
+         * @param value double precision value of input
+         * @param gearOne integer value of the number of teeth on the input side of the gear set (motor side)
+         * @param gearTwo integer value of the number of teeth on the output side of the gear set (wheel side)
+         * @return double precision value after gear reduction (or multiplication)
+         */
+        public final static double gearCalcSingle(double value, int gearOne, int gearTwo) {
+            return value * (gearOne / gearTwo);
+        }
+        /** 
+         * This function takes a value and modifies it by a gear reduction (or multiplication) for a single reduction
+         * @param value double precision value of input
+         * @param firstGearOne integer value of the number of teeth on the input side of the first gear set (motor side)
+         * @param firstGearTwo integer value of the number of teeth on the output side of the first gear set (wheel side)
+         * @param secondGearOne integer value of the number of teeth on the output side of the second gear set (wheel side)
+         * @param secondGearTwo integer value of the number of teeth on the output side of the second gear set (wheel side)
+         * @return double precision value after gear reduction (or multiplication)
+         */
+        public final static double gearCalcDouble(double value, int firstGearOne, int firstGearTwo, int secondGearOne, int secondGearTwo) {
+            return value * (firstGearOne / firstGearTwo) * (secondGearOne / secondGearTwo);
+        } 
+        
+        /**
+         * This function takes a value in RPMs and converts it to meters Per Second.  
+         * @param rpm double precision value of RPMs from the motor controller
+         * @return double precision value in meters per second based on wheel size and gear sets
+         */
+        public final static double rpmToMetersPerSecond(double rpm, double wheelDiamMM) {
+            return ((rpm / 60) * (wheelDiamMM * Math.PI)) / 1000;
+        }
+
     }
     public static final class OI {
         private static Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);

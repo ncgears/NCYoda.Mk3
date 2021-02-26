@@ -1,6 +1,9 @@
 
 package frc.team1918.robot;
 
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+
 @SuppressWarnings("unused")
 public class Constants {
     public static final class Global {
@@ -17,52 +20,59 @@ public class Constants {
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
 
-        public static final int kEncoderCPR = 1024;
-        public static final double kWheelDiameterMeters = 0.15;
-        public static final double kDriveEncoderDistancePerPulse =
-            // Assumes the encoders are directly mounted on the wheel shafts
-            (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
-
-        public static final double kTurningEncoderDistancePerPulse =
-            // Assumes the encoders are on a 1:1 reduction with the module shaft.
-            (2 * Math.PI) / (double) kEncoderCPR;
-
-        public static final double kPModuleTurningController = 1;
-
-        public static final double kPModuleDriveController = 1;
+        public static final SwerveDriveKinematics kDriveKinematics =
+        new SwerveDriveKinematics(
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)));
     }
 
     public static final class DriveTrain {
         //DriveTrain definitions
+        ////Home Tuning
         public final static String DT_HOMES_FILE = "/home/lvuser/swerveHomes2021.txt"; //The file where we save the homes data to persist reboots
-        public final static double DT_TURN_MULT_STATIONARY = 0.5; //Turn multiplier while not moving
-        public final static double DT_TURN_MULT_MOVING = 0.9; //Turn multiplier while moving
-        public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders
         public final static int DT_HOME_MARGIN_OF_ERROR = 20; //Encoder ticks margin to consider home (plus or minus this amount)
+        ////Turn Tuning
+        public final static double DT_TURN_MULT_STATIONARY = 0.5; //Turn speed multiplier while not moving
+        public final static double DT_TURN_MULT_MOVING = 0.9; //Turn speed multiplier while moving
+        public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
+        public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
         public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
+        ////Drive Tuning
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
+        public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters
+        public final static int DT_DRIVE_FIRST_GEARONE = 21; //swerve drive first gear set input teeth
+        public final static int DT_DRIVE_FIRST_GEARTWO = 36; //swerve drive first gear set output teeth
+        public final static int DT_DRIVE_SECOND_GEARONE = 15; //swerve drive second gear set input teeth
+        public final static int DT_DRIVE_SECOND_GEARTWO = 45; //swerve drive second gear set output teeth
+        public final static double DT_DRIVE_CONVERSION_FACTOR = (DT_DRIVE_FIRST_GEARONE / DT_DRIVE_FIRST_GEARTWO) * (DT_DRIVE_SECOND_GEARONE / DT_DRIVE_SECOND_GEARTWO); //Conversion factor to correct RPM from SparkMax getVelocity()
+        ////Turn PID Tuning
         public final static double DT_TURN_P = 8.0;
         public final static double DT_TURN_I = 0.0;
         public final static double DT_TURN_D = 80.0;
         public final static int DT_TURN_IZONE = 0;
-        public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
-
+        ////Front Left
         public final static int DT_FL_DRIVE_MC_ID = 2; //Front Left Drive Motor Controller ID //SPARKMAX
         public final static int DT_FL_TURN_MC_ID = 7; //Front Left Turn Motor Controller ID //TALONSRX
         public final static int DT_FL_MECHZERO = 0; //Front Left encoder value at mechanical zero, only change if mechanics broke things
-        
+        public final static double DT_FL_WHEEL_DIAM_OFFSET_MM = 0.0; //Front Left offset to wheel diam to account for wear
+        ////Front Right
         public final static int DT_FR_DRIVE_MC_ID = 16; //Front Right Drive Motor Controller ID //SPARKMAX
         public final static int DT_FR_TURN_MC_ID = 4; //Front Right Turn Motor Controller ID //TALONSRX
         public final static int DT_FR_MECHZERO = 0; //Front Right encoder value at mechanical zero, only change if mechanics broke things
-
+        public final static double DT_FR_WHEEL_DIAM_OFFSET_MM = 0.0; //Front Right offset to wheel diam to account for wear
+        ////Rear Left
         public final static int DT_RL_DRIVE_MC_ID = 3; //Rear Left Drive Motor Controller ID //SPARKMAX
         public final static int DT_RL_TURN_MC_ID = 8; //Rear Left Turn Motor Controller ID //TALONSRX
         public final static int DT_RL_MECHZERO = 0; //Rear Left encoder value at mechanical zero, only change if mechanics broke things
-        
+        public final static double DT_RL_WHEEL_DIAM_OFFSET_MM = 0.0; //Rear Left offset to wheel diam to account for wear
+        ////Rear Right
         public final static int DT_RR_DRIVE_MC_ID = 1; //Rear Right Drive Motor Controller ID //SPARKMAX
         public final static int DT_RR_TURN_MC_ID = 11; //Rear Right Turn Motor Controller ID //TALONSRX
         public final static int DT_RR_MECHZERO = 0; //Rear Right encoder value at mechanical zero, only change if mechanics broke things
+        public final static double DT_RR_WHEEL_DIAM_OFFSET_MM = 0.0; //Rear Right offset to wheel diam to account for wear
     }
     
     public static final class OI {
