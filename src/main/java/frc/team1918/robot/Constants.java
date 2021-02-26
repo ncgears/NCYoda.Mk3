@@ -22,10 +22,10 @@ public class Constants {
 
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
-            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
             new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)));
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)));
     }
 
     public static final class DriveTrain {
