@@ -97,8 +97,8 @@ public class Robot extends TimedRobot {
     m_resetGyro = m_robotContainer.getResetGyroCommand();
     if (m_resetGyro != null) m_resetGyro.schedule();
 
-    m_autoHome = m_robotContainer.getAutoHomeCommand(); 
-    if (m_autoHome != null) m_autoHome.schedule();
+    // m_autoHome = m_robotContainer.getAutoHomeCommand(); 
+    // if (m_autoHome != null) m_autoHome.schedule();
   }
 
   /**
