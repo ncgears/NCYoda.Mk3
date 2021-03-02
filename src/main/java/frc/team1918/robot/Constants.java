@@ -20,7 +20,7 @@ public class Constants {
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
         public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
-        public static final boolean kGyroReversed = false;
+        public static final boolean kGyroReversed = false;  //if the gyro getRate needs to be inverted
         //Forward Positive, Left Positive
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
