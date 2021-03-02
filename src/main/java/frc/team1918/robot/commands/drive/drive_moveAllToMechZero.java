@@ -24,6 +24,7 @@ public class drive_moveAllToMechZero extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("CMD: drive_driveAllToMechZero");
     m_drive.moveAllToMechZero();
   }
 

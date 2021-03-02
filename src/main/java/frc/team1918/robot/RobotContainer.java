@@ -12,6 +12,7 @@ package frc.team1918.robot;
 //Global imports
 //import frc.team1918.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -36,6 +37,8 @@ import frc.team1918.robot.commands.drive.drive_moveAllToMechZero;
 //samples
 import frc.team1918.robot.commands.ExampleCommand;
 import frc.team1918.robot.commands.shooter.shooter_shootWall;
+import frc.team1918.robot.commands.shooter.shooter_increaseThrottle;
+import frc.team1918.robot.commands.shooter.shooter_decreaseThrottle;
 //CommandGroup imports
 import frc.team1918.robot.commandgroups.cg_drive_autoHome;
 
@@ -140,9 +143,9 @@ public class RobotContainer {
 
     //bind all 3 up and all 3 down for shooter throttle up/down
     // btn_THROTUP_UP.or(btn_THROTUP_UL).or(btn_THROTUP_UR).whenPressed(new do_something);
-    // orbtn_THROTUP.whenPressed(new shooter_increaseThrottle());
+    orbtn_THROTUP.whenPressed(new shooter_increaseThrottle(m_shooter));
     // btn_THROTDN_DN.or(btn_THROTDN_DL).or(btn_THROTDN_DR).whenPressed(new do_something_else);
-    // orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle());
+    orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle(m_shooter));
 
     //bind both buttons requirement
     andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));

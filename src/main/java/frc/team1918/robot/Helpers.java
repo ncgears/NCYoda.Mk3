@@ -1,7 +1,6 @@
 //OI = Operator Interface
 package frc.team1918.robot;
 
-import frc.team1918.robot.Constants;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Helpers {
@@ -154,6 +153,18 @@ public class Helpers {
          */
         public static final double applyDeadband(double inVal) {
             return ( Math.abs(inVal) < Constants.OI.OI_JOY_DEADBAND ) ? 0.0 : inVal;
+        }
+
+        /**
+         * This function zeros the joystick below the deadband. After the deadband, the value is normalized
+         * from zero to 1
+         * @param inVal double precision input value to apply deadband
+         * @return double precision -1 to 1 after applying deadband calculation 
+         */
+        public static final double applyRampingDeadband(double inVal) {
+            double ramped = inVal;
+            //TODO: Figure out math for transformation
+            return ( Math.abs(inVal) < Constants.OI.OI_JOY_DEADBAND ) ? 0.0 : ramped;
         }
         // public static enum DPAD {
         //     UP(0), UP_RIGHT(45), RIGHT(90), DOWN_RIGHT(135), DOWN(180), DOWN_LEFT(225), LEFT(270), UP_LEFT(315);
