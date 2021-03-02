@@ -417,7 +417,6 @@ public class DriveSubsystem extends SubsystemBase {
 			bw.write(outString);
 			bw.close();
 			fw.close();
-			//TODO: Log to console what data was written to disk
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
