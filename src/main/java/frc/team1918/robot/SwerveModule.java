@@ -22,8 +22,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 public class SwerveModule {
     private WPI_TalonSRX turn; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
     private CANSparkMax drive; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
-    private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION, TURN_P, TURN_I, TURN_D;
+    private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
     private final double FULL_ROT_RADS = (2 * Math.PI);
+    private final double TURN_P, TURN_I, TURN_D;
     private final int TURN_IZONE;
     private boolean isDrivePowerInverted = false;
     private String moduleName;

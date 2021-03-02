@@ -142,16 +142,11 @@ public class RobotContainer {
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));
 
     //bind all 3 up and all 3 down for shooter throttle up/down
-    // btn_THROTUP_UP.or(btn_THROTUP_UL).or(btn_THROTUP_UR).whenPressed(new do_something);
     orbtn_THROTUP.whenPressed(new shooter_increaseThrottle(m_shooter));
-    // btn_THROTDN_DN.or(btn_THROTDN_DL).or(btn_THROTDN_DR).whenPressed(new do_something_else);
     orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle(m_shooter));
 
     //bind both buttons requirement
     andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
-    //btn_ABSZERO_KEY1.and(btn_ABSZERO_KEY2).whenPressed(new drive_moveAllToMechZero(m_drive)); //Something something something triggers, couldnt make it work.
-
-
   }
 
   public drive_resetGyro getResetGyroCommand() {
