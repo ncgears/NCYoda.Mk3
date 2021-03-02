@@ -116,6 +116,14 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeading() {
     return gyro.getRotation2d().getDegrees();
   }
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return gyro.getRate() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0);
+  }
 
 	/**
 	 * Resets the odometry to the specified pose.
@@ -214,7 +222,7 @@ public class DriveSubsystem extends SubsystemBase {
 		return dtRL.isTurnEncConnected();
 	}
 
-	public static boolean isBigSushiTurnEncConnected() {
+	public static boolean isdtRRTurnEncConnected() {
 		return dtRR.isTurnEncConnected();
 	}
 
