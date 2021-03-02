@@ -19,6 +19,7 @@ public class Constants {
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 4.6;
         //Forward Positive, Left Positive
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(

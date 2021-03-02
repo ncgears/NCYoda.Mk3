@@ -5,7 +5,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
@@ -123,6 +126,42 @@ public class DriveSubsystem extends SubsystemBase {
 	  m_odometry.resetPosition(pose, gyro.getRotation2d());
 	}
   
+	/**
+   * Method to drive the robot using joystick info.
+   *
+   * @param xSpeed Speed of the robot in the x direction (forward).
+   * @param ySpeed Speed of the robot in the y direction (sideways).
+   * @param rot Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   */
+  @SuppressWarnings("ParameterName")
+  public void newdrive(double fwd, double str, double rot, boolean fieldRelative) {
+	  //drive(double fwd, double str, double rot) {
+    var swerveModuleStates =
+	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
+                ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, gyro.getRotation2d())
+                : new ChassisSpeeds(fwd, str, rot));
+    SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+    dtFL.setDesiredState(swerveModuleStates[0]);
+    dtFR.setDesiredState(swerveModuleStates[1]);
+    dtRL.setDesiredState(swerveModuleStates[2]);
+    dtRR.setDesiredState(swerveModuleStates[3]);
+  }
+
+  /**
+   * Sets the swerve ModuleStates.
+   *
+   * @param desiredStates The desired SwerveModule states.
+   */
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    SwerveDriveKinematics.normalizeWheelSpeeds(
+        desiredStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+    dtFL.setDesiredState(desiredStates[0]);
+    dtFR.setDesiredState(desiredStates[1]);
+    dtRL.setDesiredState(desiredStates[2]);
+    dtRR.setDesiredState(desiredStates[3]);
+  }
+
 
 	public static AHRS getgyro() {
         return gyro;
@@ -279,8 +318,8 @@ public class DriveSubsystem extends SubsystemBase {
 		DriveSubsystem.setLocation(wa4, wa1, wa3, wa2);
 	}
 
-	public void humanDrive(double fwd, double str, double rot) {
-		// System.out.println("humanDrive: fwd="+fwd+"; str="+str+"; rot="+rot);
+	public void drive(double fwd, double str, double rot) {
+		// System.out.println("drive: fwd="+fwd+"; str="+str+"; rot="+rot);
 		if (isFirstTime) {
 			//dtFL.setEncPos(0); //same as dtFL.resetTurnEnc()
 			resetAllEnc();
@@ -328,7 +367,7 @@ public class DriveSubsystem extends SubsystemBase {
 		str = (-fwd * Math.sin(getgyroAngleInRad()))
 				+ (str * Math.cos(getgyroAngleInRad()));
 		fwd = temp;
-		humanDrive(fwd, str, rot);
+		drive(fwd, str, rot);
 	}
 
 	public void tankDrive(double left, double right) {
