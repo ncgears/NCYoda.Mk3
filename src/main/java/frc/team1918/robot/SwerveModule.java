@@ -132,7 +132,7 @@ public class SwerveModule {
 
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
-        turn.set(state.angle.getRadians());
+        turn.set(ControlMode.Position, state.angle.getRadians());  //TODO: need to convert angle to encoder ticks
     }
 
     /**
