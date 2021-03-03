@@ -41,33 +41,37 @@ public class DriveSubsystem extends SubsystemBase {
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
-		Constants.DriveTrain.DT_FL_TURN_MC_ID, 
-		Constants.DriveTrain.DT_TURN_P, 
-		Constants.DriveTrain.DT_TURN_I, 
-		Constants.DriveTrain.DT_TURN_D, 
-		Constants.DriveTrain.DT_TURN_IZONE, "dtFL",
-		Constants.DriveTrain.DT_FL_WHEEL_DIAM_OFFSET_MM); // Front Left
-	private static SwerveModule m_dtFR = new SwerveModule(Constants.DriveTrain.DT_FR_DRIVE_MC_ID,
-		Constants.DriveTrain.DT_FR_TURN_MC_ID, 
-		Constants.DriveTrain.DT_TURN_P, 
-		Constants.DriveTrain.DT_TURN_I, 
-		Constants.DriveTrain.DT_TURN_D, 
-		Constants.DriveTrain.DT_TURN_IZONE, "dtFR",
-		Constants.DriveTrain.DT_FR_WHEEL_DIAM_OFFSET_MM); // Front Right
-	private static SwerveModule m_dtRL = new SwerveModule(Constants.DriveTrain.DT_RL_DRIVE_MC_ID,
-		Constants.DriveTrain.DT_RL_TURN_MC_ID, 
-		Constants.DriveTrain.DT_TURN_P, 
-		Constants.DriveTrain.DT_TURN_I, 
-		Constants.DriveTrain.DT_TURN_D, 
-		Constants.DriveTrain.DT_TURN_IZONE, "dtRL",
-		Constants.DriveTrain.DT_RL_WHEEL_DIAM_OFFSET_MM); // Rear Left
-	private static SwerveModule m_dtRR = new SwerveModule(Constants.DriveTrain.DT_RR_DRIVE_MC_ID,
-		Constants.DriveTrain.DT_RR_TURN_MC_ID, 
+		Constants.DriveTrain.DT_FL_TURN_MC_ID,
 		Constants.DriveTrain.DT_TURN_P,
-		Constants.DriveTrain.DT_TURN_I, 
-		Constants.DriveTrain.DT_TURN_D, 
+		Constants.DriveTrain.DT_TURN_I,
+		Constants.DriveTrain.DT_TURN_D,
+		Constants.DriveTrain.DT_TURN_IZONE, "dtFL",
+		Constants.DriveTrain.DT_FL_WHEEL_DIAM_OFFSET_MM,
+		this.flHome); // Front Left
+	private static SwerveModule m_dtFR = new SwerveModule(Constants.DriveTrain.DT_FR_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_FR_TURN_MC_ID,
+		Constants.DriveTrain.DT_TURN_P,
+		Constants.DriveTrain.DT_TURN_I,
+		Constants.DriveTrain.DT_TURN_D,
+		Constants.DriveTrain.DT_TURN_IZONE, "dtFR",
+		Constants.DriveTrain.DT_FR_WHEEL_DIAM_OFFSET_MM,
+		this.frHome); // Front Right
+	private static SwerveModule m_dtRL = new SwerveModule(Constants.DriveTrain.DT_RL_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_RL_TURN_MC_ID,
+		Constants.DriveTrain.DT_TURN_P,
+		Constants.DriveTrain.DT_TURN_I,
+		Constants.DriveTrain.DT_TURN_D,
+		Constants.DriveTrain.DT_TURN_IZONE, "dtRL",
+		Constants.DriveTrain.DT_RL_WHEEL_DIAM_OFFSET_MM,
+		this.rlHome); // Rear Left
+	private static SwerveModule m_dtRR = new SwerveModule(Constants.DriveTrain.DT_RR_DRIVE_MC_ID,
+		Constants.DriveTrain.DT_RR_TURN_MC_ID,
+		Constants.DriveTrain.DT_TURN_P,
+		Constants.DriveTrain.DT_TURN_I,
+		Constants.DriveTrain.DT_TURN_D,
 		Constants.DriveTrain.DT_TURN_IZONE, "dtRR",
-		Constants.DriveTrain.DT_RR_WHEEL_DIAM_OFFSET_MM); // Rear Right
+		Constants.DriveTrain.DT_RR_WHEEL_DIAM_OFFSET_MM,
+		this.rrHome); // Rear Right
 	//initialize gyro object
 	private static AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 	//intialize odometry class for tracking robot pose
@@ -94,7 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRR.getState()
 		);
 	}
-  
+
 	/**
 	 * Returns the currently-estimated pose of the robot.
 	 *
@@ -129,7 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
 	public void resetOdometry(Pose2d pose) {
 	  m_odometry.resetPosition(pose, m_gyro.getRotation2d());
 	}
-  
+
 	/**
    * Method to drive the robot using joystick info.
    *
@@ -244,7 +248,7 @@ public class DriveSubsystem extends SubsystemBase {
 		double b = str + (rot * (l / r));
 		double c = fwd - (rot * (w / r));
 		double d = fwd + (rot * (w / r));
-		
+
 		//Wheel Speed
 		double ws1 = Math.sqrt((b * b) + (c * c)); //FR
 		double ws2 = Math.sqrt((a * a) + (c * c)); //RR
@@ -256,7 +260,7 @@ public class DriveSubsystem extends SubsystemBase {
 		double wa2 = Math.atan2(a, c); //RR
 		double wa3 = Math.atan2(a, d); //RL
 		double wa4 = Math.atan2(b, d); //FL
-		
+
 		double max = ws1;
 		max = Math.max(max, ws2);
 		max = Math.max(max, ws3);
@@ -361,6 +365,11 @@ public class DriveSubsystem extends SubsystemBase {
 		outString += "rrHome:"+rrHome+"\n";
 		System.out.print("saveAllHomes: " + outString);
 
+		dtFL.setHomePos(flHome);
+		dtFR.setHomePos(frHome);
+		dtRL.setHomePos(rlHome);
+		dtRR.setHomePos(rrHome);
+
 		try {
 			bw.write(outString);
 			bw.close();
@@ -404,6 +413,11 @@ public class DriveSubsystem extends SubsystemBase {
 				}
 				line = br.readLine(); //beg for more bread
 			}
+			dtFL.setHomePos(flHome);
+			dtFR.setHomePos(frHome);
+			dtRL.setHomePos(rlHome);
+			dtRR.setHomePos(rrHome);
+
 			br.close();
 			fr.close();
 		} catch (IOException e) {
