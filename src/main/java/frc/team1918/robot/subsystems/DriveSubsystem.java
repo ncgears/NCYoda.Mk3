@@ -34,7 +34,6 @@ public class DriveSubsystem extends SubsystemBase {
 	private static int frHome = Constants.DriveTrain.DT_FR_MECHZERO;
 	private static int rlHome = Constants.DriveTrain.DT_RL_MECHZERO;
 	private static int rrHome = Constants.DriveTrain.DT_RR_MECHZERO;
-	private static boolean isFirstTime = true;
 	private File f;
 	private BufferedWriter bw;
 	private FileWriter fw;
@@ -143,7 +142,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   @SuppressWarnings("ParameterName")
-  public void newdrive(double fwd, double str, double rot, boolean fieldRelative) {
+  public void drive(double fwd, double str, double rot, boolean fieldRelative) {
 	  //drive(double fwd, double str, double rot) {
     var swerveModuleStates =
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
@@ -162,8 +161,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param desiredStates The desired SwerveModule states.
    */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.normalizeWheelSpeeds(
-        desiredStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+    SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     dtFL.setDesiredState(desiredStates[0]);
     dtFR.setDesiredState(desiredStates[1]);
     dtRL.setDesiredState(desiredStates[2]);
@@ -226,14 +224,6 @@ public class DriveSubsystem extends SubsystemBase {
 		return dtRR.isTurnEncConnected();
 	}
 
-	public void resetAllEnc() {
-		System.out.println("resetAllEnc");
-	    dtFL.resetTurnEnc();
-		dtFR.resetTurnEnc();
-		dtRL.resetTurnEnc();
-		dtRR.resetTurnEnc();
-	}
-
 	public static void stopAllDrive() {
 	    dtFL.stopDrive();
 		dtFR.stopDrive();
@@ -241,39 +231,6 @@ public class DriveSubsystem extends SubsystemBase {
 		dtRR.stopDrive();
 	}
 
-	public static void setAllConversionFactor() {
-		dtFL.setDriveConversionFactor();
-		dtFR.setDriveConversionFactor();
-		dtRL.setDriveConversionFactor();
-		dtRR.setDriveConversionFactor();
-	}
-
-	public void resetGyro() {
-		System.out.println("resetGyro");
-		gyro.reset();
-	}
-
-	public static double getgyroAngle() {
-		return gyro.getAngle();
-	}
-
-	public static double getgyroAngleInRad() {
-		return gyro.getAngle() * (Math.PI / 180d);
-	}
-
-	public static void setAllDriveBrakeMode(boolean b) {
-	    dtFL.setBrakeMode("drive", b);
-		dtFR.setBrakeMode("drive", b);
-		dtRL.setBrakeMode("drive", b);
-		dtRR.setBrakeMode("drive", b);
-	}
-
-	public static void setAllTurnBrakeMode(boolean b) {
-	    dtFL.setBrakeMode("turn", b);
-		dtFR.setBrakeMode("turn", b);
-		dtRL.setBrakeMode("turn", b);
-		dtRR.setBrakeMode("turn", b);
-	}
 
 	public static double getAverageError() {
 		return (Math.abs(dtFL.getError()) + Math.abs(dtFR.getError())
@@ -325,64 +282,22 @@ public class DriveSubsystem extends SubsystemBase {
 		DriveSubsystem.setDrivePower(ws4, ws1, ws3, ws2);
 		DriveSubsystem.setLocation(wa4, wa1, wa3, wa2);
 	}
-
-	public void drive(double fwd, double str, double rot) {
-		// System.out.println("drive: fwd="+fwd+"; str="+str+"; rot="+rot);
-		if (isFirstTime) {
-			//dtFL.setEncPos(0); //same as dtFL.resetTurnEnc()
-			resetAllEnc();
-			isFirstTime = false;
-		}
-
-		SmartDashboard.putNumber("fwd", fwd);
-		SmartDashboard.putNumber("str", str);
-		SmartDashboard.putNumber("rot", rot);
-		
-		// if (Math.abs(rot) < 0.01) rot = 0;
-
-		fwd = Helpers.OI.applyDeadband(fwd);
-		str = Helpers.OI.applyDeadband(str);
-		if (Constants.DriveTrain.DT_TURN_MULT_BEFORE_DB) {
-			if (fwd == 0.0 && str == 0.0) {
-				rot *= Constants.DriveTrain.DT_TURN_MULT_STATIONARY;
-			} else {
-				rot *= Constants.DriveTrain.DT_TURN_MULT_MOVING;
-			}
-		}
-		rot = Helpers.OI.applyDeadband(rot);
-		if (!Constants.DriveTrain.DT_TURN_MULT_BEFORE_DB) {
-			if (fwd == 0.0 && str == 0.0) {
-				rot *= Constants.DriveTrain.DT_TURN_MULT_STATIONARY;
-			} else {
-				rot *= Constants.DriveTrain.DT_TURN_MULT_MOVING;
-			}
-		}
-
-		if (fwd == 0.0 && str == 0.0 && rot == 0.0) {
-			// setOffSets();
-			setAllDriveBrakeMode(true);
-			stopAllDrive();
-		} else {
-			setAllDriveBrakeMode(false);
-			swerveDrive(fwd, str, rot);
-			// resetOffSet();
-		}
+	//#region GYRO STUFF
+	public void resetGyro() {
+		System.out.println("resetGyro");
+		gyro.reset();
 	}
 
-	public void fieldCentricDrive(double fwd, double str, double rot) {
-		double temp = (fwd * Math.cos(getgyroAngleInRad()))
-				+ (str * Math.sin(getgyroAngleInRad()));
-		str = (-fwd * Math.sin(getgyroAngleInRad()))
-				+ (str * Math.cos(getgyroAngleInRad()));
-		fwd = temp;
-		drive(fwd, str, rot);
+	public static double getgyroAngle() {
+		return gyro.getAngle();
 	}
 
-	public void tankDrive(double left, double right) {
-		setAllLocation(0);
-		setDrivePower(right, left, right, left);
+	public static double getgyroAngleInRad() {
+		return gyro.getAngle() * (Math.PI / 180d);
 	}
+	//#endregion GYRO STUFF
 
+	//#region ENCODER STUFF
 	public void getAllAbsPos() {
 		flHome = dtFL.getTurnAbsPos();
 		frHome = dtFR.getTurnAbsPos();
@@ -395,13 +310,49 @@ public class DriveSubsystem extends SubsystemBase {
 		outString += " rrHome:"+rrHome;
 		System.out.println("getAllAbsPos: " + outString);
 	}
+	//#endregion ENCODER STUFF
 
+	//#region MOTOR CONTROLLER STUFF
+	public static void setAllConversionFactor() {
+		dtFL.setDriveConversionFactor();
+		dtFR.setDriveConversionFactor();
+		dtRL.setDriveConversionFactor();
+		dtRR.setDriveConversionFactor();
+	}
+
+	public static void setAllDriveBrakeMode(boolean b) {
+		dtFL.setBrakeMode("drive", b);
+		dtFR.setBrakeMode("drive", b);
+		dtRL.setBrakeMode("drive", b);
+		dtRR.setBrakeMode("drive", b);
+	}
+
+	public static void setAllTurnBrakeMode(boolean b) {
+		dtFL.setBrakeMode("turn", b);
+		dtFR.setBrakeMode("turn", b);
+		dtRL.setBrakeMode("turn", b);
+		dtRR.setBrakeMode("turn", b);
+	}
+	//#endregion MOTOR CONTROLLER STUFF
+
+	//#region USER CONTROLS
+	public boolean isDriveControlsLocked() {
+		return driveControlsLocked;
+	}
+
+	public void lockDriveControls(boolean lock) {
+		driveControlsLocked = lock;
+		System.out.println("drive controls lock state: " + lock);
+	}
+	//#endregion USER CONTROLS
+
+	//#region HOMING AND CALIBRATION
 	public void saveAllHomes() {
 		try {
-    		f = new File(Constants.DriveTrain.DT_HOMES_FILE);
-    		if(!f.exists()){
-    			f.createNewFile();
-    		}
+			f = new File(Constants.DriveTrain.DT_HOMES_FILE);
+			if(!f.exists()){
+				f.createNewFile();
+			}
 			fw = new FileWriter(f);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -463,22 +414,6 @@ public class DriveSubsystem extends SubsystemBase {
 		}
 	}
 
-	public void moveAllToHomes() {
-		System.out.println("moveAllToHomes");
-		readAllHomes();
-		dtFL.setTurnLocationInEncoderTicks(flHome);
-		dtFR.setTurnLocationInEncoderTicks(frHome);
-		dtRL.setTurnLocationInEncoderTicks(rlHome);
-		dtRR.setTurnLocationInEncoderTicks(rrHome);
-	}
-
-	public void moveAllToMechZero() {
-		System.out.println("moveAllToMechZero");
-		dtFL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FL_MECHZERO);
-		dtFR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FR_MECHZERO);
-		dtRL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RL_MECHZERO);
-		dtRR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RR_MECHZERO);
-	}
 	public void startCalibrationMode() {
 		System.out.println("startCalibrationMode");
 		lockDriveControls(true);
@@ -499,20 +434,13 @@ public class DriveSubsystem extends SubsystemBase {
 		lockDriveControls(false);
 	}
 
-	public boolean isDriveControlsLocked() {
-		return driveControlsLocked;
-	}
-
-	public void lockDriveControls(boolean lock) {
-		driveControlsLocked = lock;
-		System.out.println("drive controls lock state: " + lock);
-	}
-
-	public void setAllTurnEncoderAbsolute(boolean useAbsolute) {
-		dtFL.setTurnEncoderAbsolute(useAbsolute);
-		dtFR.setTurnEncoderAbsolute(useAbsolute);
-		dtRL.setTurnEncoderAbsolute(useAbsolute);
-		dtRR.setTurnEncoderAbsolute(useAbsolute);
+	public void moveAllToHomes() {
+		System.out.println("moveAllToHomes");
+		readAllHomes();
+		dtFL.setTurnLocationInEncoderTicks(flHome);
+		dtFR.setTurnLocationInEncoderTicks(frHome);
+		dtRL.setTurnLocationInEncoderTicks(rlHome);
+		dtRR.setTurnLocationInEncoderTicks(rrHome);
 	}
 
 	public boolean isAllTurnAtHome() {
@@ -527,6 +455,14 @@ public class DriveSubsystem extends SubsystemBase {
 		return false;
 	}
 
+	public void moveAllToMechZero() {
+		System.out.println("moveAllToMechZero");
+		dtFL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FL_MECHZERO);
+		dtFR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FR_MECHZERO);
+		dtRL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RL_MECHZERO);
+		dtRR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RR_MECHZERO);
+	}
+
 	public boolean isAllTurnAtMechZero() {
 		if (
 			dtFL.isTurnAtHome(Constants.DriveTrain.DT_FL_MECHZERO) &&
@@ -538,4 +474,5 @@ public class DriveSubsystem extends SubsystemBase {
 			}
 		return false;
 	}
+	//#endregion HOMING AND CALIBRATION
 }

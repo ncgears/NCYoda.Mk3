@@ -50,7 +50,7 @@ public class SwerveModule {
         turn.configFactoryDefault(); //Reset controller to factory defaults to avoid wierd stuff
         turn.set(ControlMode.PercentOutput, 0); //Set controller to disabled
         turn.setNeutralMode(NeutralMode.Brake); //Set controller to brake mode
-        turn.configSelectedFeedbackSensor(  FeedbackDevice.CTRE_MagEncoder_Relative, // Local Feedback Source
+        turn.configSelectedFeedbackSensor(  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
                                             Constants.Global.PID_PRIMARY,				// PID Slot for Source [0, 1]
                                             Constants.Global.kTimeoutMs);				// Configuration Timeout
         isDrivePowerInverted = false;
