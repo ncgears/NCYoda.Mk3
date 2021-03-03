@@ -47,7 +47,7 @@ public class DriveSubsystem extends SubsystemBase {
 		Constants.DriveTrain.DT_TURN_D,
 		Constants.DriveTrain.DT_TURN_IZONE, "dtFL",
 		Constants.DriveTrain.DT_FL_WHEEL_DIAM_OFFSET_MM,
-		this.flHome); // Front Left
+		flHome); // Front Left
 	private static SwerveModule m_dtFR = new SwerveModule(Constants.DriveTrain.DT_FR_DRIVE_MC_ID,
 		Constants.DriveTrain.DT_FR_TURN_MC_ID,
 		Constants.DriveTrain.DT_TURN_P,
@@ -55,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
 		Constants.DriveTrain.DT_TURN_D,
 		Constants.DriveTrain.DT_TURN_IZONE, "dtFR",
 		Constants.DriveTrain.DT_FR_WHEEL_DIAM_OFFSET_MM,
-		this.frHome); // Front Right
+		frHome); // Front Right
 	private static SwerveModule m_dtRL = new SwerveModule(Constants.DriveTrain.DT_RL_DRIVE_MC_ID,
 		Constants.DriveTrain.DT_RL_TURN_MC_ID,
 		Constants.DriveTrain.DT_TURN_P,
@@ -63,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
 		Constants.DriveTrain.DT_TURN_D,
 		Constants.DriveTrain.DT_TURN_IZONE, "dtRL",
 		Constants.DriveTrain.DT_RL_WHEEL_DIAM_OFFSET_MM,
-		this.rlHome); // Rear Left
+		rlHome); // Rear Left
 	private static SwerveModule m_dtRR = new SwerveModule(Constants.DriveTrain.DT_RR_DRIVE_MC_ID,
 		Constants.DriveTrain.DT_RR_TURN_MC_ID,
 		Constants.DriveTrain.DT_TURN_P,
@@ -71,7 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
 		Constants.DriveTrain.DT_TURN_D,
 		Constants.DriveTrain.DT_TURN_IZONE, "dtRR",
 		Constants.DriveTrain.DT_RR_WHEEL_DIAM_OFFSET_MM,
-		this.rrHome); // Rear Right
+		rrHome); // Rear Right
 	//initialize gyro object
 	private static AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 	//intialize odometry class for tracking robot pose
@@ -365,10 +365,10 @@ public class DriveSubsystem extends SubsystemBase {
 		outString += "rrHome:"+rrHome+"\n";
 		System.out.print("saveAllHomes: " + outString);
 
-		dtFL.setHomePos(flHome);
-		dtFR.setHomePos(frHome);
-		dtRL.setHomePos(rlHome);
-		dtRR.setHomePos(rrHome);
+		m_dtFL.setHomePos(flHome);
+		m_dtFR.setHomePos(frHome);
+		m_dtRL.setHomePos(rlHome);
+		m_dtRR.setHomePos(rrHome);
 
 		try {
 			bw.write(outString);
@@ -413,10 +413,10 @@ public class DriveSubsystem extends SubsystemBase {
 				}
 				line = br.readLine(); //beg for more bread
 			}
-			dtFL.setHomePos(flHome);
-			dtFR.setHomePos(frHome);
-			dtRL.setHomePos(rlHome);
-			dtRR.setHomePos(rrHome);
+			m_dtFL.setHomePos(flHome);
+			m_dtFR.setHomePos(frHome);
+			m_dtRL.setHomePos(rlHome);
+			m_dtRR.setHomePos(rrHome);
 
 			br.close();
 			fr.close();
