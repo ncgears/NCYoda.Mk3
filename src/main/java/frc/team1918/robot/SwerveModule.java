@@ -136,7 +136,7 @@ public class SwerveModule {
 
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
-        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()));  //TODO: need to add (or subtract?) homePos offset
+        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);  //TODO: need to add (or subtract?) homePos offset
     }
 
     /**
@@ -191,13 +191,13 @@ public class SwerveModule {
 
     /**
      * Returns a boolean indicating if the module is at home position within the margin of error defined in constants by DriveTrain.DT_HOME_MARGIN_OF_ERROR
-     * @param homePos Absolute encoder value of the target home position.
+     * @param pos Absolute encoder value of the target home position.
      * @return Boolean value indicating if this swerve module is at the home position.
      */
     public boolean isTurnAtHome(int pos) {
         int currentPos = getTurnAbsPos();
         int marginErr = Constants.DriveTrain.DT_HOME_MARGIN_OF_ERROR;
-        int offset = (pos < marginErr || pos > 4095 - marginErr) ? 1024 : 0;
+        int offset = 0; //(pos < marginErr || pos > 4095 - marginErr) ? 1024 : 0;
 
         int lowHome = pos + offset - marginErr; //could use this value % 4096
         int highHome = pos + offset + marginErr;

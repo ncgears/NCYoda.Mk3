@@ -225,7 +225,7 @@ public class DriveSubsystem extends SubsystemBase {
 		return m_dtRR.isTurnEncConnected();
 	}
 
-	public static void stopAllDrive() {
+	public void stopAllDrive() {
 	    m_dtFL.stopDrive();
 		m_dtFR.stopDrive();
 		m_dtRL.stopDrive();

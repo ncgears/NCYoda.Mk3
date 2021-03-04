@@ -21,14 +21,14 @@ public class Constants {
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
         public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
-        public static final boolean kGyroReversed = false;
+        public static final boolean kGyroReversed = true;
         //Forward Positive, Left Positive
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
-            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
             new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)));
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)));
     }
 
     public static final class DriveTrain {
@@ -42,7 +42,7 @@ public class Constants {
         public final static double DT_TURN_MULT_MOVING = 0.9; //Turn speed multiplier while moving
         public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
         public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
-        public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
+        public final static boolean DT_USE_FIELD_CENTRIC = false; //Set to true to use field-centric drive
         ////Drive Tuning
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
         public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters
