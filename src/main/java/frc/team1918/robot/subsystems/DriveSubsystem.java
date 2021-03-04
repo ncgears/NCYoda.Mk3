@@ -144,16 +144,15 @@ public class DriveSubsystem extends SubsystemBase {
    */
   @SuppressWarnings("ParameterName")
   public void drive(double fwd, double str, double rot, boolean fieldRelative) {
-	  //drive(double fwd, double str, double rot) {
     var swerveModuleStates =
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
                 : new ChassisSpeeds(fwd, str, rot));
     SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     m_dtFL.setDesiredState(swerveModuleStates[0]);
-    m_dtFR.setDesiredState(swerveModuleStates[1]);
-    m_dtRL.setDesiredState(swerveModuleStates[2]);
-    m_dtRR.setDesiredState(swerveModuleStates[3]);
+    // m_dtFR.setDesiredState(swerveModuleStates[1]);
+    // m_dtRL.setDesiredState(swerveModuleStates[2]);
+    // m_dtRR.setDesiredState(swerveModuleStates[3]);
   }
 
   /**
