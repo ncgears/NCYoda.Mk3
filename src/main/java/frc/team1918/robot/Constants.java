@@ -129,6 +129,7 @@ public class Constants {
         public final static int DRIVE_BTN_MIXER_FEEDSTUCK = LOGITECH_BTN_LB; //Reverse the mixer direction to unstick power cells
         public final static int DRIVE_BTN_HOMESWERVE = LOGITECH_BTN_Y; //Home the swerve modules
         public final static int DRIVE_BTN_MECHZERO = LOGITECH_BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
+        public final static int DRIVE_BTN_TOG_DEBUG = LOGITECH_BTN_START; //Toggle the debugging console messages
         public final static int DRIVE_DPAD_GYRO_RESET = LOGITECH_DPAD_LEFT;
         //Drive controller DPAD used as range selector for shooter speed (top half and bottom half)
         public final static int DRIVE_DPAD_THROTUP_UL = LOGITECH_DPAD_UPLEFT;

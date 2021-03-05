@@ -29,16 +29,17 @@ import frc.team1918.robot.subsystems.DriveSubsystem;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import frc.team1918.robot.subsystems.MixerSubsystem;
 //Commands imports
+import frc.team1918.robot.commands.helpers.helpers_toggleDebug;
 import frc.team1918.robot.commands.drive.drive_defaultDrive;
 import frc.team1918.robot.commands.drive.drive_startCalibration;
 import frc.team1918.robot.commands.drive.drive_stopCalibration;
 import frc.team1918.robot.commands.drive.drive_resetGyro;
 import frc.team1918.robot.commands.drive.drive_moveAllToMechZero;
-//samples
-import frc.team1918.robot.commands.ExampleCommand;
 import frc.team1918.robot.commands.shooter.shooter_shootWall;
 import frc.team1918.robot.commands.shooter.shooter_increaseThrottle;
 import frc.team1918.robot.commands.shooter.shooter_decreaseThrottle;
+//samples
+import frc.team1918.robot.commands.ExampleCommand;
 //CommandGroup imports
 import frc.team1918.robot.commandgroups.cg_drive_autoHome;
 
@@ -81,6 +82,7 @@ public class RobotContainer {
   private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEEDSTUCK);
   private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_START);
   private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_STOP);
+  private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.DRIVE_BTN_TOG_DEBUG);
   private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.DRIVE_DPAD_GYRO_RESET);
   private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UP);
     private POVButton btn_THROTUP_UL = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UL);
@@ -136,7 +138,7 @@ public class RobotContainer {
     btn_CALIBRATE_START.whenPressed(new drive_startCalibration(m_drive));
     btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
     btn_GYRO_RESET.whenPressed(new drive_resetGyro(m_drive));
-    //
+    btn_TOGGLE_DEBUG.whenPressed(new helpers_toggleDebug());
     btn_SHOOT_WALL.whenPressed(new shooter_shootWall(m_shooter));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Helpers {
     public static final class General {
+        private static boolean debugEnabled = false;
         /**
         * This function takes a value in inches and returns in meters
         * @param inches double precision value in inches
@@ -30,6 +31,24 @@ public class Helpers {
          */
         public final static int radiansToTicks(double rads) {
 			return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
+        }
+
+        /**
+         * This function takes a string and outputs it to the console when the debugging is enabled
+         * @param message String to print to console
+         */
+        public final static void debug(String message) {
+            if (debugEnabled) {
+                System.out.println(message);
+            }
+        }
+
+        /**
+         * This function toggles the debugging output to console. In a future version, each press will increase the debug level
+         * through a set list of severity levels.
+         */
+        public final static void toggleDebug() {
+            debugEnabled = !debugEnabled;
         }
 
         /**
