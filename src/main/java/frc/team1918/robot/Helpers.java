@@ -49,6 +49,7 @@ public class Helpers {
          */
         public final static void toggleDebug() {
             debugEnabled = !debugEnabled;
+            System.out.println("Debugging Output=" + debugEnabled);
         }
 
         /**

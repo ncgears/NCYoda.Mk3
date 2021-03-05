@@ -147,12 +147,15 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates =
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
-                : new ChassisSpeeds(fwd, str, rot));
+				: new ChassisSpeeds(fwd, str, rot));
+	// Helpers.General.debug(fieldRelative
+	// 	? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
+	// 	: new ChassisSpeeds(fwd, str, rot).toString());
     SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     m_dtFL.setDesiredState(swerveModuleStates[0]);
-    // m_dtFR.setDesiredState(swerveModuleStates[1]);
-    // m_dtRL.setDesiredState(swerveModuleStates[2]);
-    // m_dtRR.setDesiredState(swerveModuleStates[3]);
+    m_dtFR.setDesiredState(swerveModuleStates[1]);
+    m_dtRL.setDesiredState(swerveModuleStates[2]);
+    m_dtRR.setDesiredState(swerveModuleStates[3]);
   }
 
   /**
@@ -284,8 +287,9 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 	//#region m_gyro STUFF
 	public void resetGyro() {
-		System.out.println("resetGyro");
+		Helpers.General.debug("Gyro Reset");
 		m_gyro.reset();
+		resetOdometry(getPose());
 	}
 
 	public static double getm_gyroAngle() {
