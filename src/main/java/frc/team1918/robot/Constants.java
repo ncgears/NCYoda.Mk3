@@ -43,7 +43,7 @@ public class Constants {
         public final static double DT_TURN_MULT_MOVING = 0.9; //Turn speed multiplier while moving
         public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
         public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
-        public final static boolean DT_USE_FIELD_CENTRIC = false; //Set to true to use field-centric drive
+        public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
         ////Drive Tuning
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
         public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters

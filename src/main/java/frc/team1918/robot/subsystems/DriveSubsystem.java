@@ -148,9 +148,9 @@ public class DriveSubsystem extends SubsystemBase {
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
 				: new ChassisSpeeds(fwd, str, rot));
-	// Helpers.General.debug(fieldRelative
-	// 	? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
-	// 	: new ChassisSpeeds(fwd, str, rot).toString());
+	Helpers.General.debug(fieldRelative
+		? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
+		: new ChassisSpeeds(fwd, str, rot).toString());
     SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     m_dtFL.setDesiredState(swerveModuleStates[0]);
     m_dtFR.setDesiredState(swerveModuleStates[1]);

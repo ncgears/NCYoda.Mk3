@@ -132,11 +132,12 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
         // This could set a new angle from desired state and invert the speed
-        SwerveModuleState state = optimize(desiredState);
-
+        // SwerveModuleState state = optimize(desiredState);
+        SwerveModuleState state = desiredState;
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
-        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);  //TODO: need to add (or subtract?) homePos offset
+        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);
+        Helpers.General.debug(moduleName+" Speed="+state.speedMetersPerSecond+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos));
     }
 
     /**
