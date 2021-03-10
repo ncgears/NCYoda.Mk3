@@ -18,8 +18,28 @@ public class Constants {
 
     public static final class Air {
         public final static boolean AIR_ENABLED = true; //Set to false to disable compressor
+        public final static int AIR_COLLECTOR_1 = 0; //ID of solonoid for collector stage 1
+        public final static int AIR_COLLECTOR_2 = 1; //ID of solonoid for collector stage 2
+        public final static int AIR_HOOD = 2; //ID of solonoid for hood control
+        public final static int AIR_ANTIGRAV = 3; //ID of solonoid for climber anti-backdrive
+        public final static int AIR_SPARE = 4; //ID of solonoid for spare 
+        //which state for solonoids are the knowns
+        public final static boolean AIR_COLL1_DOWN = true;
+        public final static boolean AIR_COLL2_DOWN = true;
+        public final static boolean AIR_HOOD_UP = true;
     }
     
+    public static final class Shooter {
+        public final static int SHOOTER_LINE1_RPM = 2650; //Wall
+        public final static boolean SHOOTER_LINE1_HOOD = !Air.AIR_HOOD_UP;
+        public final static int SHOOTER_LINE2_RPM = 3780;
+        public final static boolean SHOOTER_LINE2_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOTER_LINE3_RPM = 3225;
+        public final static boolean SHOOTER_LINE3_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOTER_LINE4_RPM = 3300;
+        public final static boolean SHOOTER_LINE4_HOOD = Air.AIR_HOOD_UP;
+    }
+
     public static final class Swerve {
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
