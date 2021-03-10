@@ -9,20 +9,26 @@ package frc.team1918.robot.commands.shooter;
 
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
+import java.util.function.BooleanSupplier;
+import java.util.function.IntSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * A command that ...
  */
-public class shooter_increaseThrottle extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
+public class shooter_shootHoodAndRPM extends CommandBase {
+  @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
   private final ShooterSubsystem m_subsystem;
+  private final BooleanSupplier m_hoodUp;
+  private final IntSupplier m_speed;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
-  public shooter_increaseThrottle(ShooterSubsystem subsystem) {
+  public shooter_shootHoodAndRPM(ShooterSubsystem subsystem, BooleanSupplier hoodUp, IntSupplier speed) {
     m_subsystem = subsystem;
+    m_hoodUp = hoodUp;
+    m_speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -35,7 +41,7 @@ public class shooter_increaseThrottle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Increase Throttle");
+    Helpers.General.debug("Shooter: Shoot with settings: Hood Up="+m_hoodUp+" RPM="+m_speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +52,6 @@ public class shooter_increaseThrottle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.shooter;
 
+import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -34,7 +35,7 @@ public class shooter_decreaseThrottle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Shooter: Decrease Throttle");
+    Helpers.General.debug("Shooter: Decrease Throttle");
   }
 
   // Called once the command ends or is interrupted.

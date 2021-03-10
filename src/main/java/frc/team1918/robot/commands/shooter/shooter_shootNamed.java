@@ -14,15 +14,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * A command that ...
  */
-public class shooter_increaseThrottle extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
+public class shooter_shootNamed extends CommandBase {
+  @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
   private final ShooterSubsystem m_subsystem;
+  private final String m_name;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
-  public shooter_increaseThrottle(ShooterSubsystem subsystem) {
+  public shooter_shootNamed(ShooterSubsystem subsystem, String name) {
     m_subsystem = subsystem;
+    m_name = name;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -35,7 +37,7 @@ public class shooter_increaseThrottle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Increase Throttle");
+    Helpers.General.debug("Shooter: Shoot from "+m_name);
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +48,6 @@ public class shooter_increaseThrottle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
