@@ -32,11 +32,11 @@ public class Constants {
     public static final class Shooter {
         public final static int SHOOTER_LINE1_RPM = 2650; //Wall
         public final static boolean SHOOTER_LINE1_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE2_RPM = 3780;
+        public final static int SHOOTER_LINE2_RPM = 3780; //Short
         public final static boolean SHOOTER_LINE2_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE3_RPM = 3225;
+        public final static int SHOOTER_LINE3_RPM = 3225; //Line
         public final static boolean SHOOTER_LINE3_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE4_RPM = 3300;
+        public final static int SHOOTER_LINE4_RPM = 3300; //Trench
         public final static boolean SHOOTER_LINE4_HOOD = Air.AIR_HOOD_UP;
     }
 
