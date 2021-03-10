@@ -13,6 +13,7 @@ package frc.team1918.robot;
 //import frc.team1918.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj.Compressor;
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //Util imports
 import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
+
 //Subsystems imports
 import frc.team1918.robot.subsystems.ExampleSubsystem;
 import frc.team1918.robot.subsystems.ClimberSubsystem;
@@ -49,6 +51,7 @@ public class RobotContainer {
   //Here, we initialize the subsystems and commands that will be used for the button bindings
   //generic subsystems
   private final PowerDistributionPanel m_pdp = new PowerDistributionPanel();
+  private final Compressor m_air = new Compressor();
   //team 1918 subsystems
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final CollectorSubsystem m_collector = new CollectorSubsystem();
@@ -108,6 +111,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Enable closed loop control of compressor and enable it
+    m_air.setClosedLoopControl(Constants.Air.AIR_ENABLED);
   
     m_drive.setDefaultCommand(
       new drive_defaultDrive(

@@ -15,6 +15,10 @@ public class Constants {
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
         //dev test
     }
+
+    public static final class Air {
+        public final static boolean AIR_ENABLED = true; //Set to false to disable compressor
+    }
     
     public static final class Swerve {
         // swerve control definitions
