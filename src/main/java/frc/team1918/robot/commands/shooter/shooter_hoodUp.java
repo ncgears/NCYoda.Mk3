@@ -37,7 +37,7 @@ public class shooter_hoodUp extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Shooter: Hood Up");
-    m_shooter = moveHoodToPosition(Constants.Air.AIR_HOOD_UP);
+    m_shooter.raiseHood(Constants.Air.AIR_HOOD_UP);
   }
 
   // Called once the command ends or is interrupted.
