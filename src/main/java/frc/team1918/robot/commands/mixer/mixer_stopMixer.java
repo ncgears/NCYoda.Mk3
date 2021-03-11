@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class mixer_stopMixer extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final MixerSubsystem m_subsystem;
+  private final MixerSubsystem m_mixer;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public mixer_stopMixer(MixerSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_mixer = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +36,7 @@ public class mixer_stopMixer extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Mixer: Stop Mixer");
+    m_mixer.setMixerSpeed(0);
   }
 
   // Called once the command ends or is interrupted.

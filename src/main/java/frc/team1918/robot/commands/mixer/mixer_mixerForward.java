@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.mixer;
 
+import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.MixerSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +17,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class mixer_mixerForward extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final MixerSubsystem m_subsystem;
+  private final MixerSubsystem m_mixer;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public mixer_mixerForward(MixerSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_mixer = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +37,7 @@ public class mixer_mixerForward extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Mixer: Mixer Forward");
+    m_mixer.setMixerSpeed(Constants.Mixer.MIXER_SPEED);
   }
 
   // Called once the command ends or is interrupted.

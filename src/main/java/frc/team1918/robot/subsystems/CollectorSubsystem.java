@@ -4,6 +4,7 @@ package frc.team1918.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class CollectorSubsystem extends SubsystemBase {
@@ -21,7 +22,7 @@ public class CollectorSubsystem extends SubsystemBase {
   }
 
   public void setIntakeSpeed(double speed) {
-    coll.set(speed);
+    coll.set(ControlMode.PercentOutput, speed);
   }
 
   public void setCollectorPosition(String position) {
