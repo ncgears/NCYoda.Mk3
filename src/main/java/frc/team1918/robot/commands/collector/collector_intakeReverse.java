@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.collector;
 
+import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.CollectorSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +17,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class collector_intakeReverse extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final CollectorSubsystem m_subsystem;
+  private final CollectorSubsystem m_collector;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public collector_intakeReverse(CollectorSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_collector = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +37,7 @@ public class collector_intakeReverse extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Collector: Intake Reverse");
+    m_collector.setIntakeSpeed(-Constants.Collector.COLLECTOR_SPEED);
   }
 
   // Called once the command ends or is interrupted.

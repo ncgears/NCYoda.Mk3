@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class collector_intakeStop extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final CollectorSubsystem m_subsystem;
+  private final CollectorSubsystem m_collector;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public collector_intakeStop(CollectorSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_collector = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +36,7 @@ public class collector_intakeStop extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Collector: Intake Stop");
+    m_collector.setIntakeSpeed(0);
   }
 
   // Called once the command ends or is interrupted.

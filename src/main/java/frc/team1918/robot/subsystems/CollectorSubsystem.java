@@ -19,4 +19,23 @@ public class CollectorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void setIntakeSpeed(double speed) {
+    coll.set(speed);
+  }
+
+  public void setCollectorPosition(String position) {
+    switch(position) {
+      case "down":
+        //put collector down
+        break;
+      case "mid-down":
+      case "mid-up":
+      case "up":
+      case "stow":
+      default:
+        //put collector up
+        break;
+    }
+  }
 }

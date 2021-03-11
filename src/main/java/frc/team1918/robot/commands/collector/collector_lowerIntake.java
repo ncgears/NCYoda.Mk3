@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class collector_lowerIntake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final CollectorSubsystem m_subsystem;
+  private final CollectorSubsystem m_collector;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public collector_lowerIntake(CollectorSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_collector = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +36,7 @@ public class collector_lowerIntake extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Collector: Lower Collector");
+    m_collector.setCollectorPosition("down");
   }
 
   // Called once the command ends or is interrupted.
