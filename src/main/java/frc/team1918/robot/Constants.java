@@ -13,7 +13,6 @@ public class Constants {
         public final static int PID_TURN = 1; //Talon PID slot for auxillary loop
         public final static int ROBOT_WIDTH = 23; //Width of the robot frame
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
-        //dev test
     }
 
     public static final class Air {
@@ -38,6 +37,25 @@ public class Constants {
         public final static boolean SHOOTER_LINE3_HOOD = Air.AIR_HOOD_UP;
         public final static int SHOOTER_LINE4_RPM = 3300; //Trench
         public final static boolean SHOOTER_LINE4_HOOD = Air.AIR_HOOD_UP;
+
+        //TODO: Set motor controller IDs and speeds of Talons
+        public final static int SHOOTER_SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
+        public final static int SHOOTER_FEED1_MC_ID = 13; //ID of the Shooter stage 1 TalonSRX
+        public final static int SHOOTER_FEED2_MC_ID = 6; //ID of the Shooter stage 2 TalonSRX
+        public final static boolean SHOOTER_FEED1_INVERT = false; //Should the Feed1 talon be inverted
+        public final static boolean SHOOTER_FEED2_INVERT = false; //Should the Feed2 talon be inverted
+        public final static double SHOOTER_FEED1_SPEED = 1.0; //Speed for the Feed1 talon
+        public final static double SHOOTER_FEED2_SPEED = 1.0; //Speed for the Feed2 talon
+    }
+
+    public static final class Mixer {
+        public final static int MIXER_MC_ID = 13; //ID of the Mixer talon
+        public final static double MIXER_SPEED = 0.75; //Speed for the Mixer talon
+    }
+
+    public static final class Collector {
+        public final static int COLLECTOR_MC_ID = 15; //ID of the Collector talon
+        public final static double COLLECTOR_SPEED = 1.0; //Speed for the Collector talon
     }
 
     public static final class Swerve {
