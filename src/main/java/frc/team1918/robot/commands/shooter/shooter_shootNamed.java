@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class shooter_shootNamed extends CommandBase {
   @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final ShooterSubsystem m_subsystem;
+  private final ShooterSubsystem m_shooter;
   private final String m_name;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public shooter_shootNamed(ShooterSubsystem subsystem, String name) {
-    m_subsystem = subsystem;
+    m_shooter = subsystem;
     m_name = name;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);

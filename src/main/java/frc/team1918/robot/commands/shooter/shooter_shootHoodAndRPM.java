@@ -10,7 +10,7 @@ package frc.team1918.robot.commands.shooter;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import java.util.function.BooleanSupplier;
-import java.util.function.IntSupplier;
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -18,15 +18,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class shooter_shootHoodAndRPM extends CommandBase {
   @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final ShooterSubsystem m_subsystem;
+  private final ShooterSubsystem m_shooter;
   private final BooleanSupplier m_hoodUp;
-  private final IntSupplier m_speed;
+  private final DoubleSupplier m_speed;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
-  public shooter_shootHoodAndRPM(ShooterSubsystem subsystem, BooleanSupplier hoodUp, IntSupplier speed) {
-    m_subsystem = subsystem;
+  public shooter_shootHoodAndRPM(ShooterSubsystem subsystem, BooleanSupplier hoodUp, DoubleSupplier speed) {
+    m_shooter = subsystem;
     m_hoodUp = hoodUp;
     m_speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.

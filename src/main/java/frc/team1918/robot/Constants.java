@@ -17,11 +17,11 @@ public class Constants {
 
     public static final class Air {
         public final static boolean AIR_ENABLED = true; //Set to false to disable compressor
-        public final static int AIR_COLLECTOR_1 = 0; //ID of solonoid for collector stage 1
-        public final static int AIR_COLLECTOR_2 = 1; //ID of solonoid for collector stage 2
-        public final static int AIR_HOOD = 2; //ID of solonoid for hood control
-        public final static int AIR_ANTIGRAV = 3; //ID of solonoid for climber anti-backdrive
-        public final static int AIR_SPARE = 4; //ID of solonoid for spare 
+        public final static int AIR_COLLECTOR1_ID = 0; //ID of solonoid for collector stage 1
+        public final static int AIR_COLLECTOR2_ID = 1; //ID of solonoid for collector stage 2
+        public final static int AIR_HOOD_ID = 2; //ID of solonoid for hood control
+        public final static int AIR_ANTIGRAV_ID = 3; //ID of solonoid for climber anti-backdrive
+        public final static int AIR_SPARE_ID = 4; //ID of solonoid for spare 
         //which state for solonoids are the knowns
         public final static boolean AIR_COLL1_DOWN = true;
         public final static boolean AIR_COLL2_DOWN = true;
@@ -29,14 +29,14 @@ public class Constants {
     }
     
     public static final class Shooter {
-        public final static int SHOOTER_LINE1_RPM = 2650; //Wall
-        public final static boolean SHOOTER_LINE1_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE2_RPM = 3780; //Short
-        public final static boolean SHOOTER_LINE2_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE3_RPM = 3225; //Line
-        public final static boolean SHOOTER_LINE3_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE4_RPM = 3300; //Trench
-        public final static boolean SHOOTER_LINE4_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOTER_WALL_RPM = 2650; //Wall
+        public final static boolean SHOOTER_WALL_HOOD = !Air.AIR_HOOD_UP;
+        public final static int SHOOTER_SHORT_RPM = 3780; //Short
+        public final static boolean SHOOTER_SHORT_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOTER_LINE_RPM = 3225; //Line
+        public final static boolean SHOOTER_LINE_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOTER_TRENCH_RPM = 3300; //Trench
+        public final static boolean SHOOTER_TRENCH_HOOD = Air.AIR_HOOD_UP;
 
         //TODO: Set motor controller IDs and speeds of Talons
         public final static int SHOOTER_SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
@@ -46,6 +46,9 @@ public class Constants {
         public final static boolean SHOOTER_FEED2_INVERT = false; //Should the Feed2 talon be inverted
         public final static double SHOOTER_FEED1_SPEED = 1.0; //Speed for the Feed1 talon
         public final static double SHOOTER_FEED2_SPEED = 1.0; //Speed for the Feed2 talon
+        public final static double SHOOTER_MAX_RPM = 5400; //Maximum RPMs for setting shooter
+        public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
+        public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
     }
 
     public static final class Mixer {

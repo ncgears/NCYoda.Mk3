@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.shooter;
 
+import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +17,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class shooter_hoodDown extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
-  private final ShooterSubsystem m_subsystem;
+  private final ShooterSubsystem m_shooter;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
   public shooter_hoodDown(ShooterSubsystem subsystem) {
-    m_subsystem = subsystem;
+    m_shooter = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -36,6 +37,7 @@ public class shooter_hoodDown extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Shooter: Hood Down");
+    m_shooter = moveHoodToPosition(!Constants.Air.AIR_HOOD_UP);
   }
 
   // Called once the command ends or is interrupted.
