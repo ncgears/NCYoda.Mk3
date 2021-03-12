@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.shooter;
 
+import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -36,12 +37,18 @@ public class shooter_shootTrench extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Shooter: Shoot from Trench");
-  }
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOTER_TRENCH_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_TRENCH_RPM);
+ }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-  }
+    m_shooter.runFeeder(false);
+    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
+    m_shooter.setShooterSpeed(0);
+}
 
   // Returns true when the command should end.
   @Override
