@@ -7,6 +7,7 @@
 
 package frc.team1918.robot.commands.shooter;
 
+import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -36,7 +37,10 @@ public class shooter_stopShooter extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Shooter: Stop Shooter");
-  }
+    m_shooter.runFeeder(false);
+    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
+    m_shooter.setShooterSpeed(0);
+}
 
   // Called once the command ends or is interrupted.
   @Override

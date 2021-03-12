@@ -67,6 +67,7 @@ public class Constants {
     }
 
     public static final class Swerve {
+        public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;

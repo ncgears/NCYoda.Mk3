@@ -99,7 +99,7 @@ public class SwerveModule {
   public SwerveModuleState optimize(SwerveModuleState desiredState) {
     double wheelSpeed = desiredState.speedMetersPerSecond;
     double waRads = desiredState.angle.getRadians(); //need to get this from desiredState.angle
-    double currentAngleRads = Helpers.General.ticksToRadians(getTurnRelPos());
+    double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
     double targetAngleRads = waRads;
     int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
     targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS; //add current rotations to target
@@ -132,8 +132,7 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
         // This could set a new angle from desired state and invert the speed
-        // SwerveModuleState state = optimize(desiredState);
-        SwerveModuleState state = desiredState;
+        SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
         turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);
