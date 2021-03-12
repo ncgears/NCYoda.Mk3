@@ -87,6 +87,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void raiseHood(boolean up) {
     //send command to air to put hood up or down based on boolean
     m_hood.set(up);
+    SmartDashboard.putString("HoodPosition",(up)?"up":"down");
   }
 
   public void runFeeder(boolean run) {
