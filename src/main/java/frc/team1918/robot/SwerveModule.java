@@ -6,15 +6,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.ctre.phoenix.motorcontrol.Faults;
-import com.ctre.phoenix.motorcontrol.InvertType;
+// import com.ctre.phoenix.motorcontrol.Faults;
+// import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.SensorCollection;
-import com.ctre.phoenix.CANifierStatusFrame;
+// import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+// import com.ctre.phoenix.motorcontrol.SensorCollection;
+// import com.ctre.phoenix.CANifierStatusFrame;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -63,10 +63,10 @@ public class SwerveModule {
         TURN_D = tD;
         TURN_IZONE = tIZone;
         turn.setInverted(true); //invert turn direction if targetAngle is opposite currentAngle in setTurnLocation
-        turn.config_kP(0, tP);
-        turn.config_kI(0, tI);
-        turn.config_kD(0, tD);
-        turn.config_IntegralZone(0, tIZone);
+        turn.config_kP(0, TURN_P);
+        turn.config_kI(0, TURN_I);
+        turn.config_kD(0, TURN_D);
+        turn.config_IntegralZone(0, TURN_IZONE);
         //turn.setPID(TURN_P, TURN_I, TURN_D);
         //turn.setIZone(TURN_IZONE);
         turn.setSensorPhase(true);
