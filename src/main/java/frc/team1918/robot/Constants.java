@@ -40,15 +40,16 @@ public class Constants {
 
         //TODO: Set motor controller IDs and speeds of Talons
         public final static int SHOOTER_SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
-        public final static int SHOOTER_FEED1_MC_ID = 13; //ID of the Shooter stage 1 TalonSRX
+        public final static int SHOOTER_FEED1_MC_ID = 14; //ID of the Shooter stage 1 TalonSRX
         public final static int SHOOTER_FEED2_MC_ID = 6; //ID of the Shooter stage 2 TalonSRX
-        public final static boolean SHOOTER_FEED1_INVERT = false; //Should the Feed1 talon be inverted
+        public final static boolean SHOOTER_FEED1_INVERT = true; //Should the Feed1 talon be inverted
         public final static boolean SHOOTER_FEED2_INVERT = false; //Should the Feed2 talon be inverted
         public final static double SHOOTER_FEED1_SPEED = 1.0; //Speed for the Feed1 talon
         public final static double SHOOTER_FEED2_SPEED = 1.0; //Speed for the Feed2 talon
         public final static double SHOOTER_MAX_RPM = 5400; //Maximum RPMs for setting shooter
         public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
+        public final static boolean SHOOTER_SHOOT_INVERT = true;
         public final static double SHOOTER_PID_P = 0.00006; 
         public final static double SHOOTER_PID_I = 0;
         public final static double SHOOTER_PID_D = 0;
@@ -67,12 +68,12 @@ public class Constants {
     }
 
     public static final class Swerve {
-        public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
+        public static final boolean USE_OPTIMIZATION = false; //false to disable shortest path optimization
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
         public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
-        public static final boolean kGyroReversed = true;
+        public static final boolean kGyroReversed = false;
         //Forward Positive, Left Positive
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(

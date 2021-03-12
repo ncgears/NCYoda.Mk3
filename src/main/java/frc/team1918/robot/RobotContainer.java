@@ -80,8 +80,8 @@ public class RobotContainer {
   private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_HOMESWERVE);
   private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEED);
   private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEEDSTUCK);
-  // private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_START);
-  // private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_STOP);
+  private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_START);
+  private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_STOP);
   private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.DRIVE_BTN_TOG_DEBUG);
   private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.DRIVE_DPAD_GYRO_RESET);
   private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UP);
@@ -139,8 +139,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     btn_HOMESWERVE.whenPressed(new cg_drive_autoHome(m_drive));
-    // btn_CALIBRATE_START.whenPressed(new drive_startCalibration(m_drive));
-    // btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
+    btn_CALIBRATE_START.whenPressed(new drive_startCalibration(m_drive));
+    btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
     btn_GYRO_RESET.whenPressed(new drive_resetGyro(m_drive));
     btn_TOGGLE_DEBUG.whenPressed(new helpers_toggleDebug());
     btn_SHOOT_WALL.whileHeld(new shooter_shootWall(m_shooter));

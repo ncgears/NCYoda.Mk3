@@ -44,6 +44,7 @@ public class mixer_mixerForward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //stop the mixer
+    m_mixer.setMixerSpeed(0);
   }
 
   // Returns true when the command should end.

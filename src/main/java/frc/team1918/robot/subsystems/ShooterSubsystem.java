@@ -42,6 +42,7 @@ public class ShooterSubsystem extends SubsystemBase {
     //Setup the SparkMAX controller as desired
     shoot = new CANSparkMax(Constants.Shooter.SHOOTER_SHOOT_MC_ID, MotorType.kBrushless);
     shoot.restoreFactoryDefaults();
+    shoot.setInverted(Constants.Shooter.SHOOTER_SHOOT_INVERT);
     m_pidController = shoot.getPIDController();
     m_encoder = shoot.getEncoder();
     m_pidController.setP(Constants.Shooter.SHOOTER_PID_P); //PID P

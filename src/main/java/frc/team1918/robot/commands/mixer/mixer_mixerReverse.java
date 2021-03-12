@@ -37,12 +37,13 @@ public class mixer_mixerReverse extends CommandBase {
   @Override
   public void execute() {
     Helpers.General.debug("Mixer: Mixer Reverse");
+    m_mixer.setMixerSpeed(-Constants.Mixer.MIXER_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_mixer.setMixerSpeed(-Constants.Mixer.MIXER_SPEED);
+    m_mixer.setMixerSpeed(0);
   }
 
   // Returns true when the command should end.
