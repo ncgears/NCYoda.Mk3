@@ -97,6 +97,7 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRL.getState(),
 			m_dtRR.getState()
 		);
+		SmartDashboard.putNumber("GyroAngle",m_gyro.getAngle());
 	}
 
 	/**
