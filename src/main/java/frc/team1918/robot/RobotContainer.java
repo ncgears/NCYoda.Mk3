@@ -12,20 +12,19 @@ package frc.team1918.robot;
 //Global imports
 //import frc.team1918.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Compressor;
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+// import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //Util imports
 import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
 
 //Subsystems imports
 import frc.team1918.robot.subsystems.ExampleSubsystem;
-import frc.team1918.robot.subsystems.ClimberSubsystem;
+// import frc.team1918.robot.subsystems.ClimberSubsystem;
 import frc.team1918.robot.subsystems.CollectorSubsystem;
 import frc.team1918.robot.subsystems.DriveSubsystem;
 import frc.team1918.robot.subsystems.ShooterSubsystem;
@@ -50,10 +49,10 @@ import frc.team1918.robot.commandgroups.cg_drive_autoHome;
 public class RobotContainer {
   //Here, we initialize the subsystems and commands that will be used for the button bindings
   //generic subsystems
-  private final PowerDistributionPanel m_pdp = new PowerDistributionPanel();
+  // private final PowerDistributionPanel m_pdp = new PowerDistributionPanel();
   private final Compressor m_air = new Compressor();
   //team 1918 subsystems
-  private final ClimberSubsystem m_climber = new ClimberSubsystem();
+  // private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final CollectorSubsystem m_collector = new CollectorSubsystem();
   private final MixerSubsystem m_mixer = new MixerSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
@@ -75,8 +74,8 @@ public class RobotContainer {
   //Here, we are defining the buttons and binding
   //Driver Controller
   private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);
-  private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ALLUP);
-  private JoystickButton btn_ANTIGRAV = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ANTIGRAV);
+  // private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ALLUP);
+  // private JoystickButton btn_ANTIGRAV = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ANTIGRAV);
   private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MECHZERO);
   private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_HOMESWERVE);
   private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEED);
@@ -100,7 +99,7 @@ public class RobotContainer {
   private JoystickButton btn_SHOOT_LINE = new JoystickButton(oj, Constants.OI.OPER_BTN_SHOOT_LINE);
   private JoystickButton btn_SHOOT_SHORT = new JoystickButton(oj, Constants.OI.OPER_BTN_SHOOT_SHORT);
   private JoystickButton btn_SHOOT_TRENCH = new JoystickButton(oj, Constants.OI.OPER_BTN_SHOOT_TRENCH);
-  private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.OPER_BTN_TOG_MIDDOWN);
+  // private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.OPER_BTN_TOG_MIDDOWN);
   private JoystickButton btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.OPER_BTN_COLLECTOR_IN);
   private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.OPER_BTN_MECHZERO);
 
