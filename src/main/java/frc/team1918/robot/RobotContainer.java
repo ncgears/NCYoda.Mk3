@@ -63,6 +63,8 @@ public class RobotContainer {
   //team 1918 commands
   private final drive_resetGyro m_resetGyro = new drive_resetGyro(m_drive);
   private final cg_drive_autoHome m_autoHome = new cg_drive_autoHome(m_drive);
+  private final Command m_startCalCommand = new drive_startCalibration(m_drive);
+  private final Command m_stopCalCommand = new drive_stopCalibration(m_drive);
   // private final shooter_shootWall m_shooter_shootWall = new shooter_shootWall(shooter);
   // private final shooter_shootShort m_shooter_shootShort = new shooter_shootShort(shooter);
   // private final shooter_shootLine m_shooter_shootLine = new shooter_shootLine(shooter);
@@ -165,6 +167,14 @@ public class RobotContainer {
   }
   public cg_drive_autoHome getAutoHomeCommand() {
     return m_autoHome;
+  }
+
+  public Command getStartCalCommand() {
+    return m_startCalCommand;
+  }
+
+  public Command getStopCalCommand() {
+    return m_stopCalCommand;
   }
 
   /**
