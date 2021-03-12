@@ -44,6 +44,11 @@ public class ShooterSubsystem extends SubsystemBase {
     shoot.restoreFactoryDefaults();
     m_pidController = shoot.getPIDController();
     m_encoder = shoot.getEncoder();
+    m_pidController.setP(Constants.Shooter.SHOOTER_PID_P); //PID P
+    m_pidController.setI(Constants.Shooter.SHOOTER_PID_I); //PID I
+    m_pidController.setD(Constants.Shooter.SHOOTER_PID_D); //PID D
+    m_pidController.setIZone(Constants.Shooter.SHOOTER_PID_IZONE); //IZone
+    m_pidController.setFF(Constants.Shooter.SHOOTER_PID_FF); //Feed forward
     //Setup the solenoid
     m_hood = new Solenoid(Constants.Air.AIR_HOOD_ID);
   }
@@ -52,7 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (m_shooter_rpm != m_shooter_oldrpm) {
-      m_pidController.setReference(m_shooter_rpm, ControlType.kVelocity);
+      m_pidController.setReference(m_shooter_rpm, ControlType.kVelocity); //Set the target
       SmartDashboard.putNumber("ShootSpeed",m_encoder.getVelocity());
       m_shooter_oldrpm=m_shooter_rpm;
     }

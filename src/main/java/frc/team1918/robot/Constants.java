@@ -49,6 +49,11 @@ public class Constants {
         public final static double SHOOTER_MAX_RPM = 5400; //Maximum RPMs for setting shooter
         public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
+        public final static double SHOOTER_PID_P = 0.00006; 
+        public final static double SHOOTER_PID_I = 0;
+        public final static double SHOOTER_PID_D = 0;
+        public final static double SHOOTER_PID_IZONE = 0;
+        public final static double SHOOTER_PID_FF = 0.000015; //Feed forward
     }
 
     public static final class Mixer {
