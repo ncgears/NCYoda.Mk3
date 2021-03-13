@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * A command that ...
  */
 public class shooter_shootLine extends CommandBase {
-  @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shooter;
+  private int debug_ticks;
 
   /**
    * @param subsystem The subsystem used by this command.
@@ -40,6 +41,7 @@ public class shooter_shootLine extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    debug_ticks = Helpers.General.debug("Shooter: Current RPM="+m_shooter.getShooterSpeed(), debug_ticks);
   }
 
   // Called once the command ends or is interrupted.

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * A command that ...
  */
 public class shooter_stopShooter extends CommandBase {
-  @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shooter;
 
   /**
@@ -36,16 +36,16 @@ public class shooter_stopShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Stop Shooter");
-    m_shooter.runFeeder(false);
-    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
-    m_shooter.setShooterSpeed(0);
 }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     //stop the shooter
+    Helpers.General.debug("Shooter: Stop Shooter");
+    m_shooter.runFeeder(false);
+    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
+    m_shooter.setShooterSpeed(0);
   }
 
   // Returns true when the command should end.
