@@ -14,6 +14,7 @@ public class Constants {
         public final static int ROBOT_WIDTH = 23; //Width of the robot frame
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
         public final static boolean DEBUG_ENABLED_DEFAULT = true; //Default starting state of debug mode
+        public final static int DEBUG_RECURRING_TICKS = 100; //Periodic cycles for recurring debug messages
     }
 
     public static final class Air {

@@ -42,6 +42,12 @@ public class Helpers {
                 System.out.println(message);
             }
         }
+        public final static int debug(String message, int ticks) {
+            if (debugEnabled) {
+                if(ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) System.out.println(message);
+            }
+            return ticks++;
+        }
 
         /**
          * This function toggles the debugging output to console. In a future version, each press will increase the debug level

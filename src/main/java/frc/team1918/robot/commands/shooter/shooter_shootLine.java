@@ -31,15 +31,15 @@ public class shooter_shootLine extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Helpers.General.debug("Shooter: Shoot from Line");
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOTER_LINE_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_LINE_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Shoot from Line");
-    m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_LINE_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_LINE_RPM);
   }
 
   // Called once the command ends or is interrupted.

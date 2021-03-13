@@ -31,15 +31,15 @@ public class shooter_shootTrench extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Helpers.General.debug("Shooter: Shoot from Trench");
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOTER_TRENCH_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_TRENCH_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Shoot from Trench");
-    m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_TRENCH_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_TRENCH_RPM);
  }
 
   // Called once the command ends or is interrupted.

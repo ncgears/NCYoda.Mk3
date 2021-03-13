@@ -13,6 +13,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -43,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shoot = new CANSparkMax(Constants.Shooter.SHOOTER_SHOOT_MC_ID, MotorType.kBrushless);
     shoot.restoreFactoryDefaults();
     shoot.setInverted(Constants.Shooter.SHOOTER_SHOOT_INVERT);
+    shoot.setIdleMode(IdleMode.kCoast);
     m_pidController = shoot.getPIDController();
     m_encoder = shoot.getEncoder();
     m_pidController.setP(Constants.Shooter.SHOOTER_PID_P); //PID P
@@ -59,9 +61,13 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     if (m_shooter_rpm != m_shooter_oldrpm) {
       m_pidController.setReference(m_shooter_rpm, ControlType.kVelocity); //Set the target
-      SmartDashboard.putNumber("ShootSpeed",m_encoder.getVelocity());
+      updateDashboardShooterSpeed(getShooterSpeed());
       m_shooter_oldrpm=m_shooter_rpm;
     }
+  }
+
+  public double getShooterSpeed() {
+    return m_encoder.getVelocity();
   }
 
   public void setShooterSpeed(double RPM) {
@@ -81,8 +87,12 @@ public class ShooterSubsystem extends SubsystemBase {
     setShooterSpeed(speed);
   }
 
-  public void updateDashboardShooterSpeed() {
-    SmartDashboard.putNumber("Shooter Target RPM",m_shooter_rpm);
+  public void updateDashboardShooterSpeed(double val) {
+    SmartDashboard.putNumber("ShootSpeed",val);
+  }
+
+  public void updateDashboardShooterTargetSpeed(double val) {
+    SmartDashboard.putNumber("Shooter Target RPM",val);
   }
 
   public void raiseHood(boolean up) {

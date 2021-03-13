@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class shooter_shootWall extends CommandBase {
   @SuppressWarnings({"unused","PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
   private final ShooterSubsystem m_shooter;
+  private int debug_ticks;
 
   /**
    * @param subsystem The subsystem used by this command.
@@ -31,16 +32,17 @@ public class shooter_shootWall extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Helpers.General.debug("Shooter: Shoot from Wall");
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOTER_WALL_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_WALL_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Shoot from Wall");
-    m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_WALL_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_WALL_RPM);
- }
+    debug_ticks = Helpers.General.debug("Shooter: Current Speed="+m_shooter.getShooterSpeed(), debug_ticks);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
