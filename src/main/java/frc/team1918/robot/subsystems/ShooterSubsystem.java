@@ -2,9 +2,9 @@
 package frc.team1918.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
+import frc.team1918.robot.Dashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -61,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     if (m_shooter_rpm != m_shooter_oldrpm) {
       m_pidController.setReference(m_shooter_rpm, ControlType.kVelocity); //Set the target
-      updateDashboardShooterSpeed(getShooterSpeed());
+      Dashboard.Shooter.setCurrentSpeed(getShooterSpeed());
       m_shooter_oldrpm=m_shooter_rpm;
     }
   }
@@ -83,22 +83,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setShooterSpeedFromDashboard() {
-    double speed = SmartDashboard.getNumber("Shooter Target RPM", 0);
-    setShooterSpeed(speed);
-  }
-
-  public void updateDashboardShooterSpeed(double val) {
-    SmartDashboard.putNumber("ShootSpeed",val);
-  }
-
-  public void updateDashboardShooterTargetSpeed(double val) {
-    SmartDashboard.putNumber("Shooter Target RPM",val);
+    setShooterSpeed(Dashboard.Shooter.getTargetSpeed(0));
   }
 
   public void raiseHood(boolean up) {
     //send command to air to put hood up or down based on boolean
     m_hood.set(up);
-    SmartDashboard.putString("HoodPosition",(up)?"up":"down");
+    Dashboard.Shooter.setHoodPosition(up);
   }
 
   public void runFeeder(boolean run) {
