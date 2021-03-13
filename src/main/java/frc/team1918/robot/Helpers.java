@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Helpers {
     public static final class General {
-        private static boolean debugEnabled = false;
+        private static boolean debugEnabled = Constants.Global.DEBUG_ENABLED_DEFAULT;
         /**
         * This function takes a value in inches and returns in meters
         * @param inches double precision value in inches
