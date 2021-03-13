@@ -36,7 +36,7 @@ public class collector_intakeForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Collector: Intake Forward");
+    Helpers.Debug.debug("Collector: Intake Forward");
     m_collector.setIntakeSpeed(Constants.Collector.COLLECTOR_SPEED);
   }
 

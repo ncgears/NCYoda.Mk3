@@ -35,7 +35,7 @@ public class collector_lowerIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Collector: Lower Collector");
+    Helpers.Debug.debug("Collector: Lower Collector");
     m_collector.setCollectorPosition("down");
   }
 

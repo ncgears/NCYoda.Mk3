@@ -14,7 +14,7 @@ public class Constants {
         public final static int ROBOT_WIDTH = 23; //Width of the robot frame
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
         public final static boolean DEBUG_ENABLED_DEFAULT = true; //Default starting state of debug mode
-        public final static int DEBUG_RECURRING_TICKS = 100; //Periodic cycles for recurring debug messages
+        public final static int DEBUG_RECURRING_TICKS = 250; //Periodic cycles for recurring debug messages
     }
 
     public static final class Air {
@@ -52,11 +52,11 @@ public class Constants {
         public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
         public final static boolean SHOOTER_SHOOT_INVERT = true;
-        public final static double SHOOTER_PID_P = 0.00006; 
+        public final static double SHOOTER_PID_P = 0.0006; //.00006 
         public final static double SHOOTER_PID_I = 0;
         public final static double SHOOTER_PID_D = 0;
         public final static double SHOOTER_PID_IZONE = 0;
-        public final static double SHOOTER_PID_FF = 0.000015; //Feed forward
+        public final static double SHOOTER_PID_FF = 0; //.000015; //Feed forward
     }
 
     public static final class Mixer {

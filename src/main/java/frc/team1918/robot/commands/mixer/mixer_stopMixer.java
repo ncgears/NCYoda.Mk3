@@ -35,7 +35,7 @@ public class mixer_stopMixer extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Mixer: Stop Mixer");
+    Helpers.Debug.debug("Mixer: Stop Mixer");
     m_mixer.setMixerSpeed(0);
   }
 

@@ -35,7 +35,7 @@ public class collector_stowIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Collector: Stow Collector");
+    Helpers.Debug.debug("Collector: Stow Collector");
     m_collector.setCollectorPosition("stow");
   }
 

@@ -136,7 +136,7 @@ public class SwerveModule {
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
         turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);
-        Helpers.General.debug(moduleName+" Speed="+state.speedMetersPerSecond+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos));
+        Helpers.Debug.debug(moduleName+" Speed="+state.speedMetersPerSecond+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos));
     }
 
     /**

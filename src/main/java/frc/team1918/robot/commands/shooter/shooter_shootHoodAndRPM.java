@@ -41,7 +41,7 @@ public class shooter_shootHoodAndRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Shoot with settings: Hood Up="+m_hoodUp+" RPM="+m_speed);
+    Helpers.Debug.debug("Shooter: Shoot with settings: Hood Up="+m_hoodUp+" RPM="+m_speed);
   }
 
   // Called once the command ends or is interrupted.

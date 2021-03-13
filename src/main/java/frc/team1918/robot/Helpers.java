@@ -1,38 +1,13 @@
 //OI = Operator Interface
 package frc.team1918.robot;
 
+import java.text.DecimalFormat;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Helpers {
-    public static final class General {
+    public static final class Debug {
         private static boolean debugEnabled = Constants.Global.DEBUG_ENABLED_DEFAULT;
-        /**
-        * This function takes a value in inches and returns in meters
-        * @param inches double precision value in inches
-        * @return value in meters
-        */
-       public final static double inToMeters(double inches) {
-           return inches * 0.0254;
-       }
-
-        /**
-         * This function takes encoder ticks and returns radians
-         * @param ticks integer value in encoder ticks
-         * @return value in radians
-         */
-        public final static double ticksToRadians(int ticks) {
-            return (ticks * Math.PI / (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
-        }
-
-        /**
-         * This function takes radians and returns encoder ticks
-         * @param rads double precision value in radians
-         * @return integer value in encoder ticks
-         */
-        public final static int radiansToTicks(double rads) {
-			return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
-        }
-
         /**
          * This function takes a string and outputs it to the console when the debugging is enabled
          * @param message String to print to console
@@ -56,6 +31,40 @@ public class Helpers {
         public final static void toggleDebug() {
             debugEnabled = !debugEnabled;
             System.out.println("Debugging Output=" + debugEnabled);
+        }
+    }
+    public static final class General {
+        /**
+        * This function takes a value in inches and returns in meters
+        * @param inches double precision value in inches
+        * @return value in meters
+        */
+        public final static double inToMeters(double inches) {
+           return inches * 0.0254;
+        }
+
+        public final static double roundDouble(double val, int decimals) {
+            return Math.round(val * (10 ^ decimals)) / (10 ^ decimals);
+            // final DecimalFormat df = new DecimalFormat(format);
+            // return df.format(val);
+        }
+
+        /**
+         * This function takes encoder ticks and returns radians
+         * @param ticks integer value in encoder ticks
+         * @return value in radians
+         */
+        public final static double ticksToRadians(int ticks) {
+            return (ticks * Math.PI / (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
+        }
+
+        /**
+         * This function takes radians and returns encoder ticks
+         * @param rads double precision value in radians
+         * @return integer value in encoder ticks
+         */
+        public final static int radiansToTicks(double rads) {
+			return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
         }
 
         /**

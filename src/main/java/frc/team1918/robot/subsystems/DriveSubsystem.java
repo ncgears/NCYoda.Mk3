@@ -5,6 +5,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
+import frc.team1918.robot.Dashboard;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.SwerveModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,7 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRL.getState(),
 			m_dtRR.getState()
 		);
-		SmartDashboard.putNumber("GyroAngle",m_gyro.getAngle());
+		Dashboard.Gyro.setGyroAngle(m_gyro.getAngle());
 	}
 
 	/**
@@ -149,7 +150,7 @@ public class DriveSubsystem extends SubsystemBase {
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
 				: new ChassisSpeeds(fwd, str, rot));
-	Helpers.General.debug(fieldRelative
+	Helpers.Debug.debug(fieldRelative
 		? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
 		: new ChassisSpeeds(fwd, str, rot).toString());
     SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
@@ -288,7 +289,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 	//#region m_gyro STUFF
 	public void resetGyro() {
-		Helpers.General.debug("Gyro Reset");
+		Helpers.Debug.debug("Gyro Reset");
 		m_gyro.reset();
 		resetOdometry(getPose());
 	}

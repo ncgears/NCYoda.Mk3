@@ -30,7 +30,7 @@ public class helpers_toggleDebug extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.toggleDebug();
+    Helpers.Debug.toggleDebug();
   }
 
   // Called once the command ends or is interrupted.

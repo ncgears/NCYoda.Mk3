@@ -35,7 +35,7 @@ public class collector_intakeStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Collector: Intake Stop");
+    Helpers.Debug.debug("Collector: Intake Stop");
     m_collector.setIntakeSpeed(0);
   }
 

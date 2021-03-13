@@ -32,7 +32,7 @@ public class shooter_shootShort extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Helpers.General.debug("Shooter: Shoot from Short");
+    Helpers.Debug.debug("Shooter: Shoot from Short");
     m_shooter.runFeeder(true);
     m_shooter.raiseHood(Constants.Shooter.SHOOTER_SHORT_HOOD);
     m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_SHORT_RPM);
@@ -41,7 +41,7 @@ public class shooter_shootShort extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    debug_ticks = Helpers.General.debug("Shooter: Current RPM="+m_shooter.getShooterSpeed(), debug_ticks);
+    debug_ticks = Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed(), debug_ticks);
   }
 
   // Called once the command ends or is interrupted.

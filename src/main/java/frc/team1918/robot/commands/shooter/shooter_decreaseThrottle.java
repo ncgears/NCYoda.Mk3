@@ -35,7 +35,7 @@ public class shooter_decreaseThrottle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Decrease Throttle");
+    Helpers.Debug.debug("Shooter: Decrease Throttle");
     m_shooter.decreaseShooterSpeed();
   }
 

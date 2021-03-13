@@ -36,7 +36,7 @@ public class mixer_mixerReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Mixer: Mixer Reverse");
+    Helpers.Debug.debug("Mixer: Mixer Reverse");
     m_mixer.setMixerSpeed(-Constants.Mixer.MIXER_SPEED);
   }
 

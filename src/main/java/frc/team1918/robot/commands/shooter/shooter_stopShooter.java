@@ -42,7 +42,7 @@ public class shooter_stopShooter extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //stop the shooter
-    Helpers.General.debug("Shooter: Stop Shooter");
+    Helpers.Debug.debug("Shooter: Stop Shooter");
     m_shooter.runFeeder(false);
     m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
     m_shooter.setShooterSpeed(0);

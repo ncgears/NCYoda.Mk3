@@ -23,4 +23,9 @@ public class Dashboard {
             SmartDashboard.putString("HoodPosition",(up)?"up":"down");
         }
     }
+    public static final class Gyro {
+        public static final void setGyroAngle(double angle) {
+            SmartDashboard.putNumber("GyroAngle",angle);
+        }
+    }
 }

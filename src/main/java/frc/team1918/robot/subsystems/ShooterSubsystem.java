@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 import frc.team1918.robot.Dashboard;
+import frc.team1918.robot.Helpers;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -61,13 +62,13 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     if (m_shooter_rpm != m_shooter_oldrpm) {
       m_pidController.setReference(m_shooter_rpm, ControlType.kVelocity); //Set the target
-      Dashboard.Shooter.setCurrentSpeed(getShooterSpeed());
       m_shooter_oldrpm=m_shooter_rpm;
     }
+    Dashboard.Shooter.setCurrentSpeed(getShooterSpeed());
   }
 
   public double getShooterSpeed() {
-    return m_encoder.getVelocity();
+    return Helpers.General.roundDouble(m_encoder.getVelocity(),2);
   }
 
   public void setShooterSpeed(double RPM) {

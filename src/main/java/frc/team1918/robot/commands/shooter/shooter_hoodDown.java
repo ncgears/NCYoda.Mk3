@@ -36,7 +36,7 @@ public class shooter_hoodDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.General.debug("Shooter: Hood Down");
+    Helpers.Debug.debug("Shooter: Hood Down");
     m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
   }
 
