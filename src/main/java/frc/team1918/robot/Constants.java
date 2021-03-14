@@ -16,7 +16,7 @@ public class Constants {
         public final static boolean DEBUG_ENABLED_DEFAULT = true; //Default starting state of debug mode
         public final static int DEBUG_RECURRING_TICKS = 250; //Periodic cycles for recurring debug messages
         public final static int DASH_RECURRING_TICKS = 250; //Periodic cycles for dashboard updates
-        public final static boolean HOME_ON_TELEOP = false; //Enable home sequence at beginning of teleop
+        public final static boolean HOME_ON_TELEOP = true; //Enable home sequence at beginning of teleop
         public final static boolean HOME_ON_AUTON = !HOME_ON_TELEOP; //Enable home sequence at beginning of auton, always opposit teleop
         public final static boolean ALLOW_CAL_IN_TELEOP = true; //Allow calibration mode during teleop
     }
