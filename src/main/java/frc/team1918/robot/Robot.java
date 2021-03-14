@@ -64,17 +64,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    boolean cur_dash_Calibrate = SmartDashboard.getBoolean("Calibrate?", false);
-    if (cur_dash_Calibrate != m_dash_Calibrate) {
-      if (cur_dash_Calibrate) { //start calibration mode
-        m_startCalCommand = m_robotContainer.getStartCalCommand();
-        if (m_startCalCommand != null) m_startCalCommand.schedule();
-      } else { //stop calibration mode
-        m_stopCalCommand = m_robotContainer.getStopCalCommand();
-        if (m_stopCalCommand != null) m_stopCalCommand.schedule();
-      }
-      m_dash_Calibrate = cur_dash_Calibrate;
-    }
   }
 
   /**
@@ -82,6 +71,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+
+    if(Constants.Global.HOME_ON_AUTON) {
+      m_autoHome = m_robotContainer.getAutoHomeCommand(); 
+      if (m_autoHome != null) m_autoHome.schedule();
+    }
+
     m_resetGyro = m_robotContainer.getResetGyroCommand();
     if (m_resetGyro != null) m_resetGyro.schedule();
 
@@ -89,7 +84,6 @@ public class Robot extends TimedRobot {
     if (m_autoHome != null) m_autoHome.schedule();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) m_autonomousCommand.schedule();
   }
 
@@ -111,8 +105,10 @@ public class Robot extends TimedRobot {
     m_resetGyro = m_robotContainer.getResetGyroCommand();
     if (m_resetGyro != null) m_resetGyro.schedule();
 
-    // m_autoHome = m_robotContainer.getAutoHomeCommand(); 
-    // if (m_autoHome != null) m_autoHome.schedule();
+    if(Constants.Global.HOME_ON_TELEOP) {
+      m_autoHome = m_robotContainer.getAutoHomeCommand(); 
+      if (m_autoHome != null) m_autoHome.schedule();
+    }
   }
 
   /**
@@ -120,6 +116,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if(Constants.Global.ALLOW_CAL_IN_TELEOP) checkCalibrationMode();
   }
 
   @Override
@@ -133,5 +130,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    checkCalibrationMode();
+  }
+
+  public void checkCalibrationMode() {
+    boolean cur_dash_Calibrate = SmartDashboard.getBoolean("Calibrate?", false);
+    if (cur_dash_Calibrate != m_dash_Calibrate) {
+      if (cur_dash_Calibrate) { //start calibration mode
+        m_startCalCommand = m_robotContainer.getStartCalCommand();
+        if (m_startCalCommand != null) m_startCalCommand.schedule();
+      } else { //stop calibration mode
+        m_stopCalCommand = m_robotContainer.getStopCalCommand();
+        if (m_stopCalCommand != null) m_stopCalCommand.schedule();
+      }
+      m_dash_Calibrate = cur_dash_Calibrate;
+    }
   }
 }

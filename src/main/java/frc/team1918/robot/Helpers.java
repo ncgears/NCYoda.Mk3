@@ -1,8 +1,6 @@
 //OI = Operator Interface
 package frc.team1918.robot;
 
-import java.text.DecimalFormat;
-
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Helpers {
