@@ -114,7 +114,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Enable closed loop control of compressor and enable it
-    m_air.setClosedLoopControl(Constants.Air.AIR_DISABLED);
+    m_air.setClosedLoopControl(!Constants.Air.AIR_DISABLED);
     if(Constants.Air.AIR_DISABLED) m_air.stop();
   
     m_drive.setDefaultCommand(
