@@ -39,6 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
+	private int debug_ticks;
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -150,9 +151,9 @@ public class DriveSubsystem extends SubsystemBase {
 	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
 				: new ChassisSpeeds(fwd, str, rot));
-	Helpers.Debug.debug(fieldRelative
+	debug_ticks = Helpers.Debug.debug(fieldRelative
 		? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
-		: new ChassisSpeeds(fwd, str, rot).toString());
+		: new ChassisSpeeds(fwd, str, rot).toString(),debug_ticks);
     SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     m_dtFL.setDesiredState(swerveModuleStates[0]);
     m_dtFR.setDesiredState(swerveModuleStates[1]);
@@ -368,7 +369,7 @@ public class DriveSubsystem extends SubsystemBase {
 		outString += "frHome:"+frHome+"\n";
 		outString += "rlHome:"+rlHome+"\n";
 		outString += "rrHome:"+rrHome+"\n";
-		System.out.print("saveAllHomes: " + outString);
+		Helpers.Debug.debug("saveAllHomes: " + outString);
 
 		m_dtFL.setHomePos(flHome);
 		m_dtFR.setHomePos(frHome);
@@ -431,7 +432,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void startCalibrationMode() {
-		System.out.println("startCalibrationMode");
+		Helpers.Debug.debug("startCalibrationMode");
 		lockDriveControls(true);
 		setAllTurnBrakeMode(false);
 
@@ -442,7 +443,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void stopCalibrationMode() {
-		System.out.println("stopCalibrationMode");
+		Helpers.Debug.debug("stopCalibrationMode");
 		getAllAbsPos();
 		saveAllHomes();
 		// readAllHomes();
@@ -451,7 +452,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void moveAllToHomes() {
-		System.out.println("moveAllToHomes");
+		Helpers.Debug.debug("moveAllToHomes");
 		readAllHomes();
 		m_dtFL.setTurnLocationInEncoderTicks(flHome);
 		m_dtFR.setTurnLocationInEncoderTicks(frHome);
@@ -472,7 +473,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void moveAllToMechZero() {
-		System.out.println("moveAllToMechZero");
+		Helpers.Debug.debug("moveAllToMechZero");
 		m_dtFL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FL_MECHZERO);
 		m_dtFR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FR_MECHZERO);
 		m_dtRL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RL_MECHZERO);

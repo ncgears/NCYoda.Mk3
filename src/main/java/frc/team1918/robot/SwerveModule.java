@@ -31,6 +31,7 @@ public class SwerveModule {
     private double wheelOffsetMM = 0;
     private int homePos = 0;
     private boolean absEncoderEnabled = false;
+    private int debug_ticks1, debug_ticks2;
 
 //SparkMAX Java API Doc: https://www.revrobotics.com/content/sw/max/sw-docs/java/index.html
 
@@ -136,7 +137,7 @@ public class SwerveModule {
         //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
         turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);
-        Helpers.Debug.debug(moduleName+" Speed="+state.speedMetersPerSecond+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos));
+        debug_ticks1 = Helpers.Debug.debug(moduleName+" Speed="+state.speedMetersPerSecond+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos),debug_ticks1);
     }
 
     /**
@@ -207,10 +208,10 @@ public class SwerveModule {
         currentPos -= (currentPos + offset > 4095) ? 4096 : 0;
 
         if (currentPos + offset <= highHome && currentPos + offset >= lowHome) {
-            System.out.println(moduleName + " isTurnAtHome=true; current="+currentPos+"; target="+pos+";");
+            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=true; current="+currentPos+"; target="+pos+";",debug_ticks2);
             return true;
         } else {
-            System.out.println(moduleName + " isTurnAtHome=false; current="+currentPos+"; target="+pos+";");
+            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=false; current="+currentPos+"; target="+pos+";",debug_ticks2);
             return false;
         }
     }
@@ -219,7 +220,7 @@ public class SwerveModule {
      * Resets the relative encoder to 0.
      */
     public void resetTurnEnc() {
-        System.out.println(moduleName + " resetTurnEnc");
+        Helpers.Debug.debug(moduleName + " resetTurnEnc");
 		turn.getSensorCollection().setQuadraturePosition(0,10);
     }
 

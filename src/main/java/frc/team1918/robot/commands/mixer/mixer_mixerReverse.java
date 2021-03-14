@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class mixer_mixerReverse extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
   private final MixerSubsystem m_mixer;
+  private int debug_ticks;
 
   /**
    * @param subsystem The subsystem used by this command.
@@ -36,7 +37,7 @@ public class mixer_mixerReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.Debug.debug("Mixer: Mixer Reverse");
+    debug_ticks = Helpers.Debug.debug("Mixer: Mixer Reverse", debug_ticks);
     m_mixer.setMixerSpeed(-Constants.Mixer.MIXER_SPEED);
   }
 
