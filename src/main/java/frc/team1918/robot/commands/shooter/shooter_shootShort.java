@@ -41,7 +41,9 @@ public class shooter_shootShort extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    debug_ticks = Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed(), debug_ticks);
+    if (debug_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) {
+      Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed()+" Target="+Constants.Shooter.SHOOTER_SHORT_RPM);
+    }
   }
 
   // Called once the command ends or is interrupted.

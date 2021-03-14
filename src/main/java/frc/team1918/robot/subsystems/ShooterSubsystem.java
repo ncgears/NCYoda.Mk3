@@ -53,6 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_pidController.setD(Constants.Shooter.SHOOTER_PID_D); //PID D
     m_pidController.setIZone(Constants.Shooter.SHOOTER_PID_IZONE); //IZone
     m_pidController.setFF(Constants.Shooter.SHOOTER_PID_FF); //Feed forward
+    m_pidController.setOutputRange(-0.1, 1); //-10% allowed for speed down of shooter
     //Setup the solenoid
     m_hood = new Solenoid(Constants.Air.AIR_HOOD_ID);
   }
@@ -68,7 +69,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getShooterSpeed() {
-    return Helpers.General.roundDouble(m_encoder.getVelocity(),2);
+    return Helpers.General.roundDouble(m_encoder.getVelocity(),0);
   }
 
   public void setShooterSpeed(double RPM) {
@@ -95,7 +96,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void runFeeder(boolean run) {
     //run the feeder based on boolean
-    if (run) {
+    if (run && !Constants.Shooter.SHOOTER_FEED_DISABLED) {
       feed1.set(ControlMode.PercentOutput, Constants.Shooter.SHOOTER_FEED1_SPEED);
       feed2.set(ControlMode.PercentOutput, Constants.Shooter.SHOOTER_FEED2_SPEED);
     } else {
