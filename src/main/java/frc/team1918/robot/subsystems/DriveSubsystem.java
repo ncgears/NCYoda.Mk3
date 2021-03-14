@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
-	private int debug_ticks;
+	private int debug_ticks, dash_gyro_ticks;
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -99,7 +99,10 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRL.getState(),
 			m_dtRR.getState()
 		);
-		Dashboard.Gyro.setGyroAngle(m_gyro.getAngle());
+		if(dash_gyro_ticks % Constants.Global.DASH_RECURRING_TICKS == 0) {
+			Dashboard.Gyro.setGyroAngle(m_gyro.getAngle()); 
+			dash_gyro_ticks=0;
+		}
 	}
 
 	/**

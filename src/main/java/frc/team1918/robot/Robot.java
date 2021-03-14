@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
   private Command m_autoHome;
   private Command m_resetGyro;
   private boolean m_dash_Calibrate = false;
+  private int calibrate_ticks;
   private Command m_startCalCommand, m_stopCalCommand;
 
   private RobotContainer m_robotContainer;
@@ -134,16 +135,19 @@ public class Robot extends TimedRobot {
   }
 
   public void checkCalibrationMode() {
-    boolean cur_dash_Calibrate = SmartDashboard.getBoolean("Calibrate?", false);
-    if (cur_dash_Calibrate != m_dash_Calibrate) {
-      if (cur_dash_Calibrate) { //start calibration mode
-        m_startCalCommand = m_robotContainer.getStartCalCommand();
-        if (m_startCalCommand != null) m_startCalCommand.schedule();
-      } else { //stop calibration mode
-        m_stopCalCommand = m_robotContainer.getStopCalCommand();
-        if (m_stopCalCommand != null) m_stopCalCommand.schedule();
+    if(calibrate_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) { //throttle this command
+      boolean cur_dash_Calibrate = SmartDashboard.getBoolean("Calibrate?", false);
+      if (cur_dash_Calibrate != m_dash_Calibrate) {
+        if (cur_dash_Calibrate) { //start calibration mode
+          m_startCalCommand = m_robotContainer.getStartCalCommand();
+          if (m_startCalCommand != null) m_startCalCommand.schedule();
+        } else { //stop calibration mode
+          m_stopCalCommand = m_robotContainer.getStopCalCommand();
+          if (m_stopCalCommand != null) m_stopCalCommand.schedule();
+        }
+        m_dash_Calibrate = cur_dash_Calibrate;
       }
-      m_dash_Calibrate = cur_dash_Calibrate;
     }
+    calibrate_ticks++;
   }
 }

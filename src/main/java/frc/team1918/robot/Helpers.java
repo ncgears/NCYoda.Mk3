@@ -42,7 +42,7 @@ public class Helpers {
         }
 
         public final static double roundDouble(double val, int decimals) {
-            return Math.round(val * (10 ^ decimals)) / (10 ^ decimals);
+            return Math.round(val * Math.pow(10,decimals)) / Math.pow(10,decimals);
             // final DecimalFormat df = new DecimalFormat(format);
             // return df.format(val);
         }
