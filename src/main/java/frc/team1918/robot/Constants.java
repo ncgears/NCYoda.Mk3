@@ -207,8 +207,9 @@ public class Constants {
         public final static int OPER_BTN_TOG_MIDDOWN = LOGITECH_BTN_LB; //Toggle collector arm between middle and down position
         public final static int OPER_BTN_COLLECTOR_IN = LOGITECH_BTN_RB; //Run the collector in
         public final static int OPER_BTN_MECHZERO = LOGITECH_BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
-        public final static int OPER_DPAD_COLLECTOR_UP = LOGITECH_DPAD_LEFT; //Move collector to up
+        public final static int OPER_DPAD_COLLECTOR_UP = LOGITECH_DPAD_UP; //Move collector to up
         public final static int OPER_DPAD_COLLECTOR_MID = LOGITECH_DPAD_RIGHT; //Move collector to middle
+        public final static int OPER_DPAD_COLLECTOR_DOWN = LOGITECH_DPAD_DN; //Move collector down
         //We get dpad values with joystick.getPOV(0);
     }
 }

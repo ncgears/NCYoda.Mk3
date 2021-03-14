@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /**
  * A command that ...
  */
-public class collector_stowIntake extends CommandBase {
+public class collector_toggleIntake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"}) //Dont add "unused" under normal operation
   private final CollectorSubsystem m_collector;
 
   /**
    * @param subsystem The subsystem used by this command.
    */
-  public collector_stowIntake(CollectorSubsystem subsystem) {
+  public collector_toggleIntake(CollectorSubsystem subsystem) {
     m_collector = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -30,13 +30,17 @@ public class collector_stowIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Helpers.Debug.debug("Collector: Toggle");
+    if(m_collector.isCollectorDown()) {
+      m_collector.setCollectorPosition("up");
+    } else {
+      m_collector.setCollectorPosition("down");
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.Debug.debug("Collector: Stow Collector");
-    m_collector.setCollectorPosition("stow");
   }
 
   // Called once the command ends or is interrupted.

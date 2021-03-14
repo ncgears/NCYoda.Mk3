@@ -12,6 +12,7 @@ public class CollectorSubsystem extends SubsystemBase {
   private WPI_TalonSRX coll; //collector controller
   private Solenoid m_coll1; //collector solenoid 1
   private Solenoid m_coll2; //collector solenoid 2
+  private boolean m_collector_down = false;
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -31,12 +32,17 @@ public class CollectorSubsystem extends SubsystemBase {
     coll.set(ControlMode.PercentOutput, speed);
   }
 
+  public boolean isCollectorDown() {
+    return m_collector_down;
+  }
+
   public void setCollectorPosition(String position) {
     switch(position) {
       case "down":
         //put collector down
         m_coll1.set(Constants.Air.AIR_COLL1_DOWN);
         m_coll2.set(Constants.Air.AIR_COLL2_DOWN);
+        m_collector_down = true;
         break;
       case "mid-down":
       case "mid-up":
@@ -46,6 +52,7 @@ public class CollectorSubsystem extends SubsystemBase {
         //put collector up
         m_coll1.set(!Constants.Air.AIR_COLL1_DOWN);
         m_coll2.set(!Constants.Air.AIR_COLL2_DOWN);
+        m_collector_down = false;
         break;
     }
   }

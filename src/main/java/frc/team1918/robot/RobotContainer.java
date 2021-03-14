@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 // import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -102,6 +103,9 @@ public class RobotContainer {
   // private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.OPER_BTN_TOG_MIDDOWN);
   private JoystickButton btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.OPER_BTN_COLLECTOR_IN);
   private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.OPER_BTN_MECHZERO);
+  private POVButton btn_COLLECTOR_UP = new POVButton(oj, Constants.OI.OPER_DPAD_COLLECTOR_UP);
+  private POVButton btn_COLLECTOR_DOWN = new POVButton(oj, Constants.OI.OPER_DPAD_COLLECTOR_DOWN);
+  private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.OPER_BTN_TOG_MIDDOWN);
 
   //Special Bindings
   private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2);
@@ -150,6 +154,9 @@ public class RobotContainer {
     btn_MIXER_FEED.whileHeld(new mixer_mixerForward(m_mixer));
     btn_MIXER_FEEDSTUCK.whileHeld(new mixer_mixerReverse(m_mixer));
     btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
+    btn_COLLECTOR_DOWN.whenPressed(new collector_lowerIntake(m_collector));
+    btn_COLLECTOR_UP.whenPressed(new collector_raiseIntake(m_collector));
+    btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));
 
