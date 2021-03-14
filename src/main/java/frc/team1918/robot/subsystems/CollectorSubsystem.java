@@ -1,6 +1,7 @@
 
 package frc.team1918.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 
@@ -9,11 +10,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class CollectorSubsystem extends SubsystemBase {
   private WPI_TalonSRX coll; //collector controller
+  private Solenoid m_coll1; //collector solenoid 1
+  private Solenoid m_coll2; //collector solenoid 2
   /**
    * Creates a new ExampleSubsystem.
    */
   public CollectorSubsystem() {
     coll = new WPI_TalonSRX(Constants.Collector.COLLECTOR_MC_ID);
+    m_coll1 = new Solenoid(Constants.Air.AIR_COLLECTOR1_ID);
+    m_coll2 = new Solenoid(Constants.Air.AIR_COLLECTOR2_ID);
+
   }
 
   @Override
@@ -29,6 +35,8 @@ public class CollectorSubsystem extends SubsystemBase {
     switch(position) {
       case "down":
         //put collector down
+        m_coll1.set(Constants.Air.AIR_COLL1_DOWN);
+        m_coll2.set(Constants.Air.AIR_COLL2_DOWN);
         break;
       case "mid-down":
       case "mid-up":
@@ -36,6 +44,8 @@ public class CollectorSubsystem extends SubsystemBase {
       case "stow":
       default:
         //put collector up
+        m_coll1.set(!Constants.Air.AIR_COLL1_DOWN);
+        m_coll2.set(!Constants.Air.AIR_COLL2_DOWN);
         break;
     }
   }

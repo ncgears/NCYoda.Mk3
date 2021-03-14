@@ -149,7 +149,7 @@ public class RobotContainer {
     btn_SHOOT_TRENCH.whileHeld(new shooter_shootTrench(m_shooter));
     btn_MIXER_FEED.whileHeld(new mixer_mixerForward(m_mixer));
     btn_MIXER_FEEDSTUCK.whileHeld(new mixer_mixerReverse(m_mixer));
-    btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector));
+    btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));
 
