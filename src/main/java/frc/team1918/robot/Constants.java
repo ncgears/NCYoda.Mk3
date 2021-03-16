@@ -88,7 +88,7 @@ public class Constants {
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
         public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
         public static final boolean kGyroReversed = false;
-        //Forward Positive, Left Positive
+        //Forward Positive, Left Positive, Up Positive (NWU Convention)
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
             new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
