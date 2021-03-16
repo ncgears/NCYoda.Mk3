@@ -153,9 +153,9 @@ public class Constants {
         public final static int OI_JOY_DRIVE = 0; //ID of Driver Joystick
         public final static int OI_JOY_OPER = 1; //ID of Operator Joystick
         public final static double OI_JOY_DEADBAND = 0.1; //Deadband for analog joystick axis
-        // public static enum driveDpadDirection {UP,DOWN,IDLE};
         
         //Logitech Controller buttons  //In Java, buttons are 1-based array, BUT NOT AXIS
+        //DO NOT EDIT THESE!!!
         private final static int LOGITECH_BTN_A = 1; //A Button
         private final static int LOGITECH_BTN_B = 2; //B Button
         private final static int LOGITECH_BTN_X = 3; //X Button
@@ -218,7 +218,6 @@ public class Constants {
         public final static int OPER_DPAD_COLLECTOR_UP = LOGITECH_DPAD_UP; //Move collector to up
         public final static int OPER_DPAD_COLLECTOR_MID = LOGITECH_DPAD_RIGHT; //Move collector to middle
         public final static int OPER_DPAD_COLLECTOR_DOWN = LOGITECH_DPAD_DN; //Move collector down
-        //We get dpad values with joystick.getPOV(0);
     }
 }
 
