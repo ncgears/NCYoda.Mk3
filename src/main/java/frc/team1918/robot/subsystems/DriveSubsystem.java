@@ -101,8 +101,8 @@ public class DriveSubsystem extends SubsystemBase {
 		);
 		if(dash_gyro_ticks % Constants.Global.DASH_RECURRING_TICKS == 0) {
 			Dashboard.Gyro.setGyroAngle(m_gyro.getAngle()); 
-			dash_gyro_ticks=0;
 		}
+		dash_gyro_ticks++;
 	}
 
 	/**
