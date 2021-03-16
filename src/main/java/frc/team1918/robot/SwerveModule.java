@@ -119,7 +119,6 @@ public class SwerveModule {
 
     /**
      * This function takes a desiredState and instructs the motor controllers to move based on the desired state
-     *
      * @param desiredState Desired state with speed and angle.
      */
     public void setDesiredState(SwerveModuleState desiredState) {
