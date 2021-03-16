@@ -17,9 +17,12 @@ public class Helpers {
         }
         public final static int debug(String message, int ticks) {
             if (debugEnabled) {
-                if(ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) System.out.println(message);
+                if(debugThrottleMet(ticks)) System.out.println(message);
             }
             return ticks++;
+        }
+        public final static boolean debugThrottleMet(int ticks) {
+            return (ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0);
         }
 
         /**
