@@ -107,29 +107,27 @@ public class DriveSubsystem extends SubsystemBase {
 
 	/**
 	 * Returns the currently-estimated pose of the robot.
-	 *
 	 * @return The pose.
 	 */
 	public Pose2d getPose() {
 	  return m_odometry.getPoseMeters();
 	}
 
-	  /**
-   * Returns the heading of the robot.
-   *
-   * @return the robot's heading in degrees, from -180 to 180
-   */
-  public double getHeading() {
-    return m_gyro.getRotation2d().getDegrees();
-  }
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
-  public double getTurnRate() {
-    return m_gyro.getRate() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0);
-  }
+	/**
+     * Returns the heading of the robot.
+     * @return the robot's heading in degrees, from -180 to 180
+     */
+	public double getHeading() {
+		return m_gyro.getRotation2d().getDegrees();
+	}
+
+	/**
+	 * Returns the turn rate of the robot.
+	 * @return The turn rate of the robot, in degrees per second
+	 */
+	public double getTurnRate() {
+		return m_gyro.getRate() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0);
+	}
 
 	/**
 	 * Resets the odometry to the specified pose.
@@ -141,41 +139,42 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	/**
-   * Method to drive the robot using joystick info.
-   *
-   * @param xSpeed Speed of the robot in the x direction (forward).
-   * @param ySpeed Speed of the robot in the y direction (sideways).
-   * @param rot Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
-   */
-  @SuppressWarnings("ParameterName")
-  public void drive(double fwd, double str, double rot, boolean fieldRelative) {
-    var swerveModuleStates =
-	Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
-                ? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
-				: new ChassisSpeeds(fwd, str, rot));
-	debug_ticks = Helpers.Debug.debug(fieldRelative
-		? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
-		: new ChassisSpeeds(fwd, str, rot).toString(),debug_ticks);
-    SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
-    m_dtFL.setDesiredState(swerveModuleStates[0]);
-    m_dtFR.setDesiredState(swerveModuleStates[1]);
-    m_dtRL.setDesiredState(swerveModuleStates[2]);
-    m_dtRR.setDesiredState(swerveModuleStates[3]);
-  }
+	 * Method to drive the robot using joystick info.
+	 * @param fwd Speed of the robot in the x direction (forward).
+	 * @param str Speed of the robot in the y direction (sideways).
+	 * @param rot Angular rate of the robot.
+	 * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+	 */
+	@SuppressWarnings("ParameterName")
+	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
+		var swerveModuleStates =
+		Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
+					? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
+					: new ChassisSpeeds(fwd, str, rot));
+		if (Helpers.Debug.debugThrottleMet(debug_ticks)) {
+			Helpers.Debug.debug(fieldRelative
+			? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
+			: new ChassisSpeeds(fwd, str, rot).toString());
+		}
+		debug_ticks++;
+		SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+		m_dtFL.setDesiredState(swerveModuleStates[0]);
+		m_dtFR.setDesiredState(swerveModuleStates[1]);
+		m_dtRL.setDesiredState(swerveModuleStates[2]);
+		m_dtRR.setDesiredState(swerveModuleStates[3]);
+	}
 
-  /**
-   * Sets the swerve ModuleStates.
-   *
-   * @param desiredStates The desired SwerveModule states.
-   */
-  public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
-    m_dtFL.setDesiredState(desiredStates[0]);
-    m_dtFR.setDesiredState(desiredStates[1]);
-    m_dtRL.setDesiredState(desiredStates[2]);
-    m_dtRR.setDesiredState(desiredStates[3]);
-  }
+	/**
+	 * Sets the swerve ModuleStates.
+	 * @param desiredStates The desired SwerveModule states.
+	 */
+	public void setModuleStates(SwerveModuleState[] desiredStates) {
+		SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+		m_dtFL.setDesiredState(desiredStates[0]);
+		m_dtFR.setDesiredState(desiredStates[1]);
+		m_dtRL.setDesiredState(desiredStates[2]);
+		m_dtRR.setDesiredState(desiredStates[3]);
+	}
 
 
 	public static AHRS getm_gyro() {
