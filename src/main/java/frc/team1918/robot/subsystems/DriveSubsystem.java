@@ -158,10 +158,10 @@ public class DriveSubsystem extends SubsystemBase {
 		}
 		debug_ticks++;
 		SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
-		m_dtFL.setDesiredState(swerveModuleStates[0]);
-		m_dtFR.setDesiredState(swerveModuleStates[1]);
-		m_dtRL.setDesiredState(swerveModuleStates[2]);
-		m_dtRR.setDesiredState(swerveModuleStates[3]);
+		if(!Constants.Swerve.DISABLE_FL) m_dtFL.setDesiredState(swerveModuleStates[0]);
+		if(!Constants.Swerve.DISABLE_FR) m_dtFR.setDesiredState(swerveModuleStates[1]);
+		if(!Constants.Swerve.DISABLE_RL) m_dtRL.setDesiredState(swerveModuleStates[2]);
+		if(!Constants.Swerve.DISABLE_RR) m_dtRR.setDesiredState(swerveModuleStates[3]);
 	}
 
 	/**

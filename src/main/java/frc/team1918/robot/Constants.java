@@ -79,6 +79,11 @@ public class Constants {
 
     public static final class Swerve {
         public static final boolean USE_OPTIMIZATION = false; //false to disable shortest path optimization
+        public static final boolean DISABLE_FL = false; //Disable FL Module
+        public static final boolean DISABLE_FR = false; //Disable FR Module
+        public static final boolean DISABLE_RL = false; //Disable RL Module
+        public static final boolean DISABLE_RR = false; //Disable RR Module
+        
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
