@@ -16,15 +16,12 @@ public class Dashboard {
         public static final void setCurrentSpeed(double speed) {
             SmartDashboard.putNumber(dash_shooter_speed,speed);
         }
-        
         public static final void setTargetSpeed(double speed) {
             SmartDashboard.putNumber(dash_shooter_target,speed);
         }
-
         public static final double getTargetSpeed(double default_val) {
             return (double) SmartDashboard.getNumber(dash_shooter_target,default_val);
         }
-
         public static final void setHoodPosition(boolean up) {
             SmartDashboard.putString(dash_hood_pos,(up)?"up":"down");
         }
