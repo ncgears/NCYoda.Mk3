@@ -61,7 +61,10 @@ public class Constants {
         public final static double SHOOTER_PID_I = 4e-7; 
         public final static double SHOOTER_PID_D = 0; 
         public final static double SHOOTER_PID_IZONE = 0;
-        public final static double SHOOTER_PID_FF = 0; //Feed forward
+        public final static double SHOOTER_PID_FF = 0; //Feed forward - This should be 1/MAX_RPM
+        //Feed Forward Explanation: Reference output times desired result.. IE, if the MAX is 5400 RPM at a reference output of 1.0, then 1/5400 FF is appropriate.  
+        //This supplies the controller with a known output value to get the desired target result, then the PID can handle deviations from the known behavior.
+        //We should get the MAX RPM from trial and error by running with a reference power of 100% and measuring the actual result from the encoder
     }
 
     public static final class Mixer {
