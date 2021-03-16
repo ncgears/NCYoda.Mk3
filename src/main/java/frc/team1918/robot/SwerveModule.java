@@ -1,27 +1,21 @@
 
 package frc.team1918.robot;
 
+//Spark MAX
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-// import com.ctre.phoenix.motorcontrol.Faults;
-// import com.ctre.phoenix.motorcontrol.InvertType;
+//Talon SRX
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-// import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-// import com.ctre.phoenix.motorcontrol.SensorCollection;
-// import com.ctre.phoenix.CANifierStatusFrame;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-
+//WPILib
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 
 public class SwerveModule {
-    private WPI_TalonSRX turn; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
-    private CANSparkMax drive; //could be CANSparkMax, WPI_TalonSRX, WPI_TalonFX
+    private WPI_TalonSRX turn;
+    private CANSparkMax drive;
     private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
     private final double FULL_ROT_RADS = (2 * Math.PI);
     private final double TURN_P, TURN_I, TURN_D;
@@ -63,14 +57,12 @@ public class SwerveModule {
         TURN_I = tI;
         TURN_D = tD;
         TURN_IZONE = tIZone;
-        turn.setInverted(true); //invert turn direction if targetAngle is opposite currentAngle in setTurnLocation
+        turn.setInverted(true); //TODO: Validate this and move the true/false to constants
         turn.config_kP(0, TURN_P);
         turn.config_kI(0, TURN_I);
         turn.config_kD(0, TURN_D);
         turn.config_IntegralZone(0, TURN_IZONE);
-        //turn.setPID(TURN_P, TURN_I, TURN_D);
-        //turn.setIZone(TURN_IZONE);
-        turn.setSensorPhase(true);
+        turn.setSensorPhase(true); //TODO: Validate this and move the true/false to constants
     }
 
     /**
@@ -91,53 +83,53 @@ public class SwerveModule {
         return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), new Rotation2d(angle));
     }
 
-  /**
-   * Minimize the change in heading the desired swerve module state would require by potentially
-   * reversing the direction the wheel spins.
-   *
-   * @param desiredState The desired state.
-   */
-  public SwerveModuleState optimize(SwerveModuleState desiredState) {
-    double wheelSpeed = desiredState.speedMetersPerSecond;
-    double waRads = desiredState.angle.getRadians(); //need to get this from desiredState.angle
-    double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
-    double targetAngleRads = waRads;
-    int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
-    targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS; //add current rotations to target
+    /**
+     * Minimize the change in heading the desired swerve module state would require by potentially
+     * reversing the direction the wheel spins.
+     *
+     * @param desiredState The desired state.
+     */
+    public SwerveModuleState optimize(SwerveModuleState desiredState) {
+        double wheelSpeed = desiredState.speedMetersPerSecond;
+        double waRads = desiredState.angle.getRadians(); //need to get this from desiredState.angle
+        double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
+        double targetAngleRads = waRads;
+        int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
+        targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS; //add current rotations to target
 
-    if ((targetAngleRads > currentAngleRads + FULL_ROT_RADS * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROT_RADS * 0.25)) { //if target is more than 25% of a rotation either way
-        if (currentAngleRads < targetAngleRads) { //left strafe
-            if (targetAngleRads - currentAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                targetAngleRads -= FULL_ROT_RADS;
-            } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                targetAngleRads -= FULL_ROT_RADS * 0.5;
-                wheelSpeed *= -1;
-            }
-        } else { //right strafe
-            if ( currentAngleRads - targetAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                targetAngleRads += FULL_ROT_RADS;
-            } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                targetAngleRads += FULL_ROT_RADS * 0.5;
-                wheelSpeed *= -1;
+        if ((targetAngleRads > currentAngleRads + FULL_ROT_RADS * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROT_RADS * 0.25)) { //if target is more than 25% of a rotation either way
+            if (currentAngleRads < targetAngleRads) { //left strafe
+                if (targetAngleRads - currentAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads -= FULL_ROT_RADS;
+                } else { //otherwise, turn half a rotation from the target and reverse the drive power
+                    targetAngleRads -= FULL_ROT_RADS * 0.5;
+                    wheelSpeed *= -1;
+                }
+            } else { //right strafe
+                if ( currentAngleRads - targetAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads += FULL_ROT_RADS;
+                } else { //otherwise, turn half a rotation from the target and reverse the drive power
+                    targetAngleRads += FULL_ROT_RADS * 0.5;
+                    wheelSpeed *= -1;
+                }
             }
         }
+        return new SwerveModuleState(wheelSpeed, new Rotation2d(targetAngleRads));
     }
-    return new SwerveModuleState(wheelSpeed, new Rotation2d(targetAngleRads));
-}
 
     /**
-     * Sets the desired state for the module.
+     * This function takes a desiredState and instructs the motor controllers to move based on the desired state
      *
      * @param desiredState Desired state with speed and angle.
      */
     public void setDesiredState(SwerveModuleState desiredState) {
-        // Optimize the reference state to avoid spinning further than 90 degrees
-        // This could set a new angle from desired state and invert the speed
         SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
-        //make the controllers go to the de
         drive.set(state.speedMetersPerSecond);
-        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians()) + this.homePos);
-        debug_ticks1 = Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians())+this.homePos),debug_ticks1);
+        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos));
+        if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
+            Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)));
+        }
+        debug_ticks1++;
     }
 
     /**
