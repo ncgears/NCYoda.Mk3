@@ -7,18 +7,12 @@
 
 package frc.team1918.robot;
 
-//import edu.wpi.first.wpilibj.GenericHID;
-//import edu.wpi.first.wpilibj.XboxController;
 //Global imports
-//import frc.team1918.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
-// import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-// import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //Util imports
 import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
@@ -48,8 +42,6 @@ import frc.team1918.robot.commandgroups.cg_drive_autoHome;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  //Here, we initialize the subsystems and commands that will be used for the button bindings
-  //generic subsystems
   // private final PowerDistributionPanel m_pdp = new PowerDistributionPanel();
   private final Compressor m_air = new Compressor();
   //team 1918 subsystems
@@ -72,7 +64,7 @@ public class RobotContainer {
   //other commands
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  //Here, we are defining the buttons and binding
+  //Define the buttons and whhere they are bound
   //Driver Controller
   private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);
   // private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ALLUP);
@@ -94,7 +86,7 @@ public class RobotContainer {
   //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
   private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
   private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);
-  
+
   //Operator Controller
   private Joystick oj = new Joystick(Constants.OI.OI_JOY_OPER);
   private JoystickButton btn_SHOOT_WALL = new JoystickButton(oj, Constants.OI.OPER_BTN_SHOOT_WALL);
@@ -109,7 +101,7 @@ public class RobotContainer {
   private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.OPER_BTN_TOG_MIDDOWN);
 
   //Special Bindings
-  private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2);
+  private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2); //AndButton requires both to be true
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -121,28 +113,22 @@ public class RobotContainer {
     // Enable closed loop control of compressor and enable it
     m_air.setClosedLoopControl(!Constants.Air.AIR_DISABLED);
     if(Constants.Air.AIR_DISABLED) m_air.stop();
-  
+
+    // Set the default command that is run for the robot. Normally, this is the drive command
     m_drive.setDefaultCommand(
       new drive_defaultDrive(
-          m_drive,
-          () -> Helpers.OI.getAxisFwdValue(true),
-          () -> Helpers.OI.getAxisStrafeValue(true),
-          () -> Helpers.OI.getAxisTurnValue(true)
+        m_drive,
+        () -> Helpers.OI.getAxisFwdValue(true),
+        () -> Helpers.OI.getAxisStrafeValue(true),
+        () -> Helpers.OI.getAxisTurnValue(true)
       )
     );
 
-  
+
   }
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   * For more info, see {@link https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html}
-   */
   private void configureButtonBindings() {
-    
+    //The buttons here are named based on their functional purpose. This abstracts the purpose from which controller it is attached to.
     btn_HOMESWERVE.whenPressed(new cg_drive_autoHome(m_drive));
     btn_CALIBRATE_START.whenPressed(new drive_startCalibration(m_drive));
     btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
@@ -169,24 +155,21 @@ public class RobotContainer {
     andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
   }
 
+  // These functions return the commands, this is only needed for things that happen during robot init in Robot.java
   public drive_resetGyro getResetGyroCommand() {
     return m_resetGyro;
   }
   public cg_drive_autoHome getAutoHomeCommand() {
     return m_autoHome;
   }
-
   public Command getStartCalCommand() {
     return m_startCalCommand;
   }
-
   public Command getStopCalCommand() {
     return m_stopCalCommand;
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
