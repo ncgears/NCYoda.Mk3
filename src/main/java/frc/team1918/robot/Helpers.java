@@ -60,12 +60,16 @@ public class Helpers {
         }
 
         /**
-         * This function takes radians and returns encoder ticks
+         * This function takes radians and returns encoder ticks (based on a 0 offset)
          * @param rads double precision value in radians
+         * @param offset_ticks (optional) offset ticks to add to result, to account for home offset
          * @return integer value in encoder ticks
          */
         public final static int radiansToTicks(double rads) {
 			return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
+        }
+        public final static int radiansToTicks(double rads, int offset_ticks) {
+            return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2)) + offset_ticks;
         }
 
         /**
