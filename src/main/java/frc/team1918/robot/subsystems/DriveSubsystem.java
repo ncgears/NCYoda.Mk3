@@ -5,7 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
-import frc.team1918.robot.Dashboard;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.SwerveModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -99,10 +98,10 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRL.getState(),
 			m_dtRR.getState()
 		);
-		if(dash_gyro_ticks % Constants.Global.DASH_RECURRING_TICKS == 0) {
-			Dashboard.Gyro.setGyroAngle(m_gyro.getAngle()); 
-			dash_gyro_ticks=0;
-		}
+		// if(dash_gyro_ticks % Constants.Global.DASH_RECURRING_TICKS == 0) {
+		// 	Dashboard.Gyro.setGyroAngle(m_gyro.getAngle()); 
+		// 	dash_gyro_ticks=0;
+		// }
 	}
 
 	/**
@@ -157,7 +156,7 @@ public class DriveSubsystem extends SubsystemBase {
 	debug_ticks = Helpers.Debug.debug(fieldRelative
 		? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
 		: new ChassisSpeeds(fwd, str, rot).toString(),debug_ticks);
-    SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
+	SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
     m_dtFL.setDesiredState(swerveModuleStates[0]);
     m_dtFR.setDesiredState(swerveModuleStates[1]);
     m_dtRL.setDesiredState(swerveModuleStates[2]);
@@ -177,6 +176,52 @@ public class DriveSubsystem extends SubsystemBase {
     m_dtRR.setDesiredState(desiredStates[3]);
   }
 
+	public void oldFieldCentricDrive(double fwd, double str, double rot) {
+		double temp = (fwd * Math.cos(getGyroAngleInRad()))
+				+ (str * Math.sin(getGyroAngleInRad()));
+		str = (-fwd * Math.sin(getGyroAngleInRad()))
+				+ (str * Math.cos(getGyroAngleInRad()));
+		fwd = temp;
+		oldDrive(fwd, str, rot);
+	}
+
+	public void oldDrive(double fwd, double str, double rot) {
+		// System.out.println("humanDrive: fwd="+fwd+"; str="+str+"; rot="+rot);
+
+		SmartDashboard.putNumber("fwd", fwd);
+		SmartDashboard.putNumber("str", str);
+		SmartDashboard.putNumber("rot", rot);
+		
+		// if (Math.abs(rot) < 0.01) rot = 0;
+
+		fwd = Helpers.OI.applyDeadband(fwd);
+		str = Helpers.OI.applyDeadband(str);
+		if (Constants.DriveTrain.DT_TURN_MULT_BEFORE_DB) {
+			if (fwd == 0.0 && str == 0.0) {
+				rot *= Constants.DriveTrain.DT_TURN_MULT_STATIONARY;
+			} else {
+				rot *= Constants.DriveTrain.DT_TURN_MULT_MOVING;
+			}
+		}
+		rot = Helpers.OI.applyDeadband(rot);
+		if (!Constants.DriveTrain.DT_TURN_MULT_BEFORE_DB) {
+			if (fwd == 0.0 && str == 0.0) {
+				rot *= Constants.DriveTrain.DT_TURN_MULT_STATIONARY;
+			} else {
+				rot *= Constants.DriveTrain.DT_TURN_MULT_MOVING;
+			}
+		}
+
+		if (fwd == 0.0 && str == 0.0 && rot == 0.0) {
+			// setOffSets();
+			setAllDriveBrakeMode(true);
+			stopAllDrive();
+		} else {
+			setAllDriveBrakeMode(false);
+			swerveDrive(fwd, str, rot);
+			// resetOffSet();
+		}
+	}
 
 	public static AHRS getm_gyro() {
         return m_gyro;
@@ -288,8 +333,8 @@ public class DriveSubsystem extends SubsystemBase {
 		SmartDashboard.putNumber("wa3", wa3);
 		SmartDashboard.putNumber("wa4", wa4);
 
-		DriveSubsystem.setDrivePower(ws4, ws1, ws3, ws2);
-		DriveSubsystem.setLocation(wa4, wa1, wa3, wa2);
+		setDrivePower(ws4, ws1, ws3, ws2);
+		setLocation(wa4, wa1, wa3, wa2);
 	}
 	//#region m_gyro STUFF
 	public void resetGyro() {
@@ -298,11 +343,11 @@ public class DriveSubsystem extends SubsystemBase {
 		resetOdometry(getPose());
 	}
 
-	public static double getm_gyroAngle() {
+	public static double getGyroAngle() {
 		return m_gyro.getAngle();
 	}
 
-	public static double getm_gyroAngleInRad() {
+	public static double getGyroAngleInRad() {
 		return m_gyro.getAngle() * (Math.PI / 180d);
 	}
 	//#endregion m_gyro STUFF

@@ -14,8 +14,8 @@ public class Constants {
         public final static int ROBOT_WIDTH = 23; //Width of the robot frame
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
         public final static boolean DEBUG_ENABLED_DEFAULT = true; //Default starting state of debug mode
-        public final static int DEBUG_RECURRING_TICKS = 250; //Periodic cycles for recurring debug messages
-        public final static int DASH_RECURRING_TICKS = 250; //Periodic cycles for dashboard updates
+        public final static int DEBUG_RECURRING_TICKS = 200; //Periodic cycles for recurring debug messages
+        public final static int DASH_RECURRING_TICKS = 100; //Periodic cycles for dashboard updates
         public final static boolean HOME_ON_TELEOP = true; //Enable home sequence at beginning of teleop
         public final static boolean HOME_ON_AUTON = !HOME_ON_TELEOP; //Enable home sequence at beginning of auton, always opposit teleop
         public final static boolean ALLOW_CAL_IN_TELEOP = true; //Allow calibration mode during teleop
@@ -93,6 +93,7 @@ public class Constants {
 
     public static final class DriveTrain {
         //DriveTrain definitions
+        public final static boolean DT_USE_OLD_DRIVE_SYSTEM = false; //Use the old drive code
         ////Home Tuning
         public final static String DT_HOMES_FILE = "/home/lvuser/swerveHomes2021.txt"; //The file where we save the homes data to persist reboots
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders

@@ -36,10 +36,22 @@ public class drive_defaultDrive extends CommandBase {
   @Override
   public void execute() {
     if (!m_drive.isDriveControlsLocked()){
-      if (m_forward.getAsDouble() != 0 || m_strafe.getAsDouble() != 0 || m_rotation.getAsDouble() != 0) {
-        m_drive.drive(m_forward.getAsDouble(), m_strafe.getAsDouble(), m_rotation.getAsDouble(),Constants.DriveTrain.DT_USE_FIELD_CENTRIC);
+
+    }
+
+    if (!m_drive.isDriveControlsLocked()){
+      if(Constants.DriveTrain.DT_USE_OLD_DRIVE_SYSTEM) {
+        if (Constants.DriveTrain.DT_USE_FIELD_CENTRIC) {
+          m_drive.oldFieldCentricDrive(m_forward.getAsDouble(), m_strafe.getAsDouble(), m_rotation.getAsDouble());
+        } else {
+          m_drive.oldDrive(m_forward.getAsDouble(), m_strafe.getAsDouble(), m_rotation.getAsDouble());
+        }
       } else {
-        m_drive.stopAllDrive();
+        if (m_forward.getAsDouble() != 0 || m_strafe.getAsDouble() != 0 || m_rotation.getAsDouble() != 0) {
+          m_drive.drive(m_forward.getAsDouble(), m_strafe.getAsDouble(), m_rotation.getAsDouble(),Constants.DriveTrain.DT_USE_FIELD_CENTRIC);
+        } else {
+          m_drive.stopAllDrive();
+        }
       }
     }
   }

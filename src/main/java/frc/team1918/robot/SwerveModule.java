@@ -87,7 +87,7 @@ public class SwerveModule {
             Constants.DriveTrain.DT_DRIVE_SECOND_GEARONE,
             Constants.DriveTrain.DT_DRIVE_SECOND_GEARTWO);
         double wheelDiam = Constants.DriveTrain.DT_WHEEL_DIAM_MM - this.wheelOffsetMM;
-        double angle = Helpers.General.ticksToRadians(getTurnRelPos());
+        double angle = Helpers.General.ticksToRadians(getTurnAbsPos());
         return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), new Rotation2d(angle));
     }
 
@@ -264,32 +264,32 @@ public class SwerveModule {
 
     /**
 	 * Set turn to pos from 0 to 1 using PID using shortest turn to get the wheels aimed the right way
-	 * @param wa wheel angle location to set to in radians
+	 * @param waRads wheel angle location to set to in radians
 	 */
 	public void setTurnLocation(double waRads) {
-        double currentAngleRads = Helpers.General.ticksToRadians(getTurnRelPos());
+        double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
         double targetAngleRads = waRads;
-        int currentNumRotations = (int) (currentAngleRads / FULL_ROTATION);
-        targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROTATION : (currentNumRotations + 1) * FULL_ROTATION;
+        int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS);
+        targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS;
 
-        if ((targetAngleRads > currentAngleRads + FULL_ROTATION * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROTATION * 0.25)) { //if target is more than 25% of a rotation either way
+        if ((targetAngleRads > currentAngleRads + FULL_ROT_RADS * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROT_RADS * 0.25)) { //if target is more than 25% of a rotation either way
             if (currentAngleRads < targetAngleRads) { //left strafe
-                if (targetAngleRads - currentAngleRads > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngleRads -= FULL_ROTATION;
+                if (targetAngleRads - currentAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads -= FULL_ROT_RADS;
                 } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngleRads -= FULL_ROTATION * 0.5;
+                    targetAngleRads -= FULL_ROT_RADS * 0.5;
                     this.isDrivePowerInverted = true;
                 }
             } else { //right strafe
-                if ( currentAngleRads - targetAngleRads > FULL_ROTATION * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngleRads += FULL_ROTATION;
+                if ( currentAngleRads - targetAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
+                    targetAngleRads += FULL_ROT_RADS;
                 } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngleRads += FULL_ROTATION * 0.5;
+                    targetAngleRads += FULL_ROT_RADS * 0.5;
                     this.isDrivePowerInverted = true;
                 }
             }
         }
-        turn.set(ControlMode.Position,targetAngleRads);
+        turn.set(ControlMode.Position,Helpers.General.radiansToTicks(targetAngleRads)+homePos);
         // System.out.println(moduleName + " setTurnLocation="+targetAngle+"; isDrivePowerInverted="+this.isDrivePowerInverted);
     }
 
