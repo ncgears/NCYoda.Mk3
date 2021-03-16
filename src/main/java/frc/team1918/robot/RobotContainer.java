@@ -91,6 +91,7 @@ public class RobotContainer {
   private POVButton btn_THROTDN_DN = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DN);
     private POVButton btn_THROTDN_DL = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DL);
     private POVButton btn_THROTDN_DR = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DR);
+  //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
   private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
   private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);
   
