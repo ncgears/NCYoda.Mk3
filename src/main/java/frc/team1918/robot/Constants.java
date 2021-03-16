@@ -44,7 +44,6 @@ public class Constants {
         public final static int SHOOTER_TRENCH_RPM = 3300; //Trench
         public final static boolean SHOOTER_TRENCH_HOOD = Air.AIR_HOOD_UP;
 
-        //TODO: Set motor controller IDs and speeds of Talons
         public final static int SHOOTER_SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
         public final static int SHOOTER_FEED1_MC_ID = 14; //ID of the Shooter stage 1 TalonSRX
         public final static int SHOOTER_FEED2_MC_ID = 6; //ID of the Shooter stage 2 TalonSRX
