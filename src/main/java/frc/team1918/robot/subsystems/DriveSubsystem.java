@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
-	private int debug_ticks, dash_gyro_ticks;
+	private int debug_ticks, dash_gyro_ticks, debug_gyro_ticks;
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -118,7 +118,11 @@ public class DriveSubsystem extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
 	public double getHeading() {
-		return m_gyro.getRotation2d().getDegrees();
+		if (debug_gyro_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) {
+			Helpers.Debug.debug("Gyro Heading="+m_gyro.getRotation2d().getDegrees() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0));
+		}
+		debug_gyro_ticks++;
+		return m_gyro.getRotation2d().getDegrees() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0);
 	}
 
 	/**
@@ -149,12 +153,12 @@ public class DriveSubsystem extends SubsystemBase {
 	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
 		var swerveModuleStates =
 		Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
-					? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d())
+					? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, getRot2d())
 					: new ChassisSpeeds(fwd, str, rot));
 		if (Helpers.Debug.debugThrottleMet(debug_ticks)) {
-			Helpers.Debug.debug(fieldRelative
-			? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, m_gyro.getRotation2d()).toString()
-			: new ChassisSpeeds(fwd, str, rot).toString());
+			Helpers.Debug.debug((fieldRelative)
+			? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, getRot2d()).toString()+" fieldCentric"
+			: new ChassisSpeeds(fwd, str, rot).toString()+" robotCentric");
 		}
 		debug_ticks++;
 		SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);
@@ -290,21 +294,25 @@ public class DriveSubsystem extends SubsystemBase {
 		DriveSubsystem.setDrivePower(ws4, ws1, ws3, ws2);
 		DriveSubsystem.setLocation(wa4, wa1, wa3, wa2);
 	}
-	//#region m_gyro STUFF
+	//#region GYRO STUFF
 	public void resetGyro() {
 		Helpers.Debug.debug("Gyro Reset");
 		m_gyro.reset();
 		resetOdometry(getPose());
 	}
 
-	public static double getm_gyroAngle() {
+	public static Rotation2d getRot2d() {
+		return Rotation2d.fromDegrees(getGyroAngle());
+	}
+
+	public static double getGyroAngle() {
 		return m_gyro.getAngle();
 	}
 
-	public static double getm_gyroAngleInRad() {
+	public static double getGyroAngleInRad() {
 		return m_gyro.getAngle() * (Math.PI / 180d);
 	}
-	//#endregion m_gyro STUFF
+	//#endregion GYRO STUFF
 
 	//#region ENCODER STUFF
 	public void getAllAbsPos() {
