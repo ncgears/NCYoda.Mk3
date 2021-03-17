@@ -71,27 +71,46 @@ public class SwerveModule {
      * @return The current state of the module.
      */
     public SwerveModuleState getState() {
-        // return new SwerveModuleState(m_driveEncoder.getRate(), new Rotation2d(m_turningEncoder.get()));
-
         double rawRpm = drive.getEncoder().getVelocity();
         double wheelRpm = Helpers.General.gearCalcDouble(rawRpm,Constants.DriveTrain.DT_DRIVE_FIRST_GEARONE,
             Constants.DriveTrain.DT_DRIVE_FIRST_GEARTWO,
             Constants.DriveTrain.DT_DRIVE_SECOND_GEARONE,
             Constants.DriveTrain.DT_DRIVE_SECOND_GEARTWO);
         double wheelDiam = Constants.DriveTrain.DT_WHEEL_DIAM_MM - this.wheelOffsetMM;
-        double angle = Helpers.General.ticksToRadians(getTurnRelPos());
-        return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), new Rotation2d(angle));
+        // double angle = Helpers.General.ticksToRadians(getTurnAbsPos() - homePos); //subtract homePos so it is 0 based
+        // return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), new Rotation2d(angle));
+        return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), getTurnAbsPosAsRotation2d());
     }
 
+    // public static SwerveModuleState optimize(
+    //     SwerveModuleState desiredState, Rotation2d currentAngle) {
+    //   var delta = desiredState.angle.minus(currentAngle);
+    //   if (Math.abs(delta.getDegrees()) > 90.0) {
+    //     return new SwerveModuleState(
+    //         -desiredState.speedMetersPerSecond,
+    //         desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
+    //   } else {
+    //     return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
+    //   }
+  
     /**
      * Minimize the change in heading the desired swerve module state would require by potentially
      * reversing the direction the wheel spins.
      *
      * @param desiredState The desired state.
      */
-    public SwerveModuleState optimize(SwerveModuleState desiredState) {
+    public SwerveModuleState optimize(SwerveModuleState desiredState) {  //New optimize test 2021-03-17 JRB
+        Rotation2d currentAngle = getTurnAbsPosAsRotation2d();
+        Rotation2d delta = desiredState.angle.minus(currentAngle);
+        if (Math.abs(delta.getDegrees()) > 90.0) { //new requested turn is more than 90 degrees, invert drive speed and rotate 180 degrees from desired
+            return new SwerveModuleState(-desiredState.speedMetersPerSecond,desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
+        } else { //no optimization necessary
+            return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
+        }
+    }
+    public SwerveModuleState optimizeBad(SwerveModuleState desiredState) {
         double wheelSpeed = desiredState.speedMetersPerSecond;
-        double waRads = desiredState.angle.getRadians(); //need to get this from desiredState.angle
+        double waRads = desiredState.angle.getRadians();
         double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
         double targetAngleRads = waRads;
         int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
@@ -173,6 +192,13 @@ public class SwerveModule {
         return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF);
     }
 
+    /**
+     * Gets the position of the absolute encoder in encoder ticks, subtracts the homePos, and returns a rotation2d object
+     * @return Rotation2d object of the current position
+     */
+    public Rotation2d getTurnAbsPosAsRotation2d(){
+        return new Rotation2d(Helpers.General.ticksToRadians(turn.getSensorCollection().getPulseWidthPosition() - homePos));
+    }
     /**
      * Stores the home position for this module
      * @param homePos Absolute encoder value of the home position
