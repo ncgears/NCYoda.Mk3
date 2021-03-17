@@ -28,10 +28,9 @@ public class Constants {
         public final static int AIR_HOOD_ID = 2; //ID of solonoid for hood control
         public final static int AIR_ANTIGRAV_ID = 3; //ID of solonoid for climber anti-backdrive
         public final static int AIR_SPARE_ID = 4; //ID of solonoid for spare 
-        //which state for solonoids are the knowns
-        public final static boolean AIR_COLL1_DOWN = true;
-        public final static boolean AIR_COLL2_DOWN = true;
-        public final static boolean AIR_HOOD_UP = true;
+        public final static boolean AIR_COLL1_DOWN = true; //State of the solenoid when COLL1 is down
+        public final static boolean AIR_COLL2_DOWN = true; //State of the solenoid when COLL2 is down
+        public final static boolean AIR_HOOD_UP = true; //State of the solenoid when HOOD is up
     }
     
     public static final class Shooter {
