@@ -40,7 +40,8 @@ public class DriveSubsystem extends SubsystemBase {
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
 	private int debug_ticks, dash_gyro_ticks;
-	private double desiredAngle; //Used for driveStraight function
+	private static double desiredAngle; //Used for driveStraight function
+	private static boolean angleLocked = false;
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -139,6 +140,17 @@ public class DriveSubsystem extends SubsystemBase {
 	  m_odometry.resetPosition(pose, m_gyro.getRotation2d());
 	}
 
+	public void lockAngle() {
+		desiredAngle = m_gyro.getAngle();
+		angleLocked = true;
+		Helpers.Debug.debug("Angle Locked to "+desiredAngle);
+	}
+
+	public void unlockAngle() {
+		angleLocked = false;
+		Helpers.Debug.debug("Angle Unlocked");
+	}
+
 	/**
 	 * Method to drive the robot using joystick info.
 	 * @param fwd Speed of the robot in the x direction (forward).
@@ -150,10 +162,16 @@ public class DriveSubsystem extends SubsystemBase {
 	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
 		if(Constants.DriveTrain.DT_USE_DRIVESTRAIGHT) {
 			if(rot != 0) { //We are applying some rotation, so store the new angle
-				desiredAngle = m_gyro.getAngle();
+				// desiredAngle = m_gyro.getAngle();  
+				/** TODO: Figure out what new desiredAngle should be.
+				 * This kind of works, but setting the desiredAngle to the current angle here doesnt set it to what the new target
+				 * should be.  Need to maintain the new desiredAngle of the robot.
+				 */
 			} else { //We are not applying rotation, so lets try to maintain the desiredAngle, but only if we are moving (for safety)
-				if (Math.abs(fwd) > 0 || Math.abs(str) > 0) {
-					rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Add some correction to the rotation to account for angle drive
+				if(angleLocked) {
+					if (Math.abs(fwd) > 0 || Math.abs(str) > 0) {
+						rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Add some correction to the rotation to account for angle drive
+					}
 				}
 			}
 		}

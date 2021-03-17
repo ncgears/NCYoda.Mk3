@@ -67,8 +67,8 @@ public class RobotContainer {
   //Define the buttons and whhere they are bound
   //Driver Controller
   private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);
-  // private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ALLUP);
-  // private JoystickButton btn_ANTIGRAV = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ANTIGRAV);
+  private JoystickButton btn_LOCKANGLE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_LOCKANGLE);
+  private JoystickButton btn_UNLOCKANGLE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_UNLOCKANGLE);
   private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MECHZERO);
   private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_HOMESWERVE);
   private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEED);
@@ -144,6 +144,8 @@ public class RobotContainer {
     btn_COLLECTOR_DOWN.whenPressed(new collector_lowerIntake(m_collector));
     btn_COLLECTOR_UP.whenPressed(new collector_raiseIntake(m_collector));
     btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
+    btn_LOCKANGLE.whenPressed(new drive_lockAngle(m_drive));
+    btn_UNLOCKANGLE.whenPressed(new drive_unlockAngle(m_drive));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));
 

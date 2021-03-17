@@ -37,6 +37,7 @@ public class drive_defaultDrive extends CommandBase {
   public void execute() {
     if (!m_drive.isDriveControlsLocked()){
       if (m_forward.getAsDouble() != 0 || m_strafe.getAsDouble() != 0 || m_rotation.getAsDouble() != 0) {
+        if(m_rotation.getAsDouble() != 0) m_drive.unlockAngle();
         m_drive.drive(m_forward.getAsDouble(), m_strafe.getAsDouble(), m_rotation.getAsDouble(),Constants.DriveTrain.DT_USE_FIELD_CENTRIC);
       } else {
         m_drive.stopAllDrive();

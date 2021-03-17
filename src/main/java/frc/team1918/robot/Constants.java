@@ -100,8 +100,8 @@ public class Constants {
     public static final class DriveTrain {
         //DriveTrain definitions
         ////Global Tuning
-        public final static boolean DT_USE_DRIVESTRAIGHT = false; //enable driveStraight functionality in drive() method
-        public final static double DT_DRIVESTRAIGHT_P = 0.004; //kP for driveStraight correction
+        public final static boolean DT_USE_DRIVESTRAIGHT = true; //enable driveStraight functionality in drive() method
+        public final static double DT_DRIVESTRAIGHT_P = 0.05; //kP for driveStraight correction
         ////Home Tuning
         public final static String DT_HOMES_FILE = "/home/lvuser/swerveHomes2021.txt"; //The file where we save the homes data to persist reboots
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders
@@ -192,8 +192,8 @@ public class Constants {
         public final static int DRIVE_AXIS_STRAFE = LOGITECH_AXIS_LH; //Axis that moves the robot side to side on the field
         public final static int DRIVE_AXIS_FWD = LOGITECH_AXIS_LV; //Axis that moves the robot up and down the field
         public final static int DRIVE_AXIS_TURN = LOGITECH_AXIS_RH; //Axis that controls the rotation of the robot
-        public final static int DRIVE_BTN_ALLUP = LOGITECH_BTN_A; //Move collector to Up position
-        public final static int DRIVE_BTN_ANTIGRAV = LOGITECH_BTN_B; //Engage anti-backdrive for climber
+        public final static int DRIVE_BTN_LOCKANGLE = LOGITECH_BTN_B; //Move collector to Up position
+        public final static int DRIVE_BTN_UNLOCKANGLE = LOGITECH_BTN_A; //Engage anti-backdrive for climber
         public final static int DRIVE_BTN_MIXER_FEED = LOGITECH_BTN_X; //Run the mixer in the forward direction
         public final static int DRIVE_BTN_MIXER_FEEDSTUCK = LOGITECH_BTN_LB; //Reverse the mixer direction to unstick power cells
         public final static int DRIVE_BTN_HOMESWERVE = LOGITECH_BTN_Y; //Home the swerve modules
