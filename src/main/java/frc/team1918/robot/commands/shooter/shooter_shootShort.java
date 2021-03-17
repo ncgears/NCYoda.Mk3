@@ -42,7 +42,7 @@ public class shooter_shootShort extends CommandBase {
   @Override
   public void execute() {
     if (debug_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) {
-      Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed()+" Target="+Constants.Shooter.SHOOTER_SHORT_RPM);
+      // Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed()+" Target="+Constants.Shooter.SHOOTER_SHORT_RPM);
     }
   }
 

@@ -14,8 +14,8 @@ public class Constants {
         public final static int ROBOT_WIDTH = 23; //Width of the robot frame
         public final static int ROBOT_LENGTH = 26; //Length of the robot frame
         public final static boolean DEBUG_ENABLED_DEFAULT = true; //Default starting state of debug mode
-        public final static int DEBUG_RECURRING_TICKS = 250; //Periodic cycles for recurring debug messages
-        public final static int DASH_RECURRING_TICKS = 250; //Periodic cycles for dashboard updates
+        public final static int DEBUG_RECURRING_TICKS = 100; //Periodic cycles for recurring debug messages
+        public final static int DASH_RECURRING_TICKS = 50; //Periodic cycles for dashboard updates
         public final static boolean HOME_ON_TELEOP = true; //Enable home sequence at beginning of teleop
         public final static boolean HOME_ON_AUTON = !HOME_ON_TELEOP; //Enable home sequence at beginning of auton, always opposit teleop
         public final static boolean ALLOW_CAL_IN_TELEOP = true; //Allow calibration mode during teleop
@@ -52,15 +52,15 @@ public class Constants {
         public final static boolean SHOOTER_FEED_DISABLED = false; //Disable the feed for testing
         public final static double SHOOTER_FEED1_SPEED = 1.0; //Speed for the Feed1 talon
         public final static double SHOOTER_FEED2_SPEED = 1.0; //Speed for the Feed2 talon
-        public final static double SHOOTER_MAX_RPM = 5400; //Maximum RPMs for setting shooter
+        public final static double SHOOTER_MAX_RPM = 5600; //Maximum RPMs for setting shooter
         public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
         public final static boolean SHOOTER_SHOOT_INVERT = true;
-        public final static double SHOOTER_PID_P = 9e-6;
-        public final static double SHOOTER_PID_I = 4e-7; 
+        public final static double SHOOTER_PID_P = 9e-6; //9e-6;
+        public final static double SHOOTER_PID_I = 0; //4e-7; 
         public final static double SHOOTER_PID_D = 0; 
         public final static double SHOOTER_PID_IZONE = 0;
-        public final static double SHOOTER_PID_FF = 0; //Feed forward - This should be 1/MAX_RPM
+        public final static double SHOOTER_PID_FF = 1/SHOOTER_MAX_RPM; //Feed forward - This should be 1/MAX_RPM
         //Feed Forward Explanation: Reference output times desired result.. IE, if the MAX is 5400 RPM at a reference output of 1.0, then 1/5400 FF is appropriate.  
         //This supplies the controller with a known output value to get the desired target result, then the PID can handle deviations from the known behavior.
         //We should get the MAX RPM from trial and error by running with a reference power of 100% and measuring the actual result from the encoder
@@ -184,6 +184,7 @@ public class Constants {
     //Temporary
         public final static int DRIVE_BTN_CALIBRATE_START = LOGITECH_BTN_B; //temporary for testing
         public final static int DRIVE_BTN_CALIBRATE_STOP = LOGITECH_BTN_A; //temporary for testing
+        public final static int DRIVE_BTN_MAXPOWER = LOGITECH_DPAD_RIGHT;
 
     //Driver Controller
         public final static int DRIVE_AXIS_STRAFE = LOGITECH_AXIS_LH; //Axis that moves the robot side to side on the field

@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
-	private int debug_ticks, dash_gyro_ticks, debug_gyro_ticks;
+	private int debug_ticks, dash_gyro_ticks;
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -99,8 +99,8 @@ public class DriveSubsystem extends SubsystemBase {
 			m_dtRL.getState(),
 			m_dtRR.getState()
 		);
-		if(dash_gyro_ticks % Constants.Global.DASH_RECURRING_TICKS == 0) {
-			Dashboard.Gyro.setGyroAngle(m_gyro.getAngle()); 
+		if(dash_gyro_ticks % 5 == 0) {
+			Dashboard.Gyro.setGyroAngle(Helpers.General.roundDouble(m_gyro.getAngle(),3)); 
 		}
 		dash_gyro_ticks++;
 	}
@@ -118,10 +118,6 @@ public class DriveSubsystem extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
 	public double getHeading() {
-		if (debug_gyro_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) {
-			Helpers.Debug.debug("Gyro Heading="+m_gyro.getRotation2d().getDegrees() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0));
-		}
-		debug_gyro_ticks++;
 		return m_gyro.getRotation2d().getDegrees() * (Constants.Swerve.kGyroReversed ? -1.0 : 1.0);
 	}
 

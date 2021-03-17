@@ -76,6 +76,10 @@ public class ShooterSubsystem extends SubsystemBase {
     m_shooter_rpm = Math.min(RPM, Constants.Shooter.SHOOTER_MAX_RPM);
   }
 
+  public void setShooterVbus(double Vbus) {
+    shoot.set(Vbus);
+  }
+
   public void increaseShooterSpeed() {
     m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOTER_SPEED_INCREMENT, Constants.Shooter.SHOOTER_MAX_RPM);
   }
