@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class shooter_shootWall extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_shooter;
-  private int debug_ticks;
+  // private int debug_ticks;
 
   /**
    * @param subsystem The subsystem used by this command.

@@ -34,7 +34,7 @@ public class Constants {
     }
     
     public static final class Shooter {
-        public final static int SHOOTER_WALL_RPM = 2650; //2650; //Wall
+        public final static int SHOOTER_WALL_RPM = 2650; //Wall
         public final static boolean SHOOTER_WALL_HOOD = !Air.AIR_HOOD_UP;
         public final static int SHOOTER_SHORT_RPM = 3780; //Short
         public final static boolean SHOOTER_SHORT_HOOD = Air.AIR_HOOD_UP;
