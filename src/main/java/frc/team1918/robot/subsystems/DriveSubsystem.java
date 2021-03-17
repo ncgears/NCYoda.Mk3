@@ -153,7 +153,7 @@ public class DriveSubsystem extends SubsystemBase {
 				desiredAngle = m_gyro.getAngle();
 			} else { //We are not applying rotation, so lets try to maintain the desiredAngle, but only if we are moving (for safety)
 				if (Math.abs(fwd) > 0 || Math.abs(str) > 0) {
-					rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Calculate a new rotation to correct for angle drift
+					rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Add some correction to the rotation to account for angle drive
 				}
 			}
 		}
