@@ -40,6 +40,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
 	private int debug_ticks, dash_gyro_ticks;
+	private double desiredAngle; //Used for driveStraight function
 
 	//initialize 4 swerve modules
 	private static SwerveModule m_dtFL = new SwerveModule(Constants.DriveTrain.DT_FL_DRIVE_MC_ID,
@@ -147,6 +148,15 @@ public class DriveSubsystem extends SubsystemBase {
 	 */
 	@SuppressWarnings("ParameterName")
 	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
+		if(Constants.DriveTrain.DT_USE_DRIVESTRAIGHT) {
+			if(rot != 0) { //We are applying some rotation, so store the new angle
+				desiredAngle = m_gyro.getAngle();
+			} else { //We are not applying rotation, so lets try to maintain the desiredAngle, but only if we are moving (for safety)
+				if (Math.abs(fwd) > 0 || Math.abs(str) > 0) {
+					rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Calculate a new rotation to correct for angle drift
+				}
+			}
+		}
 		var swerveModuleStates =
 		Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
 					? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, getRot2d())
@@ -162,6 +172,12 @@ public class DriveSubsystem extends SubsystemBase {
 		if(!Constants.Swerve.DISABLE_FR) m_dtFR.setDesiredState(swerveModuleStates[1]);
 		if(!Constants.Swerve.DISABLE_RL) m_dtRL.setDesiredState(swerveModuleStates[2]);
 		if(!Constants.Swerve.DISABLE_RR) m_dtRR.setDesiredState(swerveModuleStates[3]);
+	}
+
+	public double calcAngleStraight(double targetAngle, double currentAngle, double kP) {
+		double errorAngle = (targetAngle - currentAngle) % 360.0;
+		double correction = errorAngle * kP;
+		return correction;
 	}
 
 	/**
