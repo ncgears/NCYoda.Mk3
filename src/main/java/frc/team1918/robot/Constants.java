@@ -4,8 +4,15 @@ package frc.team1918.robot;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 
-@SuppressWarnings("unused")
+//Sometimes it is useful to comment out the following to see what variables or what controller buttons are not assigned yet
+@SuppressWarnings("unused") //We silence the "unused variables" warnings in VSCode
+/**
+ * Constants let us quickly define the characteristics of our robot without having to search through code
+ */
 public class Constants {
+    /**
+     * Constants that are Global for the robot
+     */
     public static final class Global {
         //Global Constants
         public final static int kTimeoutMs = 30; //Timeout for reporting in DS if action fails, set to 0 to skip confirmation
@@ -21,6 +28,10 @@ public class Constants {
         public final static boolean ALLOW_CAL_IN_TELEOP = true; //Allow calibration mode during teleop
     }
 
+    /**
+     * Constants for the Pneumantics system
+     * This is not a subsystem, the pneumatics are controlled directly in their respective subsystems
+     */
     public static final class Air {
         public final static boolean AIR_DISABLED = false; //Set to true to disable compressor
         public final static int AIR_COLLECTOR1_ID = 0; //ID of solonoid for collector stage 1
@@ -33,6 +44,9 @@ public class Constants {
         public final static boolean AIR_HOOD_UP = true; //State of the solenoid when HOOD is up
     }
     
+    /**
+     * Constants for the Shooter subsystem
+     */
     public static final class Shooter {
         public final static boolean FEED_isDisabled = false; //Disable the feed for testing
 
@@ -66,16 +80,25 @@ public class Constants {
         //We should get the MAX RPM from trial and error by running with a reference power of 100% and measuring the actual result from the encoder
     }
 
+    /**
+     * Constants for the Mixer subsystem
+     */
     public static final class Mixer {
         public final static int MIXER_MC_ID = 13; //ID of the Mixer talon
         public final static double MIXER_SPEED = 0.75; //Speed for the Mixer talon
     }
 
+    /**
+     * Constants for the Collector subsystem
+     */
     public static final class Collector {
         public final static int COLLECTOR_MC_ID = 15; //ID of the Collector talon
         public final static double COLLECTOR_SPEED = 1.0; //Speed for the Collector talon
     }
 
+    /**
+     * Constants for the Swerve Modules
+     */
     public static final class Swerve {
         public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
         public static final boolean DISABLE_FL = false; //Disable FL Module
@@ -95,8 +118,10 @@ public class Constants {
             new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
             new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2))
         );
-
-        public static final class FL { //Front Left
+        /**
+         * Constants for Front Left Swerve Module
+         */
+        public static final class FL {
             public static final int DRIVE_MC_ID = 2; //SparkMAX Motor Controller ID
             public static final int TURN_MC_ID = 7; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
@@ -107,7 +132,10 @@ public class Constants {
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
-        public static final class FR { //Front Right
+        /**
+         * Constants for Front Right Swerve Module
+         */
+        public static final class FR {
             public static final int DRIVE_MC_ID = 16; //SparkMAX Motor Controller ID
             public static final int TURN_MC_ID = 4; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
@@ -118,7 +146,10 @@ public class Constants {
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
-        public static final class RL { //Rear Left
+        /**
+         * Constants for Rear Left Swerve Module
+         */
+        public static final class RL {
             public static final int DRIVE_MC_ID = 3; //SparkMAX Motor Controller ID
             public static final int TURN_MC_ID = 8; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
@@ -129,6 +160,9 @@ public class Constants {
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
+        /**
+         * Constants for Rear Right Swerve Module
+         */
         public static final class RR { //Rear Right
             public static final int DRIVE_MC_ID = 1; //SparkMAX Motor Controller ID
             public static final int TURN_MC_ID = 11; //TalonSRX Motor Controller ID
@@ -142,8 +176,10 @@ public class Constants {
         }
     }
 
+    /**
+     * Constants for the DriveTrain subsystem
+     */
     public static final class DriveTrain {
-        //DriveTrain definitions
         ////Global Tuning
         public final static boolean DT_USE_DRIVESTRAIGHT = true; //enable driveStraight functionality in drive() method
         public final static double DT_DRIVESTRAIGHT_P = 0.05; //kP for driveStraight correction
@@ -172,14 +208,20 @@ public class Constants {
         public final static int DT_RR_MECHZERO = 0; //Rear Right encoder value at mechanical zero, only change if mechanics broke things
     }
     
+    /**
+     * Constants for the Operator Interface
+     * The OI is based on 2 Logitech Controllers, a driver and an operator, setup for swerve drive.
+     * The driver left stick controls the forward rate (up/down), and strafe rate (left/right).
+     * The driver right stick controls the rotation rate (left/right).
+     */
     public static final class OI {
-        /**
-         * This class is based on 2 Logitech controllers, a driver and an operator, setup for swerve drive
-         */
         public final static int OI_JOY_DRIVER = 0; //ID of Driver Joystick
         public final static int OI_JOY_OPER = 1; //ID of Operator Joystick
         public final static double OI_JOY_DEADBAND = 0.1; //Deadband for analog joystick axis
 
+        /**
+         * Constants for the Driver controller
+         */
         public static final class Driver {
             public final static int AXIS_STRAFE = Logitech.AXIS_LH; //Axis that moves the robot side to side on the field
             public final static int AXIS_FWD = Logitech.AXIS_LV; //Axis that moves the robot up and down the field
@@ -200,6 +242,9 @@ public class Constants {
             public final static int DPAD_THROTDN_DN = Logitech.DPAD_DN;
             public final static int DPAD_THROTDN_DR = Logitech.DPAD_DNRIGHT;
         }
+        /**
+         * Constants for the Operator controller
+         */
         public static final class Operator {
             public final static int AXIS_CLIMB = Logitech.AXIS_LV; //Axis that controls the climber up and down
             public final static int AXIS_COLLECTOR_OUT = Logitech.AXIS_RT; //Axis that runs the collector out (actually a trigger button)
