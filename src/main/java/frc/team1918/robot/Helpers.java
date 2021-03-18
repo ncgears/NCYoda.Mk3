@@ -108,7 +108,7 @@ public class Helpers {
     }
     //Helpers for the Operator Interface
     public static final class OI {
-        private static Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);
+        private static Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVER);
         private static Joystick oj = new Joystick(Constants.OI.OI_JOY_OPER);
         //DRIVER CONTROLS
         /**
@@ -116,7 +116,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the strafe axis
          */
         public final static double getAxisStrafeValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVE_AXIS_STRAFE)) : dj.getRawAxis(Constants.OI.DRIVE_AXIS_STRAFE);
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_STRAFE)) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_STRAFE);
         }
 
         /**
@@ -124,7 +124,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the fwd axis
          */
         public final static double getAxisFwdValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVE_AXIS_FWD)*-1) : dj.getRawAxis(Constants.OI.DRIVE_AXIS_FWD)*-1;
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_FWD)*-1) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_FWD)*-1;
         }
 
         /**
@@ -132,7 +132,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the turn axis
          */
         public final static double getAxisTurnValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVE_AXIS_TURN)) : dj.getRawAxis(Constants.OI.DRIVE_AXIS_TURN);
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_TURN)) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_TURN);
         }
 
         //OPERATOR CONTROLS
