@@ -41,10 +41,15 @@ public class SwerveModule {
 	 * @param wheelOffsetMM Adjustment to size of the wheel to account for wear
 	 * @param homePos The home position of this swerve module
 	 */
-    public SwerveModule(int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, String name, double wheelOffsetMM, int homePos){
+    public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, double wheelOffsetMM, boolean sensorPhase, boolean inverted, int homePos){
         drive = new CANSparkMax(driveMC_ID, MotorType.kBrushless);
         turn = new WPI_TalonSRX(turnMC_ID);
         moduleName = name;
+        isDrivePowerInverted = false;
+        TURN_P = tP;
+        TURN_I = tI;
+        TURN_D = tD;
+        TURN_IZONE = tIZone;
 
         turn.configFactoryDefault(); //Reset controller to factory defaults to avoid wierd stuff
         turn.set(ControlMode.PercentOutput, 0); //Set controller to disabled
@@ -52,17 +57,13 @@ public class SwerveModule {
         turn.configSelectedFeedbackSensor(  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
                                             Constants.Global.PID_PRIMARY,				// PID Slot for Source [0, 1]
                                             Constants.Global.kTimeoutMs);				// Configuration Timeout
-        isDrivePowerInverted = false;
-        TURN_P = tP;
-        TURN_I = tI;
-        TURN_D = tD;
-        TURN_IZONE = tIZone;
-        turn.setInverted(true); //TODO: Validate this and move the true/false to constants
+        turn.configFeedbackNotContinuous(true, 0); //Disable continuous feedback tracking (so 0 and 4096 are effectively one and the same)
+        turn.setSensorPhase(sensorPhase);
+        turn.setInverted(inverted);
         turn.config_kP(0, TURN_P);
         turn.config_kI(0, TURN_I);
         turn.config_kD(0, TURN_D);
         turn.config_IntegralZone(0, TURN_IZONE);
-        turn.setSensorPhase(true); //TODO: Validate this and move the true/false to constants
     }
 
     /**
@@ -82,27 +83,16 @@ public class SwerveModule {
         return new SwerveModuleState(Helpers.General.rpmToMetersPerSecond(wheelRpm, wheelDiam), getTurnAbsPosAsRotation2d());
     }
 
-    // public static SwerveModuleState optimize(
-    //     SwerveModuleState desiredState, Rotation2d currentAngle) {
-    //   var delta = desiredState.angle.minus(currentAngle);
-    //   if (Math.abs(delta.getDegrees()) > 90.0) {
-    //     return new SwerveModuleState(
-    //         -desiredState.speedMetersPerSecond,
-    //         desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
-    //   } else {
-    //     return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
-    //   }
-  
     /**
      * Minimize the change in heading the desired swerve module state would require by potentially
-     * reversing the direction the wheel spins.
-     *
+     * reversing the direction the wheel spins.  Since we are using a Mag encoder with a 0-4096 value, we have
+     * to set the FeedbackSensor
      * @param desiredState The desired state.
      */
     public SwerveModuleState optimize(SwerveModuleState desiredState) {  //New optimize test 2021-03-17 JRB
         Rotation2d currentAngle = getTurnAbsPosAsRotation2d();
         Rotation2d delta = desiredState.angle.minus(currentAngle);
-        if (Math.abs(delta.getDegrees()) > 90.0) { //new requested turn is more than 90 degrees, invert drive speed and rotate 180 degrees from desired
+        if (Math.abs(delta.getDegrees()) > 90.0 && Math.abs(delta.getDegrees()) < 270) { //new requested turn is between 90 and 270 degrees, invert drive speed and rotate 180 degrees from desired
             return new SwerveModuleState(-desiredState.speedMetersPerSecond,desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
         } else { //no optimization necessary
             return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);

@@ -81,7 +81,52 @@ public class Constants {
         public static final boolean DISABLE_FR = false; //Disable FR Module
         public static final boolean DISABLE_RL = false; //Disable RL Module
         public static final boolean DISABLE_RR = false; //Disable RR Module
-        
+
+        public static final class FL { //Front Left
+            public static final int DRIVE_MC_ID = 2; //SparkMAX Motor Controller ID
+            public static final int TURN_MC_ID = 7; //TalonSRX Motor Controller ID
+            public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
+            public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
+            public static final double TURN_kP = 8.0; //PID P
+            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kD = 80.0; //PID D
+            public static final int TURN_kIZone = 0; //PID IZONE
+            public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
+        }
+        public static final class FR { //Front Right
+            public static final int DRIVE_MC_ID = 16; //SparkMAX Motor Controller ID
+            public static final int TURN_MC_ID = 4; //TalonSRX Motor Controller ID
+            public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
+            public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
+            public static final double TURN_kP = 8.0; //PID P
+            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kD = 80.0; //PID D
+            public static final int TURN_kIZone = 0; //PID IZONE
+            public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
+        }
+        public static final class RL { //Rear Left
+            public static final int DRIVE_MC_ID = 3; //SparkMAX Motor Controller ID
+            public static final int TURN_MC_ID = 8; //TalonSRX Motor Controller ID
+            public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
+            public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
+            public static final double TURN_kP = 8.0; //PID P
+            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kD = 80.0; //PID D
+            public static final int TURN_kIZone = 0; //PID IZONE
+            public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
+        }
+        public static final class RR { //Rear Right
+            public static final int DRIVE_MC_ID = 1; //SparkMAX Motor Controller ID
+            public static final int TURN_MC_ID = 11; //TalonSRX Motor Controller ID
+            public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
+            public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
+            public static final double TURN_kP = 8.0; //PID P
+            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kD = 80.0; //PID D
+            public static final int TURN_kIZone = 0; //PID IZONE
+            public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
+        }
+
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
@@ -126,25 +171,10 @@ public class Constants {
         public final static double DT_TURN_D = 80.0;
         public final static int DT_TURN_IZONE = 0;
         ////Front Left
-        public final static int DT_FL_DRIVE_MC_ID = 2; //Front Left Drive Motor Controller ID //SPARKMAX
-        public final static int DT_FL_TURN_MC_ID = 7; //Front Left Turn Motor Controller ID //TALONSRX
         public final static int DT_FL_MECHZERO = 0; //Front Left encoder value at mechanical zero, only change if mechanics broke things
-        public final static double DT_FL_WHEEL_DIAM_OFFSET_MM = 0.0; //Front Left offset to wheel diam to account for wear
-        ////Front Right
-        public final static int DT_FR_DRIVE_MC_ID = 16; //Front Right Drive Motor Controller ID //SPARKMAX
-        public final static int DT_FR_TURN_MC_ID = 4; //Front Right Turn Motor Controller ID //TALONSRX
         public final static int DT_FR_MECHZERO = 0; //Front Right encoder value at mechanical zero, only change if mechanics broke things
-        public final static double DT_FR_WHEEL_DIAM_OFFSET_MM = 0.0; //Front Right offset to wheel diam to account for wear
-        ////Rear Left
-        public final static int DT_RL_DRIVE_MC_ID = 3; //Rear Left Drive Motor Controller ID //SPARKMAX
-        public final static int DT_RL_TURN_MC_ID = 8; //Rear Left Turn Motor Controller ID //TALONSRX
         public final static int DT_RL_MECHZERO = 0; //Rear Left encoder value at mechanical zero, only change if mechanics broke things
-        public final static double DT_RL_WHEEL_DIAM_OFFSET_MM = 0.0; //Rear Left offset to wheel diam to account for wear
-        ////Rear Right
-        public final static int DT_RR_DRIVE_MC_ID = 1; //Rear Right Drive Motor Controller ID //SPARKMAX
-        public final static int DT_RR_TURN_MC_ID = 11; //Rear Right Turn Motor Controller ID //TALONSRX
         public final static int DT_RR_MECHZERO = 0; //Rear Right encoder value at mechanical zero, only change if mechanics broke things
-        public final static double DT_RR_WHEEL_DIAM_OFFSET_MM = 0.0; //Rear Right offset to wheel diam to account for wear
     }
     
     public static final class OI {
