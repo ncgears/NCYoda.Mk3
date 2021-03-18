@@ -139,8 +139,8 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void unlockAngle() {
+		if(angleLocked) Helpers.Debug.debug("Angle Unlocked");
 		angleLocked = false;
-		Helpers.Debug.debug("Angle Unlocked");
 	}
 
 	/**
