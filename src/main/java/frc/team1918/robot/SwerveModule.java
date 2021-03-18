@@ -179,7 +179,8 @@ public class SwerveModule {
      * @return Integer of absolute encoder ticks
      */
     public int getTurnAbsPos(){
-        return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF);
+        return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF); //This gets only the most significant bits (0-4095)
+        //Explanation: & is a bitwise "AND" operator, and 0xFFF is 4095 in Hex, consider "0101010101 AND 1111 = 0101"
     }
 
     /**
@@ -187,7 +188,7 @@ public class SwerveModule {
      * @return Rotation2d object of the current position
      */
     public Rotation2d getTurnAbsPosAsRotation2d(){
-        return new Rotation2d(Helpers.General.ticksToRadians(turn.getSensorCollection().getPulseWidthPosition() - homePos));
+        return new Rotation2d(Helpers.General.ticksToRadians(getTurnAbsPos() - homePos));
     }
     /**
      * Stores the home position for this module
