@@ -31,28 +31,28 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public ShooterSubsystem() {
     //Reset the talonsrx controllers to avoid any leftovers in flash and configure them as desired
-    feed1 = new WPI_TalonSRX(Constants.Shooter.SHOOTER_FEED1_MC_ID);
-    feed2 = new WPI_TalonSRX(Constants.Shooter.SHOOTER_FEED2_MC_ID);
+    feed1 = new WPI_TalonSRX(Constants.Shooter.FEED_1_MC_ID);
+    feed2 = new WPI_TalonSRX(Constants.Shooter.FEED_2_MC_ID);
     feed1.configFactoryDefault();
     feed2.configFactoryDefault();
     feed1.set(ControlMode.PercentOutput, 0);
     feed2.set(ControlMode.PercentOutput, 0);
     feed1.setNeutralMode(NeutralMode.Coast);
     feed2.setNeutralMode(NeutralMode.Coast);
-    feed1.setInverted(Constants.Shooter.SHOOTER_FEED1_INVERT);
-    feed2.setInverted(Constants.Shooter.SHOOTER_FEED2_INVERT);
+    feed1.setInverted(Constants.Shooter.FEED_1_isInverted);
+    feed2.setInverted(Constants.Shooter.FEED_2_isInverted);
     //Setup the SparkMAX controller as desired
-    shoot = new CANSparkMax(Constants.Shooter.SHOOTER_SHOOT_MC_ID, MotorType.kBrushless);
+    shoot = new CANSparkMax(Constants.Shooter.SHOOT_MC_ID, MotorType.kBrushless);
     shoot.restoreFactoryDefaults();
-    shoot.setInverted(Constants.Shooter.SHOOTER_SHOOT_INVERT);
+    shoot.setInverted(Constants.Shooter.SHOOT_isInverted);
     shoot.setIdleMode(IdleMode.kCoast);
     m_pidController = shoot.getPIDController();
     m_encoder = shoot.getEncoder();
-    m_pidController.setP(Constants.Shooter.SHOOTER_PID_P); //PID P
-    m_pidController.setI(Constants.Shooter.SHOOTER_PID_I); //PID I
-    m_pidController.setD(Constants.Shooter.SHOOTER_PID_D); //PID D
-    m_pidController.setIZone(Constants.Shooter.SHOOTER_PID_IZONE); //IZone
-    m_pidController.setFF(Constants.Shooter.SHOOTER_PID_FF); //Feed forward
+    m_pidController.setP(Constants.Shooter.SHOOT_PID_P); //PID P
+    m_pidController.setI(Constants.Shooter.SHOOT_PID_I); //PID I
+    m_pidController.setD(Constants.Shooter.SHOOT_PID_D); //PID D
+    m_pidController.setIZone(Constants.Shooter.SHOOT_PID_IZONE); //IZone
+    m_pidController.setFF(Constants.Shooter.SHOOT_PID_FF); //Feed forward
     m_pidController.setOutputRange(-0.1, 1); //-10% allowed for speed down of shooter
     //Setup the solenoid
     m_hood = new Solenoid(Constants.Air.AIR_HOOD_ID);
@@ -73,7 +73,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setShooterSpeed(double RPM) {
-    m_shooter_rpm = Math.min(RPM, Constants.Shooter.SHOOTER_MAX_RPM);
+    m_shooter_rpm = Math.min(RPM, Constants.Shooter.SHOOT_MAX_RPM);
   }
 
   public void setShooterVbus(double Vbus) {
@@ -81,11 +81,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void increaseShooterSpeed() {
-    m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOTER_SPEED_INCREMENT, Constants.Shooter.SHOOTER_MAX_RPM);
+    m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MAX_RPM);
   }
 
   public void decreaseShooterSpeed() {
-    m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOTER_SPEED_INCREMENT, Constants.Shooter.SHOOTER_MIN_RPM);
+    m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MIN_RPM);
   }
 
   public void setShooterSpeedFromDashboard() {
@@ -100,9 +100,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void runFeeder(boolean run) {
     //run the feeder based on boolean
-    if (run && !Constants.Shooter.SHOOTER_FEED_DISABLED) {
-      feed1.set(ControlMode.PercentOutput, Constants.Shooter.SHOOTER_FEED1_SPEED);
-      feed2.set(ControlMode.PercentOutput, Constants.Shooter.SHOOTER_FEED2_SPEED);
+    if (run && !Constants.Shooter.FEED_isDisabled) {
+      feed1.set(ControlMode.PercentOutput, Constants.Shooter.FEED_1_SPEED);
+      feed2.set(ControlMode.PercentOutput, Constants.Shooter.FEED_2_SPEED);
     } else {
       feed1.set(ControlMode.PercentOutput, 0);
       feed2.set(ControlMode.PercentOutput, 0);

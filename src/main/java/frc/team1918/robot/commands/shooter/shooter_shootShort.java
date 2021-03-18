@@ -34,8 +34,8 @@ public class shooter_shootShort extends CommandBase {
   public void initialize() {
     Helpers.Debug.debug("Shooter: Shoot from Short");
     m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_SHORT_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_SHORT_RPM);
+    m_shooter.raiseHood(Constants.Shooter.SHOOT_SHORT_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_SHORT_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

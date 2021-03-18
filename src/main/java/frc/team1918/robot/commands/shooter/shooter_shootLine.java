@@ -34,8 +34,8 @@ public class shooter_shootLine extends CommandBase {
   public void initialize() {
     Helpers.Debug.debug("Shooter: Shoot from Line");
     m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_LINE_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_LINE_RPM);
+    m_shooter.raiseHood(Constants.Shooter.SHOOT_LINE_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_LINE_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
