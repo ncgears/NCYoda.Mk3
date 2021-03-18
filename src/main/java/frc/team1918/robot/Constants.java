@@ -82,6 +82,19 @@ public class Constants {
         public static final boolean DISABLE_FR = false; //Disable FR Module
         public static final boolean DISABLE_RL = false; //Disable RL Module
         public static final boolean DISABLE_RR = false; //Disable RR Module
+        // swerve control definitions
+        public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
+        public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
+        public static final boolean kGyroReversed = false;
+        //Forward Positive, Left Positive, Up Positive (NWU Convention)
+        public static final SwerveDriveKinematics kDriveKinematics =
+        new SwerveDriveKinematics(
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
+            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2))
+        );
 
         public static final class FL { //Front Left
             public static final int DRIVE_MC_ID = 2; //SparkMAX Motor Controller ID
@@ -127,20 +140,6 @@ public class Constants {
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
-
-        // swerve control definitions
-        public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
-        public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
-        public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
-        public static final boolean kGyroReversed = false;
-        //Forward Positive, Left Positive, Up Positive (NWU Convention)
-        public static final SwerveDriveKinematics kDriveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(-Global.ROBOT_WIDTH / 2)),
-            new Translation2d(Helpers.General.inToMeters(-Global.ROBOT_LENGTH / 2), Helpers.General.inToMeters(Global.ROBOT_WIDTH / 2))
-        );
     }
 
     public static final class DriveTrain {
