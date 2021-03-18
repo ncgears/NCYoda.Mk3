@@ -133,7 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 
 	public void lockAngle() {
-		desiredAngle = m_gyro.getAngle();
+		desiredAngle = Helpers.General.roundDouble(m_gyro.getAngle(), 3);
 		angleLocked = true;
 		Helpers.Debug.debug("Angle Locked to "+desiredAngle);
 	}
