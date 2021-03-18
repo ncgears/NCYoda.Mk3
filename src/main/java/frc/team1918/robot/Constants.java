@@ -165,12 +165,7 @@ public class Constants {
         public final static int DT_DRIVE_SECOND_GEARONE = 15; //swerve drive second gear set input teeth
         public final static int DT_DRIVE_SECOND_GEARTWO = 45; //swerve drive second gear set output teeth
         public final static double DT_DRIVE_CONVERSION_FACTOR = (DT_DRIVE_FIRST_GEARONE / DT_DRIVE_FIRST_GEARTWO) * (DT_DRIVE_SECOND_GEARONE / DT_DRIVE_SECOND_GEARTWO); //Conversion factor to correct RPM from SparkMax getVelocity()
-        ////Turn PID Tuning
-        public final static double DT_TURN_P = 8.0;
-        public final static double DT_TURN_I = 0.0;
-        public final static double DT_TURN_D = 80.0;
-        public final static int DT_TURN_IZONE = 0;
-        ////Front Left
+        ////Defaults if calibration file fails to read -- this shouldnt happen
         public final static int DT_FL_MECHZERO = 0; //Front Left encoder value at mechanical zero, only change if mechanics broke things
         public final static int DT_FR_MECHZERO = 0; //Front Right encoder value at mechanical zero, only change if mechanics broke things
         public final static int DT_RL_MECHZERO = 0; //Rear Left encoder value at mechanical zero, only change if mechanics broke things
