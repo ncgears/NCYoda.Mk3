@@ -116,7 +116,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the strafe axis
          */
         public final static double getAxisStrafeValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_STRAFE)) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_STRAFE);
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.Driver.AXIS_STRAFE)) : dj.getRawAxis(Constants.OI.Driver.AXIS_STRAFE);
         }
 
         /**
@@ -124,7 +124,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the fwd axis
          */
         public final static double getAxisFwdValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_FWD)*-1) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_FWD)*-1;
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.Driver.AXIS_FWD)*-1) : dj.getRawAxis(Constants.OI.Driver.AXIS_FWD)*-1;
         }
 
         /**
@@ -132,7 +132,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the turn axis
          */
         public final static double getAxisTurnValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.DRIVER_AXIS_TURN)) : dj.getRawAxis(Constants.OI.DRIVER_AXIS_TURN);
+            return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.Driver.AXIS_TURN)) : dj.getRawAxis(Constants.OI.Driver.AXIS_TURN);
         }
 
         //OPERATOR CONTROLS
@@ -141,7 +141,7 @@ public class Helpers {
          * @return double precision -1 to 1 of the fwd axis
          */
         public double getClimbAxisValue(boolean useDeadband) {
-            return (useDeadband) ? applyDeadband(oj.getRawAxis(Constants.OI.OPER_AXIS_CLIMB)) : oj.getRawAxis(Constants.OI.OPER_AXIS_CLIMB);
+            return (useDeadband) ? applyDeadband(oj.getRawAxis(Constants.OI.Operator.AXIS_CLIMB)) : oj.getRawAxis(Constants.OI.Operator.AXIS_CLIMB);
         }
 
         //HELPERS

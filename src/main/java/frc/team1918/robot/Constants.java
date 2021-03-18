@@ -173,8 +173,52 @@ public class Constants {
     }
     
     public static final class OI {
+        /**
+         * This class is based on 2 Logitech controllers, a driver and an operator, setup for swerve drive
+         */
+        public final static int OI_JOY_DRIVER = 0; //ID of Driver Joystick
+        public final static int OI_JOY_OPER = 1; //ID of Operator Joystick
+        public final static double OI_JOY_DEADBAND = 0.1; //Deadband for analog joystick axis
+
+        public static final class Driver {
+            public final static int AXIS_STRAFE = Logitech.AXIS_LH; //Axis that moves the robot side to side on the field
+            public final static int AXIS_FWD = Logitech.AXIS_LV; //Axis that moves the robot up and down the field
+            public final static int AXIS_TURN = Logitech.AXIS_RH; //Axis that controls the rotation of the robot
+            public final static int BTN_ALLUP = Logitech.BTN_A; //Move collector to Up position
+            public final static int BTN_ANTIGRAV = Logitech.BTN_B; //Engage anti-backdrive for climber
+            public final static int BTN_MIXER_FEED = Logitech.BTN_X; //Run the mixer in the forward direction
+            public final static int BTN_MIXER_FEEDSTUCK = Logitech.BTN_LB; //Reverse the mixer direction to unstick power cells
+            public final static int BTN_HOMESWERVE = Logitech.BTN_Y; //Home the swerve modules
+            public final static int BTN_MECHZERO = Logitech.BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
+            public final static int BTN_TOG_DEBUG = Logitech.BTN_START; //Toggle the debugging console messages
+            public final static int DPAD_GYRO_RESET = Logitech.DPAD_LEFT;
+            //Driver controller DPAD used as range selector for shooter speed (top half and bottom half)
+            public final static int DPAD_THROTUP_UL = Logitech.DPAD_UPLEFT;
+            public final static int DPAD_THROTUP_UP = Logitech.DPAD_UP;
+            public final static int DPAD_THROTUP_UR = Logitech.DPAD_UPRIGHT;
+            public final static int DPAD_THROTDN_DL = Logitech.DPAD_DNLEFT;
+            public final static int DPAD_THROTDN_DN = Logitech.DPAD_DN;
+            public final static int DPAD_THROTDN_DR = Logitech.DPAD_DNRIGHT;
+        }
+        public static final class Operator {
+            public final static int AXIS_CLIMB = Logitech.AXIS_LV; //Axis that controls the climber up and down
+            public final static int AXIS_COLLECTOR_OUT = Logitech.AXIS_RT; //Axis that runs the collector out (actually a trigger button)
+            public final static int BTN_SHOOT_WALL = Logitech.BTN_A; //Shoot from at the wall
+            public final static int BTN_SHOOT_SHORT = Logitech.BTN_B; //Shoot from close to the wall
+            public final static int BTN_SHOOT_LINE = Logitech.BTN_X; //Shoot from the initiation line
+            public final static int BTN_SHOOT_TRENCH = Logitech.BTN_Y; //Shoot from the trench
+            public final static int BTN_TOG_MIDDOWN = Logitech.BTN_LB; //Toggle collector arm between middle and down position
+            public final static int BTN_COLLECTOR_IN = Logitech.BTN_RB; //Run the collector in
+            public final static int BTN_MECHZERO = Logitech.BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
+            public final static int DPAD_COLLECTOR_UP = Logitech.DPAD_UP; //Move collector to up
+            public final static int DPAD_COLLECTOR_MID = Logitech.DPAD_RIGHT; //Move collector to middle
+            public final static int DPAD_COLLECTOR_DOWN = Logitech.DPAD_DN; //Move collector down
+        }
+        /**
+         * This class defines the hardware button and axis IDs for a Logitech Controller.
+         * The buttons array is 1-based, but the axis array is 0-based
+         */
         public static final class Logitech {
-            //Logitech Controller buttons  //In Java, buttons are 1-based array, BUT NOT AXIS
             //DO NOT EDIT THESE
             private final static int BTN_A = 1; //A Button
             private final static int BTN_B = 2; //B Button
@@ -202,45 +246,6 @@ public class Constants {
             private final static int DPAD_UPLEFT = 315;
             private final static int DPAD_IDLE = -1; 
         }
-        /**
-         * This class is based on 2 Logitech controllers, a driver and an operator, setup for swerve drive
-         */
-        public final static int OI_JOY_DRIVER = 0; //ID of Driver Joystick
-        public final static int OI_JOY_OPER = 1; //ID of Operator Joystick
-        public final static double OI_JOY_DEADBAND = 0.1; //Deadband for analog joystick axis
-    
-    //Driver Controller
-        public final static int DRIVER_AXIS_STRAFE = Logitech.AXIS_LH; //Axis that moves the robot side to side on the field
-        public final static int DRIVER_AXIS_FWD = Logitech.AXIS_LV; //Axis that moves the robot up and down the field
-        public final static int DRIVER_AXIS_TURN = Logitech.AXIS_RH; //Axis that controls the rotation of the robot
-        public final static int DRIVER_BTN_ALLUP = Logitech.BTN_A; //Move collector to Up position
-        public final static int DRIVER_BTN_ANTIGRAV = Logitech.BTN_B; //Engage anti-backdrive for climber
-        public final static int DRIVER_BTN_MIXER_FEED = Logitech.BTN_X; //Run the mixer in the forward direction
-        public final static int DRIVER_BTN_MIXER_FEEDSTUCK = Logitech.BTN_LB; //Reverse the mixer direction to unstick power cells
-        public final static int DRIVER_BTN_HOMESWERVE = Logitech.BTN_Y; //Home the swerve modules
-        public final static int DRIVER_BTN_MECHZERO = Logitech.BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
-        public final static int DRIVER_BTN_TOG_DEBUG = Logitech.BTN_START; //Toggle the debugging console messages
-        public final static int DRIVER_DPAD_GYRO_RESET = Logitech.DPAD_LEFT;
-        //Driver controller DPAD used as range selector for shooter speed (top half and bottom half)
-        public final static int DRIVER_DPAD_THROTUP_UL = Logitech.DPAD_UPLEFT;
-        public final static int DRIVER_DPAD_THROTUP_UP = Logitech.DPAD_UP;
-        public final static int DRIVER_DPAD_THROTUP_UR = Logitech.DPAD_UPRIGHT;
-        public final static int DRIVER_DPAD_THROTDN_DL = Logitech.DPAD_DNLEFT;
-        public final static int DRIVER_DPAD_THROTDN_DN = Logitech.DPAD_DN;
-        public final static int DRIVER_DPAD_THROTDN_DR = Logitech.DPAD_DNRIGHT;
-    //Operator Controller        
-        public final static int OPER_AXIS_CLIMB = Logitech.AXIS_LV; //Axis that controls the climber up and down
-        public final static int OPER_AXIS_COLLECTOR_OUT = Logitech.AXIS_RT; //Axis that runs the collector out (actually a trigger button)
-        public final static int OPER_BTN_SHOOT_WALL = Logitech.BTN_A; //Shoot from at the wall
-        public final static int OPER_BTN_SHOOT_SHORT = Logitech.BTN_B; //Shoot from close to the wall
-        public final static int OPER_BTN_SHOOT_LINE = Logitech.BTN_X; //Shoot from the initiation line
-        public final static int OPER_BTN_SHOOT_TRENCH = Logitech.BTN_Y; //Shoot from the trench
-        public final static int OPER_BTN_TOG_MIDDOWN = Logitech.BTN_LB; //Toggle collector arm between middle and down position
-        public final static int OPER_BTN_COLLECTOR_IN = Logitech.BTN_RB; //Run the collector in
-        public final static int OPER_BTN_MECHZERO = Logitech.BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
-        public final static int OPER_DPAD_COLLECTOR_UP = Logitech.DPAD_UP; //Move collector to up
-        public final static int OPER_DPAD_COLLECTOR_MID = Logitech.DPAD_RIGHT; //Move collector to middle
-        public final static int OPER_DPAD_COLLECTOR_DOWN = Logitech.DPAD_DN; //Move collector down
     }
 }
 
