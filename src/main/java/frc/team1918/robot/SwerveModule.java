@@ -98,7 +98,7 @@ public class SwerveModule {
             return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
         }
     }
-    public SwerveModuleState optimizeBad(SwerveModuleState desiredState) {
+    public SwerveModuleState optimizeBad(SwerveModuleState desiredState) { //TODO: Remove optimizeBad() once optimize() is working properly
         double wheelSpeed = desiredState.speedMetersPerSecond;
         double waRads = desiredState.angle.getRadians();
         double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
@@ -169,7 +169,7 @@ public class SwerveModule {
      * Gets the position of the relative encoder in encoder ticks
      * @return Integer of relative encoder ticks
      */
-    public int getTurnRelPos(){
+    public int getTurnRelPors(){
         return turn.getSensorCollection().getQuadraturePosition();
         //https://github.com/CrossTheRoadElec/Phoenix-Documentation/blob/master/Legacy/Migration%20Guide.md
     }
@@ -274,7 +274,7 @@ public class SwerveModule {
 	 * @param wa wheel angle location to set to in radians
 	 */
 	public void setTurnLocation(double waRads) {
-        double currentAngleRads = Helpers.General.ticksToRadians(getTurnRelPos());
+        double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
         double targetAngleRads = waRads;
         int currentNumRotations = (int) (currentAngleRads / FULL_ROTATION);
         targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROTATION : (currentNumRotations + 1) * FULL_ROTATION;
