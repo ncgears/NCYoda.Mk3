@@ -34,8 +34,8 @@ public class shooter_shootWall extends CommandBase {
   public void initialize() {
     Helpers.Debug.debug("Shooter: Shoot from Wall");
     m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOTER_WALL_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOTER_WALL_RPM);
+    m_shooter.raiseHood(Constants.Shooter.SHOOT_WALL_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_WALL_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

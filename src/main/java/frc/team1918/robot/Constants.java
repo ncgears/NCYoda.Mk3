@@ -34,32 +34,33 @@ public class Constants {
     }
     
     public static final class Shooter {
-        public final static int SHOOTER_WALL_RPM = 2650; //Wall
-        public final static boolean SHOOTER_WALL_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOTER_SHORT_RPM = 3780; //Short
-        public final static boolean SHOOTER_SHORT_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_LINE_RPM = 3225; //Line
-        public final static boolean SHOOTER_LINE_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOTER_TRENCH_RPM = 3300; //Trench
-        public final static boolean SHOOTER_TRENCH_HOOD = Air.AIR_HOOD_UP;
+        public final static boolean FEED_isDisabled = false; //Disable the feed for testing
 
-        public final static int SHOOTER_SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
-        public final static int SHOOTER_FEED1_MC_ID = 14; //ID of the Shooter stage 1 TalonSRX
-        public final static int SHOOTER_FEED2_MC_ID = 6; //ID of the Shooter stage 2 TalonSRX
-        public final static boolean SHOOTER_FEED1_INVERT = true; //Should the Feed1 talon be inverted
-        public final static boolean SHOOTER_FEED2_INVERT = false; //Should the Feed2 talon be inverted
-        public final static boolean SHOOTER_FEED_DISABLED = false; //Disable the feed for testing
-        public final static double SHOOTER_FEED1_SPEED = 1.0; //Speed for the Feed1 talon
-        public final static double SHOOTER_FEED2_SPEED = 1.0; //Speed for the Feed2 talon
-        public final static double SHOOTER_MAX_RPM = 5600; //Maximum RPMs for setting shooter
-        public final static double SHOOTER_MIN_RPM = 2200; //Minimum RPMs for setting shooter
-        public final static double SHOOTER_SPEED_INCREMENT = 25; //Incremental amounts to adjust shooter throttle
-        public final static boolean SHOOTER_SHOOT_INVERT = true;
-        public final static double SHOOTER_PID_P = 9e-6; //9e-6;
-        public final static double SHOOTER_PID_I = 0; //4e-7; 
-        public final static double SHOOTER_PID_D = 0; 
-        public final static double SHOOTER_PID_IZONE = 0;
-        public final static double SHOOTER_PID_FF = 1/SHOOTER_MAX_RPM; //Feed forward - This should be 1/MAX_RPM
+        public final static int SHOOT_WALL_RPM = 2650; //Wall
+        public final static boolean SHOOT_WALL_HOOD = !Air.AIR_HOOD_UP;
+        public final static int SHOOT_SHORT_RPM = 3780; //Short
+        public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOT_LINE_RPM = 3225; //Line
+        public final static boolean SHOOT_LINE_HOOD = Air.AIR_HOOD_UP;
+        public final static int SHOOT_TRENCH_RPM = 3300; //Trench
+        public final static boolean SHOOT_TRENCH_HOOD = Air.AIR_HOOD_UP;
+
+        public final static int SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
+        public final static int FEED_1_MC_ID = 14; //ID of the Shooter stage 1 TalonSRX
+        public final static int FEED_2_MC_ID = 6; //ID of the Shooter stage 2 TalonSRX
+        public final static boolean FEED_1_isInverted = true; //Should the Feed1 talon be inverted
+        public final static double FEED_1_SPEED = 1.0; //Speed for the Feed1 talon
+        public final static boolean FEED_2_isInverted = false; //Should the Feed2 talon be inverted
+        public final static double FEED_2_SPEED = 1.0; //Speed for the Feed2 talon
+        public final static double SHOOT_MAX_RPM = 5600; //Maximum RPMs for setting shooter
+        public final static double SHOOT_MIN_RPM = 2200; //Minimum RPMs for setting shooter
+        public final static double SHOOT_speedIncrement = 25; //Incremental amounts to adjust shooter throttle
+        public final static boolean SHOOT_isInverted = true;
+        public final static double SHOOT_PID_P = 9e-6; //9e-6;
+        public final static double SHOOT_PID_I = 0; //4e-7; 
+        public final static double SHOOT_PID_D = 0; 
+        public final static double SHOOT_PID_IZONE = 0;
+        public final static double SHOOT_PID_FF = 1/SHOOT_MAX_RPM; //Feed forward - This should be 1/MAX_RPM
         //Feed Forward Explanation: Reference output times desired result.. IE, if the MAX is 5400 RPM at a reference output of 1.0, then 1/5400 FF is appropriate.  
         //This supplies the controller with a known output value to get the desired target result, then the PID can handle deviations from the known behavior.
         //We should get the MAX RPM from trial and error by running with a reference power of 100% and measuring the actual result from the encoder
