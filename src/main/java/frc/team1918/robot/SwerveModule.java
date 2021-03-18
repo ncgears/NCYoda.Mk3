@@ -169,7 +169,7 @@ public class SwerveModule {
      * Gets the position of the relative encoder in encoder ticks
      * @return Integer of relative encoder ticks
      */
-    public int getTurnRelPors(){
+    public int getTurnRelPos(){
         return turn.getSensorCollection().getQuadraturePosition();
         //https://github.com/CrossTheRoadElec/Phoenix-Documentation/blob/master/Legacy/Migration%20Guide.md
     }
