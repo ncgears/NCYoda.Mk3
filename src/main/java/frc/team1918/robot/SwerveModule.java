@@ -132,8 +132,11 @@ public class SwerveModule {
      */
     public void setDesiredState(SwerveModuleState desiredState) {
         SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
+        int turn_ticks = (Constants.Global.SWERVE_SENSOR_NONCONTINUOUS) 
+            ? (40960 + Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)) & 0xFFF
+            : Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos);
         drive.set(state.speedMetersPerSecond);
-        turn.set(ControlMode.Position, Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos));
+        turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
             Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)));
         }

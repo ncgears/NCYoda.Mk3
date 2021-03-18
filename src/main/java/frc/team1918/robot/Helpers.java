@@ -67,10 +67,11 @@ public class Helpers {
          * @return integer value in encoder ticks
          */
         public final static int radiansToTicks(double rads) {
+
 			return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2));
         }
         public final static int radiansToTicks(double rads, int offset_ticks) {
-            return (int) (rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2)) + offset_ticks;
+            return (int) ((rads / Math.PI * (Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION / 2)) + offset_ticks);
         }
 
         /**
