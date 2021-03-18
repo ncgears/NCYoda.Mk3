@@ -66,23 +66,23 @@ public class RobotContainer {
 
   //Define the buttons and whhere they are bound
   //Driver Controller
-  private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVE);
-  // private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ALLUP);
-  // private JoystickButton btn_ANTIGRAV = new JoystickButton(dj, Constants.OI.DRIVE_BTN_ANTIGRAV);
-  private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MECHZERO);
-  private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.DRIVE_BTN_HOMESWERVE);
-  private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEED);
-  private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.DRIVE_BTN_MIXER_FEEDSTUCK);
-  // private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_START);
-  // private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.DRIVE_BTN_CALIBRATE_STOP);
-  private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.DRIVE_BTN_TOG_DEBUG);
-  private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.DRIVE_DPAD_GYRO_RESET);
-  private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UP);
-    private POVButton btn_THROTUP_UL = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UL);
-    private POVButton btn_THROTUP_UR = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTUP_UR);
-  private POVButton btn_THROTDN_DN = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DN);
-    private POVButton btn_THROTDN_DL = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DL);
-    private POVButton btn_THROTDN_DR = new POVButton(dj, Constants.OI.DRIVE_DPAD_THROTDN_DR);
+  private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVER);
+  // private JoystickButton btn_ALLUP = new JoystickButton(dj, Constants.OI.DRIVER_BTN_ALLUP);
+  // private JoystickButton btn_ANTIGRAV = new JoystickButton(dj, Constants.OI.DRIVER_BTN_ANTIGRAV);
+  private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.DRIVER_BTN_MECHZERO);
+  private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.DRIVER_BTN_HOMESWERVE);
+  private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.DRIVER_BTN_MIXER_FEED);
+  private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.DRIVER_BTN_MIXER_FEEDSTUCK);
+  // private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.DRIVER_BTN_CALIBRATE_START);
+  // private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.DRIVER_BTN_CALIBRATE_STOP);
+  private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.DRIVER_BTN_TOG_DEBUG);
+  private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.DRIVER_DPAD_GYRO_RESET);
+  private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTUP_UP);
+    private POVButton btn_THROTUP_UL = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTUP_UL);
+    private POVButton btn_THROTUP_UR = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTUP_UR);
+  private POVButton btn_THROTDN_DN = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTDN_DN);
+    private POVButton btn_THROTDN_DL = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTDN_DL);
+    private POVButton btn_THROTDN_DR = new POVButton(dj, Constants.OI.DRIVER_DPAD_THROTDN_DR);
   //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
   private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
   private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);

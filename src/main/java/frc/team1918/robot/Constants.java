@@ -176,7 +176,7 @@ public class Constants {
         /**
          * This class is based on 2 Logitech controllers, a driver and an operator, setup for swerve drive
          */
-        public final static int OI_JOY_DRIVE = 0; //ID of Driver Joystick
+        public final static int OI_JOY_DRIVER = 0; //ID of Driver Joystick
         public final static int OI_JOY_OPER = 1; //ID of Operator Joystick
         public final static double OI_JOY_DEADBAND = 0.1; //Deadband for analog joystick axis
         
@@ -209,29 +209,29 @@ public class Constants {
         private final static int LOGITECH_DPAD_IDLE = -1; 
     
     //Temporary
-        public final static int DRIVE_BTN_CALIBRATE_START = LOGITECH_BTN_B; //temporary for testing
-        public final static int DRIVE_BTN_CALIBRATE_STOP = LOGITECH_BTN_A; //temporary for testing
-        public final static int DRIVE_BTN_MAXPOWER = LOGITECH_DPAD_RIGHT;
+        public final static int DRIVER_BTN_CALIBRATE_START = LOGITECH_BTN_B; //temporary for testing
+        public final static int DRIVER_BTN_CALIBRATE_STOP = LOGITECH_BTN_A; //temporary for testing
+        public final static int DRIVER_BTN_MAXPOWER = LOGITECH_DPAD_RIGHT;
 
     //Driver Controller
-        public final static int DRIVE_AXIS_STRAFE = LOGITECH_AXIS_LH; //Axis that moves the robot side to side on the field
-        public final static int DRIVE_AXIS_FWD = LOGITECH_AXIS_LV; //Axis that moves the robot up and down the field
-        public final static int DRIVE_AXIS_TURN = LOGITECH_AXIS_RH; //Axis that controls the rotation of the robot
-        public final static int DRIVE_BTN_ALLUP = LOGITECH_BTN_A; //Move collector to Up position
-        public final static int DRIVE_BTN_ANTIGRAV = LOGITECH_BTN_B; //Engage anti-backdrive for climber
-        public final static int DRIVE_BTN_MIXER_FEED = LOGITECH_BTN_X; //Run the mixer in the forward direction
-        public final static int DRIVE_BTN_MIXER_FEEDSTUCK = LOGITECH_BTN_LB; //Reverse the mixer direction to unstick power cells
-        public final static int DRIVE_BTN_HOMESWERVE = LOGITECH_BTN_Y; //Home the swerve modules
-        public final static int DRIVE_BTN_MECHZERO = LOGITECH_BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
-        public final static int DRIVE_BTN_TOG_DEBUG = LOGITECH_BTN_START; //Toggle the debugging console messages
-        public final static int DRIVE_DPAD_GYRO_RESET = LOGITECH_DPAD_LEFT;
-        //Drive controller DPAD used as range selector for shooter speed (top half and bottom half)
-        public final static int DRIVE_DPAD_THROTUP_UL = LOGITECH_DPAD_UPLEFT;
-        public final static int DRIVE_DPAD_THROTUP_UP = LOGITECH_DPAD_UP;
-        public final static int DRIVE_DPAD_THROTUP_UR = LOGITECH_DPAD_UPRIGHT;
-        public final static int DRIVE_DPAD_THROTDN_DL = LOGITECH_DPAD_DNLEFT;
-        public final static int DRIVE_DPAD_THROTDN_DN = LOGITECH_DPAD_DN;
-        public final static int DRIVE_DPAD_THROTDN_DR = LOGITECH_DPAD_DNRIGHT;
+        public final static int DRIVER_AXIS_STRAFE = LOGITECH_AXIS_LH; //Axis that moves the robot side to side on the field
+        public final static int DRIVER_AXIS_FWD = LOGITECH_AXIS_LV; //Axis that moves the robot up and down the field
+        public final static int DRIVER_AXIS_TURN = LOGITECH_AXIS_RH; //Axis that controls the rotation of the robot
+        public final static int DRIVER_BTN_ALLUP = LOGITECH_BTN_A; //Move collector to Up position
+        public final static int DRIVER_BTN_ANTIGRAV = LOGITECH_BTN_B; //Engage anti-backdrive for climber
+        public final static int DRIVER_BTN_MIXER_FEED = LOGITECH_BTN_X; //Run the mixer in the forward direction
+        public final static int DRIVER_BTN_MIXER_FEEDSTUCK = LOGITECH_BTN_LB; //Reverse the mixer direction to unstick power cells
+        public final static int DRIVER_BTN_HOMESWERVE = LOGITECH_BTN_Y; //Home the swerve modules
+        public final static int DRIVER_BTN_MECHZERO = LOGITECH_BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
+        public final static int DRIVER_BTN_TOG_DEBUG = LOGITECH_BTN_START; //Toggle the debugging console messages
+        public final static int DRIVER_DPAD_GYRO_RESET = LOGITECH_DPAD_LEFT;
+        //Driver controller DPAD used as range selector for shooter speed (top half and bottom half)
+        public final static int DRIVER_DPAD_THROTUP_UL = LOGITECH_DPAD_UPLEFT;
+        public final static int DRIVER_DPAD_THROTUP_UP = LOGITECH_DPAD_UP;
+        public final static int DRIVER_DPAD_THROTUP_UR = LOGITECH_DPAD_UPRIGHT;
+        public final static int DRIVER_DPAD_THROTDN_DL = LOGITECH_DPAD_DNLEFT;
+        public final static int DRIVER_DPAD_THROTDN_DN = LOGITECH_DPAD_DN;
+        public final static int DRIVER_DPAD_THROTDN_DR = LOGITECH_DPAD_DNRIGHT;
     //Operator Controller        
         public final static int OPER_AXIS_CLIMB = LOGITECH_AXIS_LV; //Axis that controls the climber up and down
         public final static int OPER_AXIS_COLLECTOR_OUT = LOGITECH_AXIS_RT; //Axis that runs the collector out (actually a trigger button)
