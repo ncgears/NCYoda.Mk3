@@ -413,7 +413,7 @@ public class DriveSubsystem extends SubsystemBase {
 		m_dtRR.setHomePos(rrHome);
 
 		try {
-			bw.write(outString);
+			bw.write(outString+"\n");
 			bw.close();
 			fw.close();
 		} catch (IOException e) {
@@ -438,19 +438,19 @@ public class DriveSubsystem extends SubsystemBase {
 				switch (part[0]) {
 					case "flHome":
 						flHome = Integer.parseInt(part[1]);
-						// System.out.print("readAllHomes: flHome="+flHome+"\n");
+						Helpers.Debug.debug("readAllHomes: flHome="+flHome);
 						break;
 					case "frHome":
 						frHome = Integer.parseInt(part[1]);
-						// System.out.print("readAllHomes: frHome="+frHome+"\n");
+						Helpers.Debug.debug("readAllHomes: frHome="+frHome);
 						break;
 					case "rlHome":
 						rlHome = Integer.parseInt(part[1]);
-						// System.out.print("readAllHomes: rlHome="+rlHome+"\n");
+						Helpers.Debug.debug("readAllHomes: rlHome="+rlHome);
 						break;
 					case "rrHome":
 						rrHome = Integer.parseInt(part[1]);
-						// System.out.print("readAllHomes: rrHome="+rrHome+"\n");
+						Helpers.Debug.debug("readAllHomes: rrHome="+rrHome);
 						break;
 				}
 				line = br.readLine(); //beg for more bread
