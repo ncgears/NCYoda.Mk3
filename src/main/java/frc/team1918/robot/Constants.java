@@ -71,7 +71,7 @@ public class Constants {
         public final static double SHOOT_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOT_speedIncrement = 25; //Incremental amounts to adjust shooter throttle
         public final static boolean SHOOT_isInverted = true;
-        public final static double SHOOT_PID_P = 9e-6; //9e-6;
+        public final static double SHOOT_PID_P = 9e-4; //9e-6;
         public final static double SHOOT_PID_I = 0; //4e-7; 
         public final static double SHOOT_PID_D = 0; 
         public final static double SHOOT_PID_IZONE = 0;
@@ -122,7 +122,7 @@ public class Constants {
         /**
          * Constants for Front Left Swerve Module
          */
-        public static final class FL {
+        public static final class FL {  //TODO: PID Tuning
             public static final int DRIVE_MC_ID = 2; //SparkMAX Motor Controller ID
             public static final int TURN_MC_ID = 7; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
@@ -131,6 +131,7 @@ public class Constants {
             public static final double TURN_kI = 0.00001; //PID I //0
             public static final double TURN_kD = 0.9; //PID D //80.0
             public static final int TURN_kIZone = 0; //PID IZONE
+            public static final int TURN_ALLOWED_ERROR = 2;
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
         /**
@@ -145,6 +146,7 @@ public class Constants {
             public static final double TURN_kI = 0; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
+            public static final int TURN_ALLOWED_ERROR = 2;
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
         /**
@@ -159,6 +161,7 @@ public class Constants {
             public static final double TURN_kI = 0; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
+            public static final int TURN_ALLOWED_ERROR = 2;
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
         /**
@@ -173,6 +176,7 @@ public class Constants {
             public static final double TURN_kI = 0; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
+            public static final int TURN_ALLOWED_ERROR = 2;
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
         }
     }

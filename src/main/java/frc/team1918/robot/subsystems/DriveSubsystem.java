@@ -47,24 +47,28 @@ public class DriveSubsystem extends SubsystemBase {
 	private static SwerveModule m_dtFL = new SwerveModule("dtFL",
 		Constants.Swerve.FL.DRIVE_MC_ID, Constants.Swerve.FL.TURN_MC_ID,
 		Constants.Swerve.FL.TURN_kP, Constants.Swerve.FL.TURN_kI, Constants.Swerve.FL.TURN_kD, Constants.Swerve.FL.TURN_kIZone,
+		Constants.Swerve.FL.TURN_ALLOWED_ERROR,
 		Constants.Swerve.FL.DRIVE_wheelDiamOffsetMM,
 		Constants.Swerve.FL.TURN_sensorPhase, Constants.Swerve.FL.TURN_isInverted,
 		flHome); // Front Left
 	private static SwerveModule m_dtFR = new SwerveModule("dtFR",
 		Constants.Swerve.FR.DRIVE_MC_ID, Constants.Swerve.FR.TURN_MC_ID,
 		Constants.Swerve.FR.TURN_kP, Constants.Swerve.FR.TURN_kI, Constants.Swerve.FR.TURN_kD, Constants.Swerve.FR.TURN_kIZone,
+		Constants.Swerve.FR.TURN_ALLOWED_ERROR,
 		Constants.Swerve.FR.DRIVE_wheelDiamOffsetMM,
 		Constants.Swerve.FR.TURN_sensorPhase, Constants.Swerve.FR.TURN_isInverted,
 		frHome); // Front Right
 	private static SwerveModule m_dtRL = new SwerveModule("dtRL",
 		Constants.Swerve.RL.DRIVE_MC_ID, Constants.Swerve.RL.TURN_MC_ID,
 		Constants.Swerve.RL.TURN_kP, Constants.Swerve.RL.TURN_kI, Constants.Swerve.RL.TURN_kD, Constants.Swerve.RL.TURN_kIZone,
+		Constants.Swerve.RL.TURN_ALLOWED_ERROR,
 		Constants.Swerve.RL.DRIVE_wheelDiamOffsetMM,
 		Constants.Swerve.RL.TURN_sensorPhase, Constants.Swerve.RL.TURN_isInverted,
 		rlHome); // Rear Left
 	private static SwerveModule m_dtRR = new SwerveModule("dtRR",
 		Constants.Swerve.RR.DRIVE_MC_ID, Constants.Swerve.RR.TURN_MC_ID,
 		Constants.Swerve.RR.TURN_kP, Constants.Swerve.RR.TURN_kI, Constants.Swerve.RR.TURN_kD, Constants.Swerve.RR.TURN_kIZone,
+		Constants.Swerve.RR.TURN_ALLOWED_ERROR,
 		Constants.Swerve.RR.DRIVE_wheelDiamOffsetMM,
 		Constants.Swerve.RR.TURN_sensorPhase, Constants.Swerve.RR.TURN_isInverted,
 		rrHome); // Rear Right

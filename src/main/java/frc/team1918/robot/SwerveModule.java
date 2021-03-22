@@ -20,6 +20,7 @@ public class SwerveModule {
     private final double FULL_ROT_RADS = (2 * Math.PI);
     private final double TURN_P, TURN_I, TURN_D;
     private final int TURN_IZONE;
+    private final int TURN_ALLOWED_ERROR;
     private boolean isDrivePowerInverted = false;
     private String moduleName;
     private double wheelOffsetMM = 0;
@@ -41,7 +42,7 @@ public class SwerveModule {
 	 * @param wheelOffsetMM Adjustment to size of the wheel to account for wear
 	 * @param homePos The home position of this swerve module
 	 */
-    public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, double wheelOffsetMM, boolean sensorPhase, boolean inverted, int homePos){
+    public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, int tAllowedError, double wheelOffsetMM, boolean sensorPhase, boolean inverted, int homePos){
         drive = new CANSparkMax(driveMC_ID, MotorType.kBrushless);
         turn = new WPI_TalonSRX(turnMC_ID);
         moduleName = name;
@@ -50,6 +51,7 @@ public class SwerveModule {
         TURN_I = tI;
         TURN_D = tD;
         TURN_IZONE = tIZone;
+        TURN_ALLOWED_ERROR = tAllowedError;
 
         turn.configFactoryDefault(); //Reset controller to factory defaults to avoid wierd stuff
         turn.set(ControlMode.PercentOutput, 0); //Set controller to disabled
@@ -64,6 +66,7 @@ public class SwerveModule {
         turn.config_kI(0, TURN_I);
         turn.config_kD(0, TURN_D);
         turn.config_IntegralZone(0, TURN_IZONE);
+        turn.configAllowableClosedloopError(0, TURN_ALLOWED_ERROR); 
     }
 
     /**
