@@ -187,7 +187,7 @@ public class Constants {
     public static final class DriveTrain {
         ////Global Tuning
         public final static boolean DT_USE_DRIVESTRAIGHT = true; //enable driveStraight functionality in drive() method
-        public final static double DT_DRIVESTRAIGHT_P = 0.075; //kP for driveStraight correction
+        public final static double DT_DRIVESTRAIGHT_P = 0.065; //kP for driveStraight correction
         ////Home Tuning
         public final static String DT_HOMES_FILE = "/home/lvuser/swerveHomes2021.txt"; //The file where we save the homes data to persist reboots
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders

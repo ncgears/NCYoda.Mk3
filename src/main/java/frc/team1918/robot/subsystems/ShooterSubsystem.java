@@ -81,11 +81,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void increaseShooterSpeed() {
-    m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MAX_RPM);
+    if(m_shooter_rpm != 0) m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MAX_RPM);
   }
 
   public void decreaseShooterSpeed() {
-    m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MIN_RPM);
+    if(m_shooter_rpm != 0) m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MIN_RPM);
   }
 
   public void setShooterSpeedFromDashboard() {
