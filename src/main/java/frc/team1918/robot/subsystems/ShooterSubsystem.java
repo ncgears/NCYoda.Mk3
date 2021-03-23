@@ -82,10 +82,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void increaseShooterSpeed() {
     m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MAX_RPM);
+    Helpers.Debug.debug("New Shooter Speed:"+m_shooter_rpm);
   }
 
   public void decreaseShooterSpeed() {
     m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MIN_RPM);
+    Helpers.Debug.debug("New Shooter Speed:"+m_shooter_rpm);
   }
 
   public void setShooterSpeedFromDashboard() {
