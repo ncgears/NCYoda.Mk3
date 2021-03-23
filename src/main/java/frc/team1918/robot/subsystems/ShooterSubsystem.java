@@ -23,7 +23,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax shoot; // shooter controller
   private double m_shooter_rpm = 0.0; // Current shooter speed
   private double m_shooter_oldrpm = 0.0; // Old shooter speed
-  private double m_shooter_offset = 0.0; //offset to shooter throttle
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
   private Solenoid m_hood;
@@ -81,20 +80,12 @@ public class ShooterSubsystem extends SubsystemBase {
     shoot.set(Vbus);
   }
 
-  public void resetShooterSpeedAdjustment() {
-    m_shooter_offset = 0.0;
-  }
-
   public void increaseShooterSpeed() {
-    m_shooter_offset += Constants.Shooter.SHOOT_speedIncrement;
     m_shooter_rpm = Math.min(m_shooter_rpm + Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MAX_RPM);
-    Helpers.Debug.debug("New Shooter Speed: "+ (m_shooter_rpm+m_shooter_offset) +" offset:"+m_shooter_offset);
   }
 
   public void decreaseShooterSpeed() {
-    m_shooter_offset -= Constants.Shooter.SHOOT_speedIncrement;
     m_shooter_rpm = Math.max(m_shooter_rpm - Constants.Shooter.SHOOT_speedIncrement, Constants.Shooter.SHOOT_MIN_RPM);
-    Helpers.Debug.debug("New Shooter Speed: "+ (m_shooter_rpm+m_shooter_offset) +" offset:"+m_shooter_offset);
   }
 
   public void setShooterSpeedFromDashboard() {
