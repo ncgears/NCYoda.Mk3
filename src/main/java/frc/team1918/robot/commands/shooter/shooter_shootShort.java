@@ -33,9 +33,6 @@ public class shooter_shootShort extends CommandBase {
   @Override
   public void initialize() {
     Helpers.Debug.debug("Shooter: Shoot from Short");
-    m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOT_SHORT_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_SHORT_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,19 +41,19 @@ public class shooter_shootShort extends CommandBase {
     if (debug_ticks % Constants.Global.DEBUG_RECURRING_TICKS == 0) {
       // Helpers.Debug.debug("Shooter (Short): Current RPM="+m_shooter.getShooterSpeed()+" Target="+Constants.Shooter.SHOOTER_SHORT_RPM);
     }
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOT_SHORT_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_SHORT_RPM);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.runFeeder(false);
-    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
-    m_shooter.setShooterSpeed(0);
-}
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

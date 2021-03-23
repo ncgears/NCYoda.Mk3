@@ -32,29 +32,26 @@ public class shooter_shootWall extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Helpers.Debug.debug("Shooter: Shoot from Wall");
-    m_shooter.runFeeder(true);
-    m_shooter.raiseHood(Constants.Shooter.SHOOT_WALL_HOOD);
-    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_WALL_RPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // debug_ticks = Helpers.Debug.debug("Shooter (Wall): Current RPM="+m_shooter.getShooterSpeed()+" Target="+Constants.Shooter.SHOOTER_WALL_RPM, debug_ticks);
+    Helpers.Debug.debug("Shooter: Shoot from Wall");
+    m_shooter.runFeeder(true);
+    m_shooter.raiseHood(Constants.Shooter.SHOOT_WALL_HOOD);
+    m_shooter.setShooterSpeed(Constants.Shooter.SHOOT_WALL_RPM);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.runFeeder(false);
-    m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
-    m_shooter.setShooterSpeed(0);
-}
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

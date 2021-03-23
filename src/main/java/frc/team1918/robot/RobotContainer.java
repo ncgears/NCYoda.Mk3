@@ -134,10 +134,10 @@ public class RobotContainer {
     // btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
     btn_GYRO_RESET.whenPressed(new drive_resetGyro(m_drive));
     btn_TOGGLE_DEBUG.whenPressed(new helpers_toggleDebug());
-    btn_SHOOT_WALL.whileHeld(new shooter_shootWall(m_shooter));
-    btn_SHOOT_LINE.whileHeld(new shooter_shootLine(m_shooter));
-    btn_SHOOT_SHORT.whileHeld(new shooter_shootShort(m_shooter));
-    btn_SHOOT_TRENCH.whileHeld(new shooter_shootTrench(m_shooter));
+    btn_SHOOT_WALL.whenPressed(new shooter_shootWall(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    btn_SHOOT_LINE.whenPressed(new shooter_shootLine(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    btn_SHOOT_SHORT.whenPressed(new shooter_shootShort(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    btn_SHOOT_TRENCH.whenPressed(new shooter_shootTrench(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
     btn_MIXER_FEED.whileHeld(new mixer_mixerForward(m_mixer));
     btn_MIXER_FEEDSTUCK.whileHeld(new mixer_mixerReverse(m_mixer));
     btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));

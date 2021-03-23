@@ -46,6 +46,7 @@ public class shooter_stopShooter extends CommandBase {
     m_shooter.runFeeder(false);
     m_shooter.raiseHood(!Constants.Air.AIR_HOOD_UP);
     m_shooter.setShooterSpeed(0);
+    m_shooter.resetShooterSpeedAdjustment();
   }
 
   // Returns true when the command should end.
