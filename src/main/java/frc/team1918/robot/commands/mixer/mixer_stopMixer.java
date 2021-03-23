@@ -30,13 +30,13 @@ public class mixer_stopMixer extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    Helpers.Debug.debug("Mixer: Stop Mixer");
+    m_mixer.setMixerSpeed(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Helpers.Debug.debug("Mixer: Stop Mixer");
-    m_mixer.setMixerSpeed(0);
   }
 
   // Called once the command ends or is interrupted.

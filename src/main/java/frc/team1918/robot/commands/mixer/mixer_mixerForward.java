@@ -32,13 +32,13 @@ public class mixer_mixerForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    debug_ticks = Helpers.Debug.debug("Mixer: Mixer Forward", debug_ticks);
+    m_mixer.setMixerSpeed(Constants.Mixer.MIXER_SPEED);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    debug_ticks = Helpers.Debug.debug("Mixer: Mixer Forward", debug_ticks);
-    m_mixer.setMixerSpeed(Constants.Mixer.MIXER_SPEED);
   }
 
   // Called once the command ends or is interrupted.
