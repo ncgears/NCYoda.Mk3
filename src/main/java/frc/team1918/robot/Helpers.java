@@ -36,6 +36,7 @@ public class Helpers {
     }
     //General Helpers
     public static final class General {
+        //TODO: Replace calls for inToMeters and ftToMeters with WPILib Units.inchesToMeters and Units.feetToMeters
         /**
         * This function takes a value in inches and returns in meters
         * @param inches double precision value in inches
