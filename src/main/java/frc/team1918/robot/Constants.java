@@ -31,6 +31,14 @@ public class Constants {
     }
 
     /**
+     * Constants for the Autonomous subsystem
+     */
+    public static final class Auton {
+        public final static double kMaxSpeedMetersPerSecond = 0.0;
+        public final static double kMaxAccelerationMetersPerSecondSquared = 0.0;
+    }
+
+    /**
      * Constants for the Pneumantics system
      * This is not a subsystem, the pneumatics are controlled directly in their respective subsystems
      */
