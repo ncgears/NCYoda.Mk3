@@ -36,24 +36,6 @@ public class Helpers {
     }
     //General Helpers
     public static final class General {
-        //TODO: Replace calls for inToMeters and ftToMeters with WPILib Units.inchesToMeters and Units.feetToMeters
-        /**
-        * This function takes a value in inches and returns in meters
-        * @param inches double precision value in inches
-        * @return value in meters
-        */
-        public final static double inToMeters(double inches) {
-           return inches * 0.0254;
-        }
-        /**
-        * This function takes a value in feet (decimal) and returns in meters
-        * @param feet double precision value in feet
-        * @return value in meters
-        */
-        public final static double ftToMeters(double feet) {
-            return feet * 0.3048;
-        }
-
         public final static double roundDouble(double val, int decimals) {
             return Math.round(val * Math.pow(10,decimals)) / Math.pow(10,decimals);
             // final DecimalFormat df = new DecimalFormat(format);
