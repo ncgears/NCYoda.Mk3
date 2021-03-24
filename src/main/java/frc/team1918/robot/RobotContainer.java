@@ -20,7 +20,7 @@ import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
 
 //Subsystems imports
-import frc.team1918.robot.subsystems.ExampleSubsystem;
+import frc.team1918.robot.subsystems.AutonSubsystem;
 // import frc.team1918.robot.subsystems.ClimberSubsystem;
 import frc.team1918.robot.subsystems.CollectorSubsystem;
 import frc.team1918.robot.subsystems.DriveSubsystem;
@@ -32,8 +32,6 @@ import frc.team1918.robot.commands.drive.*;
 import frc.team1918.robot.commands.shooter.*;
 import frc.team1918.robot.commands.mixer.*;
 import frc.team1918.robot.commands.collector.*;
-//samples
-import frc.team1918.robot.commands.ExampleCommand;
 //CommandGroup imports
 import frc.team1918.robot.commandgroups.cg_drive_autoHome;
 
@@ -53,7 +51,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final DriveSubsystem m_drive = new DriveSubsystem();
   //other subsystems
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final AutonSubsystem m_auton = new AutonSubsystem();
   //team 1918 commands
   private final drive_resetGyro m_resetGyro = new drive_resetGyro(m_drive);
   private final cg_drive_autoHome m_autoHome = new cg_drive_autoHome(m_drive);
@@ -63,8 +61,6 @@ public class RobotContainer {
   // private final shooter_shootShort m_shooter_shootShort = new shooter_shootShort(shooter);
   // private final shooter_shootLine m_shooter_shootLine = new shooter_shootLine(shooter);
   // private final shooter_shootTrench m_shooter_shootTrench = new shooter_shootTrench(shooter);
-  //other commands
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   //Define the buttons and whhere they are bound
   //Driver Controller
@@ -184,6 +180,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return m_autonCommand;
+    return null;
   }
 }
