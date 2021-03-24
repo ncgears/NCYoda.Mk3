@@ -9,6 +9,8 @@ package frc.team1918.robot;
 
 //Global imports
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -113,6 +115,10 @@ public class RobotContainer {
     // Enable closed loop control of compressor and enable it
     m_air.setClosedLoopControl(!Constants.Air.AIR_DISABLED);
     if(Constants.Air.AIR_DISABLED) m_air.stop();
+
+    // Enable the camera server and start capture
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(640, 480);
 
     // Set the default command that is run for the robot. Normally, this is the drive command
     m_drive.setDefaultCommand(
