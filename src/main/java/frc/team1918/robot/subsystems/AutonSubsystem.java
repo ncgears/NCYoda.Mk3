@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team1918.robot.Constants;
 import frc.team1918.robot.Helpers;
@@ -32,14 +33,14 @@ public class AutonSubsystem extends SubsystemBase {
 
   public Trajectory getTrajectoryByName(String pathname) {
     var config = getTrajectoryConfig();
-    var startPos = new Pose2d(0, 0, new Rotation2d(0));
-    var endPos = new Pose2d(0, 0, new Rotation2d(0));
+    var startPos = new Pose2d(Units.feetToMeters(0.0), Units.feetToMeters(0.0), new Rotation2d(0));
     var intWaypoints = new ArrayList<Translation2d>();
+    var endPos = new Pose2d(Units.feetToMeters(0.0), Units.feetToMeters(0.0), new Rotation2d(0));
     switch (pathname) {
       case "test":
-        endPos = new Pose2d(3, 0, new Rotation2d(0)); //set a new endPos
-        intWaypoints.add(new Translation2d(1, 1));
-        intWaypoints.add(new Translation2d(2,-1));
+        intWaypoints.add(new Translation2d(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
+        intWaypoints.add(new Translation2d(Units.feetToMeters(6.0), Units.feetToMeters(-3.0)));
+        endPos = new Pose2d(Units.feetToMeters(9.0), Units.feetToMeters(0.0), new Rotation2d(0)); //set a new endPos
         break;
       default:
         Helpers.Debug.debug("Invalid auton path name requested: "+pathname);
