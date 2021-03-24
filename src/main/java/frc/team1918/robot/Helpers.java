@@ -44,6 +44,14 @@ public class Helpers {
         public final static double inToMeters(double inches) {
            return inches * 0.0254;
         }
+        /**
+        * This function takes a value in feet (decimal) and returns in meters
+        * @param feet double precision value in feet
+        * @return value in meters
+        */
+        public final static double ftToMeters(double feet) {
+            return feet * 0.3048;
+        }
 
         public final static double roundDouble(double val, int decimals) {
             return Math.round(val * Math.pow(10,decimals)) / Math.pow(10,decimals);
