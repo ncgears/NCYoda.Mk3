@@ -51,13 +51,13 @@ public class Constants {
     public static final class Shooter {
         public final static boolean FEED_isDisabled = false; //Disable the feed for testing
 
-        public final static int SHOOT_WALL_RPM = 2650; //Wall
+        public final static int SHOOT_WALL_RPM = 2500; //Wall
         public final static boolean SHOOT_WALL_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOT_SHORT_RPM = 3780; //Short
+        public final static int SHOOT_SHORT_RPM = 3400; //Short
         public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOT_LINE_RPM = 3225; //Line
-        public final static boolean SHOOT_LINE_HOOD = Air.AIR_HOOD_UP;
-        public final static int SHOOT_TRENCH_RPM = 3300; //Trench
+        public final static int SHOOT_LINE_RPM = 3000; //Line
+        public final static boolean SHOOT_LINE_HOOD = !Air.AIR_HOOD_UP;
+        public final static int SHOOT_TRENCH_RPM = 3000; //Trench
         public final static boolean SHOOT_TRENCH_HOOD = Air.AIR_HOOD_UP;
 
         public final static int SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
@@ -71,7 +71,7 @@ public class Constants {
         public final static double SHOOT_MIN_RPM = 2200; //Minimum RPMs for setting shooter
         public final static double SHOOT_speedIncrement = 25; //Incremental amounts to adjust shooter throttle
         public final static boolean SHOOT_isInverted = true;
-        public final static double SHOOT_PID_P = 9e-4; //9e-6;
+        public final static double SHOOT_PID_P = 0.001; //9e-6;
         public final static double SHOOT_PID_I = 0; //4e-7; 
         public final static double SHOOT_PID_D = 0; 
         public final static double SHOOT_PID_IZONE = 0;
@@ -86,7 +86,7 @@ public class Constants {
      */
     public static final class Mixer {
         public final static int MIXER_MC_ID = 13; //ID of the Mixer talon
-        public final static double MIXER_SPEED = 0.75; //Speed for the Mixer talon
+        public final static double MIXER_SPEED = 0.5; //Speed for the Mixer talon
     }
 
     /**
