@@ -117,8 +117,10 @@ public class RobotContainer {
     if(Constants.Air.AIR_DISABLED) m_air.stop();
 
     // Enable the camera server and start capture
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(640, 480);
+    if(Constants.Global.CAMERA_ENABLED) {
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(640, 480);
+    }
 
     // Set the default command that is run for the robot. Normally, this is the drive command
     m_drive.setDefaultCommand(
