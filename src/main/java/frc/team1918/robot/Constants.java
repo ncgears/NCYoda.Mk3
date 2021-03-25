@@ -16,7 +16,7 @@ public class Constants {
      */
     public static final class Global {
         //Global Constants
-        public final static boolean CAMERA_ENABLED = false; //set to false if UsbCamera is removed
+        public final static boolean CAMERA_ENABLED = true; //set to false if UsbCamera is removed
         public final static boolean SWERVE_SENSOR_NONCONTINUOUS = true;
         public final static int kTimeoutMs = 30; //Timeout for reporting in DS if action fails, set to 0 to skip confirmation
         public final static int PID_PRIMARY = 0;  //Talon PID slot for primary loop
@@ -61,7 +61,7 @@ public class Constants {
     public static final class Shooter {
         public final static boolean FEED_isDisabled = false; //Disable the feed for testing
 
-        public final static int SHOOT_WALL_RPM = 2500; //Wall
+        public final static int SHOOT_WALL_RPM = 2400; //Wall
         public final static boolean SHOOT_WALL_HOOD = !Air.AIR_HOOD_UP;
         public final static int SHOOT_SHORT_RPM = 3400; //Short
         public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
@@ -112,7 +112,7 @@ public class Constants {
      */
     public static final class Swerve {
         public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
-        public static final boolean USE_DRIVE_PID = true; //true to enable PID based drive control
+        public static final boolean USE_DRIVE_PID = false; //true to enable PID based drive control
         public static final boolean DISABLE_FL = false; //Disable FL Module
         public static final boolean DISABLE_FR = false; //Disable FR Module
         public static final boolean DISABLE_RL = false; //Disable RL Module
