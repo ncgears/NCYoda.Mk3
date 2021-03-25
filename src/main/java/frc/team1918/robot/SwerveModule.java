@@ -1,7 +1,7 @@
 
 package frc.team1918.robot;
 
-import com.revrobotics.CANEncoder;
+// import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 //Spark MAX
 import com.revrobotics.CANSparkMax;
@@ -80,7 +80,7 @@ public class SwerveModule {
         m_drive_pidController.setI(0.0); //PID I
         m_drive_pidController.setD(0.0); //PID D
         // m_drive_pidController.setIZone(0); //IZone
-        m_drive_pidController.setFF(1/5570); //Feed forward
+        m_drive_pidController.setFF(1/4740); //Feed forward
         m_drive_pidController.setOutputRange(-1, 1);
     }
 
