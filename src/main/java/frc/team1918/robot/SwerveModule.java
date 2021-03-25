@@ -1,8 +1,12 @@
 
 package frc.team1918.robot;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 //Spark MAX
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 //Talon SRX
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -27,6 +31,7 @@ public class SwerveModule {
     private int homePos = 0;
     private boolean absEncoderEnabled = false;
     private int debug_ticks1, debug_ticks2;
+    private CANPIDController m_drive_pidController;
 
 //SparkMAX Java API Doc: https://www.revrobotics.com/content/sw/max/sw-docs/java/index.html
 
@@ -67,6 +72,16 @@ public class SwerveModule {
         turn.config_kD(0, TURN_D);
         turn.config_IntegralZone(0, TURN_IZONE);
         turn.configAllowableClosedloopError(0, TURN_ALLOWED_ERROR); 
+
+        drive.restoreFactoryDefaults();
+        drive.setIdleMode(IdleMode.kBrake);
+        m_drive_pidController = drive.getPIDController();
+        m_drive_pidController.setP(0.0); //PID P
+        m_drive_pidController.setI(0.0); //PID I
+        m_drive_pidController.setD(0.0); //PID D
+        // m_drive_pidController.setIZone(0); //IZone
+        // m_drive_pidController.setFF(0); //Feed forward
+        // m_drive_pidController.setOutputRange(-1, 1);
     }
 
     /**
@@ -138,7 +153,7 @@ public class SwerveModule {
         int turn_ticks = (Constants.Global.SWERVE_SENSOR_NONCONTINUOUS) 
             ? (40960 + Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)) & 0xFFF
             : Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos);
-        drive.set(state.speedMetersPerSecond);
+        m_drive_pidController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
         turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
             Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)));
