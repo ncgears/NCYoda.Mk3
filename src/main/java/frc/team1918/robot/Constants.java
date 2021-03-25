@@ -61,7 +61,7 @@ public class Constants {
     public static final class Shooter {
         public final static boolean FEED_isDisabled = false; //Disable the feed for testing
 
-        public final static int SHOOT_WALL_RPM = 2500; //Wall
+        public final static int SHOOT_WALL_RPM = 2400; //Wall
         public final static boolean SHOOT_WALL_HOOD = !Air.AIR_HOOD_UP;
         public final static int SHOOT_SHORT_RPM = 3400; //Short
         public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
