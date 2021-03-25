@@ -156,8 +156,10 @@ public class DriveSubsystem extends SubsystemBase {
 	 */
 	@SuppressWarnings("ParameterName")
 	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
+
 		if(Constants.DriveTrain.DT_USE_DRIVESTRAIGHT) {
 			if(rot != 0) { //We are applying some rotation, so store the new angle
+				//TODO: rotate multiplier if standing still vs moving
 				// desiredAngle = m_gyro.getAngle();  
 				/** TODO: Figure out what new desiredAngle should be.
 				 * This kind of works, but setting the desiredAngle to the current angle here doesnt set it to what the new target
@@ -171,14 +173,16 @@ public class DriveSubsystem extends SubsystemBase {
 				}
 			}
 		}
+		double fwdMPS = fwd * Constants.DriveTrain.DT_kMaxMetersPerSecond;
+		double strMPS = str * Constants.DriveTrain.DT_kMaxMetersPerSecond;
 		var swerveModuleStates =
 		Constants.Swerve.kDriveKinematics.toSwerveModuleStates(fieldRelative
-					? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, getRot2d())
-					: new ChassisSpeeds(fwd, str, rot));
+					? ChassisSpeeds.fromFieldRelativeSpeeds(fwdMPS, strMPS, rot, getRot2d())
+					: new ChassisSpeeds(fwdMPS, strMPS, rot));
 		if (Helpers.Debug.debugThrottleMet(debug_ticks)) {
 			Helpers.Debug.debug((fieldRelative)
-			? ChassisSpeeds.fromFieldRelativeSpeeds(fwd, str, rot, getRot2d()).toString()+" fieldCentric"
-			: new ChassisSpeeds(fwd, str, rot).toString()+" robotCentric");
+			? ChassisSpeeds.fromFieldRelativeSpeeds(fwdMPS, strMPS, rot, getRot2d()).toString()+" fieldCentric"
+			: new ChassisSpeeds(fwdMPS, strMPS, rot).toString()+" robotCentric");
 		}
 		debug_ticks++;
 		SwerveDriveKinematics.normalizeWheelSpeeds(swerveModuleStates, Constants.Swerve.kMaxSpeedMetersPerSecond);

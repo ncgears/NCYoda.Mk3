@@ -97,6 +97,10 @@ public class Helpers {
             return ((rpm / 60) * (wheelDiamMM * Math.PI)) / 1000;
         }
 
+        public final static double metersPerSecondToRPM(double mps, double wheelDiamMM) {
+            return ((mps * 1000) / (wheelDiamMM * Math.PI)) * 60;
+        }
+
     }
     //Helpers for the Operator Interface
     public static final class OI {

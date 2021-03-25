@@ -16,7 +16,7 @@ public class Constants {
      */
     public static final class Global {
         //Global Constants
-        public final static boolean CAMERA_ENABLED = true; //set to false if UsbCamera is removed
+        public final static boolean CAMERA_ENABLED = false; //set to false if UsbCamera is removed
         public final static boolean SWERVE_SENSOR_NONCONTINUOUS = true;
         public final static int kTimeoutMs = 30; //Timeout for reporting in DS if action fails, set to 0 to skip confirmation
         public final static int PID_PRIMARY = 0;  //Talon PID slot for primary loop
@@ -67,7 +67,7 @@ public class Constants {
         public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
         public final static int SHOOT_LINE_RPM = 3000; //Line
         public final static boolean SHOOT_LINE_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOT_TRENCH_RPM = 3000; //Trench
+        public final static int SHOOT_TRENCH_RPM = 3150; //Trench
         public final static boolean SHOOT_TRENCH_HOOD = Air.AIR_HOOD_UP;
 
         public final static int SHOOT_MC_ID = 12; //ID of the Shooter SparkMAX
@@ -112,6 +112,7 @@ public class Constants {
      */
     public static final class Swerve {
         public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
+        public static final boolean USE_DRIVE_PID = true; //true to enable PID based drive control
         public static final boolean DISABLE_FL = false; //Disable FL Module
         public static final boolean DISABLE_FR = false; //Disable FR Module
         public static final boolean DISABLE_RL = false; //Disable RL Module
@@ -119,7 +120,7 @@ public class Constants {
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
-        public static final double kMaxSpeedMetersPerSecond = 4.176; //13.7fps per Mike
+        public static final double kMaxSpeedMetersPerSecond = 3.677; //12.0fps calculated; 13.7fps per Mike
         public static final boolean kGyroReversed = false;
         //Forward Positive, Left Positive, Up Positive (NWU Convention)
         public static final SwerveDriveKinematics kDriveKinematics =
@@ -198,6 +199,7 @@ public class Constants {
         ////Global Tuning
         public final static boolean DT_USE_DRIVESTRAIGHT = true; //enable driveStraight functionality in drive() method
         public final static double DT_DRIVESTRAIGHT_P = 0.065; //kP for driveStraight correction
+        public static final double DT_kMaxMetersPerSecond = 3.677; //limit full stick speed meters to 12.0fps
         ////Home Tuning
         public final static String DT_HOMES_FILE = "/home/lvuser/swerveHomes2021.txt"; //The file where we save the homes data to persist reboots
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders

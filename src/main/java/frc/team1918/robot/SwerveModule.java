@@ -76,12 +76,12 @@ public class SwerveModule {
         drive.restoreFactoryDefaults();
         drive.setIdleMode(IdleMode.kBrake);
         m_drive_pidController = drive.getPIDController();
-        m_drive_pidController.setP(0.0); //PID P
+        m_drive_pidController.setP(0.001); //PID P
         m_drive_pidController.setI(0.0); //PID I
         m_drive_pidController.setD(0.0); //PID D
         // m_drive_pidController.setIZone(0); //IZone
-        // m_drive_pidController.setFF(0); //Feed forward
-        // m_drive_pidController.setOutputRange(-1, 1);
+        m_drive_pidController.setFF(1/5570); //Feed forward
+        m_drive_pidController.setOutputRange(-1, 1);
     }
 
     /**
@@ -147,13 +147,21 @@ public class SwerveModule {
     /**
      * This function takes a desiredState and instructs the motor controllers to move based on the desired state
      * @param desiredState Desired state with speed and angle.
+     * FL = 5570, FR = 5200, RL = 5200, RR = 4740
      */
     public void setDesiredState(SwerveModuleState desiredState) {
+        double wheelDiam = Constants.DriveTrain.DT_WHEEL_DIAM_MM - this.wheelOffsetMM;
         SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
         int turn_ticks = (Constants.Global.SWERVE_SENSOR_NONCONTINUOUS) 
             ? (40960 + Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)) & 0xFFF
             : Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos);
-        m_drive_pidController.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
+        if (Constants.Swerve.USE_DRIVE_PID) {
+            double motorRpm = Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR;
+            // Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
+            m_drive_pidController.setReference(motorRpm, ControlType.kVelocity);
+        } else {
+            drive.set(state.speedMetersPerSecond);
+        }
         turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
             Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)));
