@@ -76,9 +76,9 @@ public class SwerveModule {
         drive.restoreFactoryDefaults();
         drive.setIdleMode(IdleMode.kBrake);
         m_drive_pidController = drive.getPIDController();
-        m_drive_pidController.setP(0.0003); //PID P
+        m_drive_pidController.setP(0.0005); //PID P
         m_drive_pidController.setI(0.0); //PID I
-        m_drive_pidController.setD(0.0); //PID D
+        m_drive_pidController.setD(0.00005); //PID D
         // m_drive_pidController.setIZone(0); //IZone
         m_drive_pidController.setFF(1/4740); //Feed forward
         m_drive_pidController.setOutputRange(-1, 1);
