@@ -76,7 +76,7 @@ public class SwerveModule {
         drive.restoreFactoryDefaults();
         drive.setIdleMode(IdleMode.kBrake);
         m_drive_pidController = drive.getPIDController();
-        m_drive_pidController.setP(0.001); //PID P
+        m_drive_pidController.setP(0.0003); //PID P
         m_drive_pidController.setI(0.0); //PID I
         m_drive_pidController.setD(0.0); //PID D
         // m_drive_pidController.setIZone(0); //IZone
@@ -156,8 +156,8 @@ public class SwerveModule {
             ? (40960 + Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)) & 0xFFF
             : Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos);
         if (Constants.Swerve.USE_DRIVE_PID) {
-            double motorRpm = Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR;
-            // Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
+            double motorRpm = (Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / 0.194444);
+            Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
             m_drive_pidController.setReference(motorRpm, ControlType.kVelocity);
         } else {
             drive.set(state.speedMetersPerSecond);
@@ -173,7 +173,7 @@ public class SwerveModule {
      * This function sets the conversion factor on the SparkMAX from the constants DT_DRIVE_CONVERSION_FACTOR
      */
     public void setDriveConversionFactor() {
-        drive.getEncoder().setVelocityConversionFactor(Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR);
+        // drive.getEncoder().setVelocityConversionFactor(Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR);
     }
 
     /**
