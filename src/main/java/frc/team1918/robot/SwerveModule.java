@@ -160,7 +160,9 @@ public class SwerveModule {
             drive.set(state.speedMetersPerSecond);
         }
         //Calculate the turn (always optimize turn direction)
-        int turn_ticks = minTurnTicks(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos), getTurnAbsPos());
+        int cur_ticks = getTurnAbsPos();
+        int min_ticks = minTurnTicks(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos), cur_ticks);
+        int turn_ticks = min_ticks + cur_ticks;
         turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
             Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+turn_ticks);
