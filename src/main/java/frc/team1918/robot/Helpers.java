@@ -36,6 +36,20 @@ public class Helpers {
     }
     //General Helpers
     public static final class General {
+        /**
+         * This function takes values a and b. It determines the minimum Change between the two based on the wrap value.
+         * @param a 
+         * @param b
+         * @param wrap
+         * @return
+         */
+        public final static double minChange(double a, double b, double wrap) {
+            return Math.IEEEremainder(a - b, wrap);
+        }
+        public final static int minChange(int a, int b, int wrap) {
+            return (int) Math.IEEEremainder(a - b, wrap);
+        }
+
         public final static double roundDouble(double val, int decimals) {
             return Math.round(val * Math.pow(10,decimals)) / Math.pow(10,decimals);
             // final DecimalFormat df = new DecimalFormat(format);

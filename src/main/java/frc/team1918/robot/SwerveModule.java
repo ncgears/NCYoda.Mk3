@@ -110,8 +110,8 @@ public class SwerveModule {
     public SwerveModuleState optimize(SwerveModuleState desiredState) {  //New optimize test 2021-03-17 JRB
         Rotation2d currentAngle = getTurnAbsPosAsRotation2d();
         Rotation2d delta = desiredState.angle.minus(currentAngle);
-        if (Math.abs(delta.getDegrees()) > 90.0 && Math.abs(delta.getDegrees()) < 270) { //new requested turn is between 90 and 270 degrees, invert drive speed and rotate 180 degrees from desired
-            return new SwerveModuleState(-desiredState.speedMetersPerSecond,desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
+        if (Math.abs(delta.getDegrees()) > 90.0 && Math.abs(delta.getDegrees()) < 270) { //new requested delta is between 90 and -90 (270) degrees, invert drive speed and rotate 180 degrees from desired
+            return new SwerveModuleState(-desiredState.speedMetersPerSecond, desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
         } else { //no optimization necessary
             return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
         }
@@ -152,9 +152,6 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState) {
         double wheelDiam = Constants.DriveTrain.DT_WHEEL_DIAM_MM - this.wheelOffsetMM;
         SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
-        int turn_ticks = (Constants.Global.SWERVE_SENSOR_NONCONTINUOUS) 
-            ? (40960 + Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)) & 0xFFF
-            : Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos);
         if (Constants.Swerve.USE_DRIVE_PID) {
             double motorRpm = (Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / 0.194444);
             Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
@@ -162,11 +159,28 @@ public class SwerveModule {
         } else {
             drive.set(state.speedMetersPerSecond);
         }
+        //Calculate the turn (always optimize turn direction)
+        int turn_ticks = minTurnTicks(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos), getTurnAbsPos());
         turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
-            Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos)));
+            Helpers.Debug.debug(moduleName+" Speed="+Helpers.General.roundDouble(state.speedMetersPerSecond,3)+" Turn="+turn_ticks);
         }
         debug_ticks1++;
+    }
+
+    /**
+     * This function calculates the minimum turn (in encoder ticks) based on the desired location and the current location.
+     * It uses the encoder wrap-around to determine if we should turn negative past 0
+     * @param desiredTicks encoder count of desired target
+     * @param curTicks encoder count of current position
+     * @return An encoder count between -4095..0..4095 of the new target
+     */
+    public int minTurnTicks(int desiredTicks, int curTicks) {
+        int wrap = (int) Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
+        return Helpers.General.minChange(desiredTicks,curTicks,wrap);
+        //minChange calculates the shortest distance to the desired target, even if that means wrapping over 0.
+        //Example: curTicks = 1023 (45deg), desiredTicks = 3073 (1 tick above 270deg)
+        //Example result: -2047 ticks (-180deg) instead of +2049 ticks
     }
 
     /**
