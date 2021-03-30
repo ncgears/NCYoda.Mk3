@@ -205,7 +205,6 @@ public class DriveSubsystem extends SubsystemBase {
 		m_dtRR.setDesiredState(desiredStates[3]);
 	}
 
-
 	public static AHRS getm_gyro() {
         return m_gyro;
 	}
@@ -233,46 +232,11 @@ public class DriveSubsystem extends SubsystemBase {
 		m_dtRR.setTurnLocation(rrLoc);
 	}
 
-	public static void setAllTurnPower(double power) {
-		setTurnPower(power, power, power, power);
-	}
-
-	public static void setAllDrivePower(double power) {
-		setDrivePower(power, power, power, power);
-	}
-
-	public static void setAllLocation(double loc) {
-		setLocation(loc, loc, loc, loc);
-	}
-
-	public static boolean isdtLFTurnEncConnected() {
-		return m_dtFL.isTurnEncConnected();
-	}
-
-	public static boolean isdtFRTurnEncConnected() {
-		return m_dtFR.isTurnEncConnected();
-	}
-
-	public static boolean isdtRLTurnEncConnected() {
-		return m_dtRL.isTurnEncConnected();
-	}
-
-	public static boolean isdtRRTurnEncConnected() {
-		return m_dtRR.isTurnEncConnected();
-	}
-
 	public void stopAllDrive() {
 	    m_dtFL.stopDrive();
 		m_dtFR.stopDrive();
 		m_dtRL.stopDrive();
 		m_dtRR.stopDrive();
-	}
-
-
-	public static double getAverageError() {
-		return (Math.abs(m_dtFL.getError()) + Math.abs(m_dtFR.getError())
-				+ Math.abs(m_dtRL.getError()) + Math.abs(m_dtRR
-				.getError())) / 4d;
 	}
 
 	/*
