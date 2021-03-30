@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.team1918.robot.subsystems.DriveSubsystem;
 import frc.team1918.robot.commands.drive.drive_lockDriveControls;
+import frc.team1918.robot.commands.drive.drive_resetAbsEnc;
 import frc.team1918.robot.commands.drive.drive_moveAllToHomes;
 import frc.team1918.robot.commands.drive.drive_resetGyro;
 import frc.team1918.robot.commands.drive.drive_resetOdometry;
@@ -41,6 +42,7 @@ public class cg_drive_autoHome extends SequentialCommandGroup {
     addCommands(
         //this is a comma separated list of commands, thus, the last one should not have a comma
         new drive_lockDriveControls(m_drive, () -> true),
+        new drive_resetAbsEnc(m_drive),
         new drive_moveAllToHomes(m_drive),
         new drive_resetGyro(m_drive),
         new drive_resetOdometry(m_drive),
