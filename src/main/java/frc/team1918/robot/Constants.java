@@ -17,7 +17,7 @@ public class Constants {
     public static final class Global {
         //Global Constants
         public final static boolean CAMERA_ENABLED = false; //set to false if UsbCamera is removed
-        public final static boolean SWERVE_SENSOR_NONCONTINUOUS = true;
+        public final static boolean SWERVE_SENSOR_NONCONTINUOUS = false;
         public final static int kTimeoutMs = 30; //Timeout for reporting in DS if action fails, set to 0 to skip confirmation
         public final static int PID_PRIMARY = 0;  //Talon PID slot for primary loop
         public final static int PID_TURN = 1; //Talon PID slot for auxillary loop
@@ -138,9 +138,9 @@ public class Constants {
             public static final int TURN_MC_ID = 7; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
-            public static final double TURN_kP = 6.0; //PID P //8.0
-            public static final double TURN_kI = 0.00001; //PID I //0
-            public static final double TURN_kD = 0.9; //PID D //80.0
+            public static final double TURN_kP = 5.5; //PID P //6.0
+            public static final double TURN_kI = 0.005; //PID I //0
+            public static final double TURN_kD = 0.9; //PID D //0.9
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final int TURN_ALLOWED_ERROR = 2;
             public static final double DRIVE_wheelDiamOffsetMM = 0.0; //offset to wheel diam to account for wear, in mm from nominal (negative for worn wheels)
@@ -153,8 +153,8 @@ public class Constants {
             public static final int TURN_MC_ID = 4; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
-            public static final double TURN_kP = 6.0; //PID P
-            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kP = 5.5; //PID P
+            public static final double TURN_kI = 0.005; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final int TURN_ALLOWED_ERROR = 2;
@@ -168,8 +168,8 @@ public class Constants {
             public static final int TURN_MC_ID = 8; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
-            public static final double TURN_kP = 6.0; //PID P
-            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kP = 5.5; //PID P
+            public static final double TURN_kI = 0.005; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final int TURN_ALLOWED_ERROR = 2;
@@ -183,8 +183,8 @@ public class Constants {
             public static final int TURN_MC_ID = 11; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
-            public static final double TURN_kP = 6.0; //PID P
-            public static final double TURN_kI = 0; //PID I
+            public static final double TURN_kP = 5.5; //PID P
+            public static final double TURN_kI = 0.005; //PID I
             public static final double TURN_kD = 0.9; //PID D
             public static final int TURN_kIZone = 0; //PID IZONE
             public static final int TURN_ALLOWED_ERROR = 2;

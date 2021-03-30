@@ -494,10 +494,18 @@ public class DriveSubsystem extends SubsystemBase {
 	public void moveAllToHomes() {
 		Helpers.Debug.debug("moveAllToHomes");
 		readAllHomes();
+		// resetAllAbsEnc();
 		m_dtFL.setTurnLocationInEncoderTicks(flHome);
 		m_dtFR.setTurnLocationInEncoderTicks(frHome);
 		m_dtRL.setTurnLocationInEncoderTicks(rlHome);
 		m_dtRR.setTurnLocationInEncoderTicks(rrHome);
+	}
+
+	public void resetAllAbsEnc() {
+		m_dtFL.resetTurnAbsEnc();
+		m_dtFR.resetTurnAbsEnc();
+		m_dtRL.resetTurnAbsEnc();
+		m_dtRR.resetTurnAbsEnc();
 	}
 
 	public boolean isAllTurnAtHome() {

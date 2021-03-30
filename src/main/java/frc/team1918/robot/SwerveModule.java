@@ -64,7 +64,7 @@ public class SwerveModule {
         turn.configSelectedFeedbackSensor(  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
                                             Constants.Global.PID_PRIMARY,				// PID Slot for Source [0, 1]
                                             Constants.Global.kTimeoutMs);				// Configuration Timeout
-        turn.configFeedbackNotContinuous(true, 0); //Disable continuous feedback tracking (so 0 and 4096 are effectively one and the same)
+        turn.configFeedbackNotContinuous(Constants.Global.SWERVE_SENSOR_NONCONTINUOUS, 0); //Disable continuous feedback tracking (so 0 and 4096 are effectively one and the same)
         turn.setSensorPhase(sensorPhase);
         turn.setInverted(inverted);
         turn.config_kP(0, TURN_P);
@@ -154,7 +154,7 @@ public class SwerveModule {
         SwerveModuleState state = (Constants.Swerve.USE_OPTIMIZATION) ? optimize(desiredState) : desiredState;
         if (Constants.Swerve.USE_DRIVE_PID) {
             double motorRpm = (Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR);
-            Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
+            // Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
             m_drive_pidController.setReference(motorRpm, ControlType.kVelocity);
         } else {
             drive.set(state.speedMetersPerSecond);
@@ -277,6 +277,10 @@ public class SwerveModule {
 		turn.getSensorCollection().setQuadraturePosition(0,10);
     }
 
+    public void resetTurnAbsEnc() {
+        Helpers.Debug.debug(moduleName + " resetTurnAbsEnc");
+	    turn.getSensorCollection().setPulseWidthPosition(0, 10);
+    }
     /**
      * Sets the relative encoder to a specific value
      * @param value Integer from 0 to 4095 indicating the relative encoder position to set
