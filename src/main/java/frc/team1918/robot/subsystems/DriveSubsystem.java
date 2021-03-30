@@ -243,7 +243,6 @@ public class DriveSubsystem extends SubsystemBase {
 	 * Drive methods
 	 */
 	public static void swerveDrive(double fwd, double str, double rot) {
-		//TODO: If fwd, str, and rot is all 0.0, shortcut this math and do a static thing to save cpu
 		double a = str - (rot * (l / r));
 		double b = str + (rot * (l / r));
 		double c = fwd - (rot * (w / r));

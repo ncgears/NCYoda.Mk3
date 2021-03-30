@@ -21,7 +21,6 @@ public class SwerveModule {
     private WPI_TalonSRX turn;
     private CANSparkMax drive;
     private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
-    private final double FULL_ROT_RADS = (2 * Math.PI);
     private final double TURN_P, TURN_I, TURN_D;
     private final int TURN_IZONE;
     private final int TURN_ALLOWED_ERROR;
@@ -115,33 +114,6 @@ public class SwerveModule {
         } else { //no optimization necessary
             return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
         }
-    }
-    public SwerveModuleState optimizeBad(SwerveModuleState desiredState) { //TODO: Remove optimizeBad() once optimize() is working properly
-        double wheelSpeed = desiredState.speedMetersPerSecond;
-        double waRads = desiredState.angle.getRadians();
-        double currentAngleRads = Helpers.General.ticksToRadians(getTurnAbsPos());
-        double targetAngleRads = waRads;
-        int currentNumRotations = (int) (currentAngleRads / FULL_ROT_RADS ); //figure out how many rotations current position is
-        targetAngleRads += (currentNumRotations >= 0) ? currentNumRotations * FULL_ROT_RADS : (currentNumRotations + 1) * FULL_ROT_RADS; //add current rotations to target
-
-        if ((targetAngleRads > currentAngleRads + FULL_ROT_RADS * 0.25) || (targetAngleRads < currentAngleRads - FULL_ROT_RADS * 0.25)) { //if target is more than 25% of a rotation either way
-            if (currentAngleRads < targetAngleRads) { //left strafe
-                if (targetAngleRads - currentAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngleRads -= FULL_ROT_RADS;
-                } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngleRads -= FULL_ROT_RADS * 0.5;
-                    wheelSpeed *= -1;
-                }
-            } else { //right strafe
-                if ( currentAngleRads - targetAngleRads > FULL_ROT_RADS * 0.75) { //if target would require moving less than 75% of a rotation, just go there
-                    targetAngleRads += FULL_ROT_RADS;
-                } else { //otherwise, turn half a rotation from the target and reverse the drive power
-                    targetAngleRads += FULL_ROT_RADS * 0.5;
-                    wheelSpeed *= -1;
-                }
-            }
-        }
-        return new SwerveModuleState(wheelSpeed, new Rotation2d(targetAngleRads));
     }
 
     /**
