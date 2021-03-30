@@ -224,7 +224,8 @@ public class SwerveModule {
      * @return Integer of absolute encoder ticks
      */
     public int getTurnAbsPos(){
-        return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF); //This gets only the most significant bits (0-4095)
+        return turn.getSensorCollection().getPulseWidthPosition(); //We reset rotation counter when saving to adjust to 0-4095, so get the full value
+        // return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF); //This gets only the most significant bits (0-4095)
         //Explanation: & is a bitwise "AND" operator, and 0xFFF is 4095 in Hex, consider "0101010101 AND 1111 = 0101"
     }
 
