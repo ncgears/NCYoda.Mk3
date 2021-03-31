@@ -171,8 +171,16 @@ public class Helpers {
          */
         public static final double applyRampingDeadband(double inVal) {
             double ramped = inVal;
-            //TODO: Figure out math for transformation
             return ( Math.abs(inVal) < Constants.OI.OI_JOY_DEADBAND ) ? 0.0 : ramped;
+            //TODO: Figure out math for transformation
+            /**
+             * The following math is from 2767 Stryke Force ExpoScale Utility
+             * https://github.com/strykeforce/thirdcoast/blob/master/src/main/java/org/strykeforce/thirdcoast/util/ExpoScale.java
+             */
+            // var scale = 1;
+            // var deadband = 0.15;
+            // var offset = 1.0 / (scale * Math.pow(1 - deadband, 3) + (1 - scale) * (1 - deadband));
+            // return (scale * Math.pow(inVal, 3) + (1 - scale) * inVal) * offset;
         }
     }
 }
