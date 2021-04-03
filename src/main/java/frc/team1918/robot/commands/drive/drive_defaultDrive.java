@@ -41,7 +41,7 @@ public class drive_defaultDrive extends CommandBase {
         //adjust rotation by multiplier, different if moving vs stationary
         double m_rotation_adjusted = (m_forward.getAsDouble() != 0 || m_strafe.getAsDouble() != 0) ? m_rotation.getAsDouble() * Constants.DriveTrain.DT_TURN_MULT_MOVING : m_rotation.getAsDouble() * Constants.DriveTrain.DT_TURN_MULT_STATIONARY;
         double m_forward_adjusted = (m_forward.getAsDouble() * Constants.DriveTrain.DT_FWD_MULT);
-        double m_strafe_adjusted = (m_strafe.getAsDouble() * Constants.DriveTrain.DT_STR_MULT);
+        double m_strafe_adjusted = (m_strafe.getAsDouble() < 0.75) ? (m_strafe.getAsDouble() * Constants.DriveTrain.DT_STR_MULT) : m_strafe.getAsDouble();
         m_drive.drive(m_forward_adjusted, m_strafe_adjusted, m_rotation_adjusted,Constants.DriveTrain.DT_USE_FIELD_CENTRIC);
       } else {
         m_drive.stopAllDrive();

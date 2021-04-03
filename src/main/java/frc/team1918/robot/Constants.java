@@ -44,7 +44,7 @@ public class Constants {
      * This is not a subsystem, the pneumatics are controlled directly in their respective subsystems
      */
     public static final class Air {
-        public final static boolean AIR_DISABLED = false; //Set to true to disable compressor
+        public final static boolean AIR_DISABLED = true; //Set to true to disable compressor
         public final static int AIR_COLLECTOR1_ID = 0; //ID of solonoid for collector stage 1
         public final static int AIR_COLLECTOR2_ID = 1; //ID of solonoid for collector stage 2
         public final static int AIR_HOOD_ID = 2; //ID of solonoid for hood control
@@ -211,8 +211,8 @@ public class Constants {
         public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
         public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
         ////Drive Tuning
-        public final static double DT_FWD_MULT = 1.0; //Fwd throttle multiplier
-        public final static double DT_STR_MULT = 1.0; //Str throttle multiplier
+        public final static double DT_FWD_MULT = 0.8; //Fwd throttle multiplier
+        public final static double DT_STR_MULT = 0.6; //Str throttle multiplier
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
         public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters
         public final static int DT_DRIVE_FIRST_GEARONE = 21; //swerve drive first gear set input teeth
