@@ -158,16 +158,11 @@ public class DriveSubsystem extends SubsystemBase {
 	public void drive(double fwd, double str, double rot, boolean fieldRelative) {
 
 		if(Constants.DriveTrain.DT_USE_DRIVESTRAIGHT) {
-			if(rot != 0) { //We are applying some rotation, so store the new angle
-				//TODO: rotate multiplier if standing still vs moving
-				// desiredAngle = m_gyro.getAngle();  
-				/** TODO: Figure out what new desiredAngle should be.
-				 * This kind of works, but setting the desiredAngle to the current angle here doesnt set it to what the new target
-				 * should be.  Need to maintain the new desiredAngle of the robot.
-				 */
-			} else { //We are not applying rotation, so lets try to maintain the desiredAngle, but only if we are moving (for safety)
-				if(angleLocked) {
-					if (Math.abs(fwd) > 0 || Math.abs(str) > 0) {
+			if(rot == 0) { //We are not applying rotation
+				if(!angleLocked) { //We havent locked an angle, so lets save the desiredAngle and lock it
+					lockAngle();
+				} else {
+					if (Math.abs(fwd) > 0 || Math.abs(str) > 0) { //Only do angle correction while moving, for safety reasons
 						rot += calcAngleStraight(desiredAngle,m_gyro.getAngle(),Constants.DriveTrain.DT_DRIVESTRAIGHT_P); //Add some correction to the rotation to account for angle drive
 					}
 				}
