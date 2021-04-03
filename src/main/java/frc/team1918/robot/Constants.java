@@ -211,6 +211,8 @@ public class Constants {
         public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
         public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
         ////Drive Tuning
+        public final static double DT_FWD_MULT = 1.0; //Fwd throttle multiplier
+        public final static double DT_STR_MULT = 1.0; //Str throttle multiplier
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
         public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters
         public final static int DT_DRIVE_FIRST_GEARONE = 21; //swerve drive first gear set input teeth
