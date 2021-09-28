@@ -40,6 +40,19 @@ public class Constants {
     }
 
     /**
+     * Constants for the Climber subsystem
+     */
+    public static final class Climber {
+        public final static int CLIMBER1_MC_ID = 9; //ID of the Climber talon1
+        public final static int CLIMBER2_MC_ID = 10; //ID of Climber talon2
+        public final static double CLIMBER_SPEED = 1.0; //Speed for the Climber talon
+        public final static int CLIMBER_LIMIT_TOP = 1; //Roborio DIO ID of top limit switch
+        public final static int CLIMBER_LIMIT_BOTTOM = 2; //Roborio DIO ID of bottom limit switch
+        public final static boolean CLIMBER_1_isInverted = true; //Should the Climber1 talon be inverted
+        public final static boolean CLIMBER_2_isInverted = false; //Should the Climber2 talon be inverted
+    }
+
+    /**
      * Constants for the Pneumantics system
      * This is not a subsystem, the pneumatics are controlled directly in their respective subsystems
      */
@@ -49,6 +62,7 @@ public class Constants {
         public final static int AIR_COLLECTOR2_ID = 1; //ID of solonoid for collector stage 2
         public final static int AIR_HOOD_ID = 2; //ID of solonoid for hood control
         public final static int AIR_ANTIGRAV_ID = 3; //ID of solonoid for climber anti-backdrive
+        public final static boolean AIR_ANTIGRAV_ENGAGED = true; //State of the solenoid when ANTIGRAV is engaged
         public final static int AIR_SPARE_ID = 4; //ID of solonoid for spare 
         public final static boolean AIR_COLL1_DOWN = true; //State of the solenoid when COLL1 is down
         public final static boolean AIR_COLL2_DOWN = true; //State of the solenoid when COLL2 is down
