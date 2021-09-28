@@ -129,6 +129,7 @@ public class Helpers {
          */
         public final static double getAxisTurnValue(boolean useDeadband) {
             return (useDeadband) ? applyDeadband(dj.getRawAxis(Constants.OI.Driver.AXIS_TURN)) : dj.getRawAxis(Constants.OI.Driver.AXIS_TURN);
+            // return (useDeadband) ? applyDeadband(oj.getRawAxis(Constants.OI.Operator.AXIS_TURN)) : oj.getRawAxis(Constants.OI.Operator.AXIS_TURN);
         }
 
         //OPERATOR CONTROLS

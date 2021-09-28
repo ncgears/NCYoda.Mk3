@@ -44,7 +44,7 @@ public class Constants {
      * This is not a subsystem, the pneumatics are controlled directly in their respective subsystems
      */
     public static final class Air {
-        public final static boolean AIR_DISABLED = true; //Set to true to disable compressor
+        public final static boolean AIR_DISABLED = false; //Set to true to disable compressor
         public final static int AIR_COLLECTOR1_ID = 0; //ID of solonoid for collector stage 1
         public final static int AIR_COLLECTOR2_ID = 1; //ID of solonoid for collector stage 2
         public final static int AIR_HOOD_ID = 2; //ID of solonoid for hood control
@@ -63,7 +63,7 @@ public class Constants {
 
         public final static int SHOOT_WALL_RPM = 2400; //Wall
         public final static boolean SHOOT_WALL_HOOD = !Air.AIR_HOOD_UP;
-        public final static int SHOOT_SHORT_RPM = 3400; //Short
+        public final static int SHOOT_SHORT_RPM = 3600; //Short
         public final static boolean SHOOT_SHORT_HOOD = Air.AIR_HOOD_UP;
         public final static int SHOOT_LINE_RPM = 3000; //Line
         public final static boolean SHOOT_LINE_HOOD = !Air.AIR_HOOD_UP;
@@ -205,14 +205,14 @@ public class Constants {
         public final static double DT_HOME_DELAY = 0.75; //Seconds to wait for homing before reset encoders
         public final static int DT_HOME_MARGIN_OF_ERROR = 20; //Encoder ticks margin to consider home (plus or minus this amount)
         ////Turn Tuning
-        public final static double DT_TURN_MULT_STATIONARY = 0.5; //Turn speed multiplier while not moving
-        public final static double DT_TURN_MULT_MOVING = 0.9; //Turn speed multiplier while moving
+        public final static double DT_TURN_MULT_STATIONARY = 0.3; //Turn speed multiplier while not moving
+        public final static double DT_TURN_MULT_MOVING = 0.3; //Turn speed multiplier while moving
         public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
         public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
         public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
         ////Drive Tuning
-        public final static double DT_FWD_MULT = 0.8; //Fwd throttle multiplier
-        public final static double DT_STR_MULT = 0.6; //Str throttle multiplier
+        public final static double DT_FWD_MULT = 0.6; //Fwd throttle multiplier
+        public final static double DT_STR_MULT = DT_FWD_MULT; //Str throttle multiplier
         public final static boolean DT_DRIVE_DISABLED = false; //Set to true to disable the drive motors (for lab)
         public final static double DT_WHEEL_DIAM_MM = 77.1; //diameter of drive wheels in millimeters
         public final static int DT_DRIVE_FIRST_GEARONE = 21; //swerve drive first gear set input teeth
@@ -266,12 +266,14 @@ public class Constants {
          */
         public static final class Operator {
             public final static int AXIS_CLIMB = Logitech.AXIS_LV; //Axis that controls the climber up and down
+            public final static int AXIS_TURN = Logitech.AXIS_LH; 
             public final static int AXIS_COLLECTOR_OUT = Logitech.AXIS_RT; //Axis that runs the collector out (actually a trigger button)
             public final static int BTN_SHOOT_WALL = Logitech.BTN_A; //Shoot from at the wall
             public final static int BTN_SHOOT_SHORT = Logitech.BTN_B; //Shoot from close to the wall
             public final static int BTN_SHOOT_LINE = Logitech.BTN_X; //Shoot from the initiation line
             public final static int BTN_SHOOT_TRENCH = Logitech.BTN_Y; //Shoot from the trench
-            public final static int BTN_TOG_MIDDOWN = Logitech.BTN_LB; //Toggle collector arm between middle and down position
+            //public final static int BTN_TOG_MIDDOWN = Logitech.BTN_LB; //Toggle collector arm between middle and down position
+            public final static int BTN_MIXER_FEED = Logitech.BTN_LB; //Run the mixer in the forward direction
             public final static int BTN_COLLECTOR_IN = Logitech.BTN_RB; //Run the collector in
             public final static int BTN_MECHZERO = Logitech.BTN_BACK; //DRIVER MECHZERO and OPER MECHZERO are required for this
             public final static int DPAD_COLLECTOR_UP = Logitech.DPAD_UP; //Move collector to up

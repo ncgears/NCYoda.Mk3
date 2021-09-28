@@ -69,10 +69,8 @@ public class RobotContainer {
   private JoystickButton btn_UNLOCKANGLE = new JoystickButton(dj, Constants.OI.Driver.BTN_UNLOCKANGLE);
   private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.Driver.BTN_MECHZERO);
   private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.Driver.BTN_HOMESWERVE);
-  private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEED);
+  // private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEED);
   private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEEDSTUCK);
-  // private JoystickButton btn_CALIBRATE_START = new JoystickButton(dj, Constants.OI.Driver.BTN_CALIBRATE_START);
-  // private JoystickButton btn_CALIBRATE_STOP = new JoystickButton(dj, Constants.OI.Driver.BTN_CALIBRATE_STOP);
   private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.Driver.BTN_TOG_DEBUG);
   private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.Driver.DPAD_GYRO_RESET);
   private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UP);
@@ -91,12 +89,13 @@ public class RobotContainer {
   private JoystickButton btn_SHOOT_LINE = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_LINE);
   private JoystickButton btn_SHOOT_SHORT = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_SHORT);
   private JoystickButton btn_SHOOT_TRENCH = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_TRENCH);
+  private JoystickButton btn_MIXER_FEED = new JoystickButton(oj, Constants.OI.Operator.BTN_MIXER_FEED);
   // private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
   private JoystickButton btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.Operator.BTN_COLLECTOR_IN);
   private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.Operator.BTN_MECHZERO);
   private POVButton btn_COLLECTOR_UP = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_UP);
   private POVButton btn_COLLECTOR_DOWN = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_DOWN);
-  private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
+  // private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
 
   //Special Bindings
   private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2); //AndButton requires both to be true
@@ -147,7 +146,7 @@ public class RobotContainer {
     btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
     btn_COLLECTOR_DOWN.whenPressed(new collector_lowerIntake(m_collector));
     btn_COLLECTOR_UP.whenPressed(new collector_raiseIntake(m_collector));
-    btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
+    // btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
     btn_LOCKANGLE.whenPressed(new drive_lockAngle(m_drive));
     btn_UNLOCKANGLE.whenPressed(new drive_unlockAngle(m_drive));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
