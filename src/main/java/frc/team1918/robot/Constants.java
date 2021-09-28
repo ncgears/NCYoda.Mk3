@@ -46,8 +46,8 @@ public class Constants {
         public final static int CLIMBER1_MC_ID = 9; //ID of the Climber talon1
         public final static int CLIMBER2_MC_ID = 10; //ID of Climber talon2
         public final static double CLIMBER_SPEED = 1.0; //Speed for the Climber talon
-        public final static int CLIMBER_LIMIT_TOP = 1; //Roborio DIO ID of top limit switch
-        public final static int CLIMBER_LIMIT_BOTTOM = 2; //Roborio DIO ID of bottom limit switch
+        public final static int CLIMBER_LIMIT_TOP = 0; //Roborio DIO ID of top limit switch
+        public final static int CLIMBER_LIMIT_BOTTOM = 1; //Roborio DIO ID of bottom limit switch
         public final static boolean CLIMBER_1_isInverted = true; //Should the Climber1 talon be inverted
         public final static boolean CLIMBER_2_isInverted = false; //Should the Climber2 talon be inverted
     }
