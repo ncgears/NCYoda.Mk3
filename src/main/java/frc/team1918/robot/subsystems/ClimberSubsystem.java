@@ -15,6 +15,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private WPI_TalonSRX m_climber2; //climber talon 2
   private double m_speed1;
   private double m_speed2;
+  private boolean m_antigrav_engaged = false;
   private DigitalInput m_limit_top = new DigitalInput(Constants.Climber.CLIMBER_LIMIT_TOP);;
   private DigitalInput m_limit_bottom = new DigitalInput(Constants.Climber.CLIMBER_LIMIT_BOTTOM);;
   /**
@@ -24,12 +25,17 @@ public class ClimberSubsystem extends SubsystemBase {
     m_antigrav = new Solenoid(Constants.Air.AIR_ANTIGRAV_ID);
   }
 
-  public void SetAntigrav(boolean IsActive) {
+  public void setAntigrav(boolean IsActive) {
     if(IsActive) { 
       m_antigrav.set(Constants.Air.AIR_ANTIGRAV_ENGAGED); 
     } else { 
       m_antigrav.set(!Constants.Air.AIR_ANTIGRAV_ENGAGED); 
-    };
+    }
+    m_antigrav_engaged = IsActive;
+  }
+
+  public boolean isAntigravEngaged() {
+    return m_antigrav_engaged;
   }
 
   public void setClimberDirection(String direction) {
