@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 //Util imports
 import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
@@ -67,21 +68,21 @@ public class RobotContainer {
   private Joystick dj = new Joystick(Constants.OI.OI_JOY_DRIVER);
   private JoystickButton btn_LOCKANGLE = new JoystickButton(dj, Constants.OI.Driver.BTN_LOCKANGLE);
   private JoystickButton btn_UNLOCKANGLE = new JoystickButton(dj, Constants.OI.Driver.BTN_UNLOCKANGLE);
-  private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.Driver.BTN_MECHZERO);
+  // private JoystickButton btn_MECHZERO_KEY1 = new JoystickButton(dj, Constants.OI.Driver.BTN_MECHZERO);
   private JoystickButton btn_HOMESWERVE = new JoystickButton(dj, Constants.OI.Driver.BTN_HOMESWERVE);
-  // private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEED);
+  private JoystickButton btn_MIXER_FEED = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEED);
   private JoystickButton btn_MIXER_FEEDSTUCK = new JoystickButton(dj, Constants.OI.Driver.BTN_MIXER_FEEDSTUCK);
   private JoystickButton btn_TOGGLE_DEBUG = new JoystickButton(dj, Constants.OI.Driver.BTN_TOG_DEBUG);
   private POVButton btn_GYRO_RESET = new POVButton(dj, Constants.OI.Driver.DPAD_GYRO_RESET);
-  private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UP);
-    private POVButton btn_THROTUP_UL = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UL);
-    private POVButton btn_THROTUP_UR = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UR);
-  private POVButton btn_THROTDN_DN = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DN);
-    private POVButton btn_THROTDN_DL = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DL);
-    private POVButton btn_THROTDN_DR = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DR);
-  //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
-  private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
-  private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);
+  // private POVButton btn_THROTUP_UP = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UP);
+  //   private POVButton btn_THROTUP_UL = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UL);
+  //   private POVButton btn_THROTUP_UR = new POVButton(dj, Constants.OI.Driver.DPAD_THROTUP_UR);
+  // private POVButton btn_THROTDN_DN = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DN);
+  //   private POVButton btn_THROTDN_DL = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DL);
+  //   private POVButton btn_THROTDN_DR = new POVButton(dj, Constants.OI.Driver.DPAD_THROTDN_DR);
+  // //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
+  // private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
+  // private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);
 
   //Operator Controller
   private Joystick oj = new Joystick(Constants.OI.OI_JOY_OPER);
@@ -89,16 +90,27 @@ public class RobotContainer {
   private JoystickButton btn_SHOOT_LINE = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_LINE);
   private JoystickButton btn_SHOOT_SHORT = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_SHORT);
   private JoystickButton btn_SHOOT_TRENCH = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_TRENCH);
-  private JoystickButton btn_MIXER_FEED = new JoystickButton(oj, Constants.OI.Operator.BTN_MIXER_FEED);
+  // private JoystickButton btn_MIXER_FEED = new JoystickButton(oj, Constants.OI.Operator.BTN_MIXER_FEED);
   // private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
-  private JoystickButton btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.Operator.BTN_COLLECTOR_IN);
-  private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.Operator.BTN_MECHZERO);
-  private POVButton btn_COLLECTOR_UP = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_UP);
-  private POVButton btn_COLLECTOR_DOWN = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_DOWN);
-  // private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
+  private Trigger btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_IN);
+  private Trigger btn_COLLECTOR_OUT = new JoystickButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_OUT);
+  // private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.Operator.BTN_MECHZERO);
+  // private POVButton btn_COLLECTOR_UP = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_UP);
+  // private POVButton btn_COLLECTOR_DOWN = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_DOWN);
+  private JoystickButton btn_COLLECTOR_TOGGLE = new JoystickButton(oj, Constants.OI.Operator.BTN_COLLECTOR_TOGGLE);
+  //DPAD stuff for throttle up/down
+  private POVButton btn_THROTUP_UP = new POVButton(oj, Constants.OI.Operator.DPAD_THROTUP_UP);
+    private POVButton btn_THROTUP_UL = new POVButton(oj, Constants.OI.Operator.DPAD_THROTUP_UL);
+    private POVButton btn_THROTUP_UR = new POVButton(oj, Constants.OI.Operator.DPAD_THROTUP_UR);
+  private POVButton btn_THROTDN_DN = new POVButton(oj, Constants.OI.Operator.DPAD_THROTDN_DN);
+    private POVButton btn_THROTDN_DL = new POVButton(oj, Constants.OI.Operator.DPAD_THROTDN_DL);
+    private POVButton btn_THROTDN_DR = new POVButton(oj, Constants.OI.Operator.DPAD_THROTDN_DR);
+  //OrPOVButtons are a custom button type to bind 3 DPAD directions to a single command. See utils/OrPOVButton
+  private OrPOVButton orbtn_THROTUP = new OrPOVButton(btn_THROTUP_UP, btn_THROTUP_UL, btn_THROTUP_UR);
+  private OrPOVButton orbtn_THROTDN = new OrPOVButton(btn_THROTDN_DN, btn_THROTDN_DL, btn_THROTDN_DR);
 
   //Special Bindings
-  private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2); //AndButton requires both to be true
+  // private AndButton andbtn_MECHZERO = new AndButton(btn_MECHZERO_KEY1,btn_MECHZERO_KEY2); //AndButton requires both to be true
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -143,10 +155,12 @@ public class RobotContainer {
     btn_SHOOT_TRENCH.whenPressed(new shooter_shootTrench(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
     btn_MIXER_FEED.whileHeld(new mixer_mixerForward(m_mixer));
     btn_MIXER_FEEDSTUCK.whileHeld(new mixer_mixerReverse(m_mixer));
-    btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
-    btn_COLLECTOR_DOWN.whenPressed(new collector_lowerIntake(m_collector));
-    btn_COLLECTOR_UP.whenPressed(new collector_raiseIntake(m_collector));
-    // btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
+    // btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
+    btn_COLLECTOR_IN.whenActive(new collector_intakeForward(m_collector)).whenInactive(new collector_intakeStop(m_collector));
+    btn_COLLECTOR_OUT.whenActive(new collector_intakeReverse(m_collector)).whenInactive(new collector_intakeStop(m_collector));
+    // btn_COLLECTOR_DOWN.whenPressed(new collector_lowerIntake(m_collector));
+    // btn_COLLECTOR_UP.whenPressed(new collector_raiseIntake(m_collector));
+    btn_COLLECTOR_TOGGLE.whenPressed(new collector_toggleIntake(m_collector));
     btn_LOCKANGLE.whenPressed(new drive_lockAngle(m_drive));
     btn_UNLOCKANGLE.whenPressed(new drive_unlockAngle(m_drive));
     // btn_ALLUP.whenPressed(new moveArmUp(m_collector));
@@ -157,7 +171,7 @@ public class RobotContainer {
     orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle(m_shooter));
 
     //bind both buttons requirement
-    andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
+    // andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
   }
 
   // These functions return the commands, this is only needed for things that happen during robot init in Robot.java
