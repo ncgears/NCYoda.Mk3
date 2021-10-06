@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 //Util imports
+import frc.team1918.robot.utils.AnalogButton;
 import frc.team1918.robot.utils.AndButton;
 import frc.team1918.robot.utils.OrPOVButton;
 
@@ -92,8 +92,8 @@ public class RobotContainer {
   private JoystickButton btn_SHOOT_TRENCH = new JoystickButton(oj, Constants.OI.Operator.BTN_SHOOT_TRENCH);
   // private JoystickButton btn_MIXER_FEED = new JoystickButton(oj, Constants.OI.Operator.BTN_MIXER_FEED);
   // private JoystickButton btn_TOG_MIDDOWN = new JoystickButton(oj, Constants.OI.Operator.BTN_TOG_MIDDOWN);
-  private Trigger btn_COLLECTOR_IN = new JoystickButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_IN);
-  private Trigger btn_COLLECTOR_OUT = new JoystickButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_OUT);
+  private AnalogButton btn_COLLECTOR_IN = new AnalogButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_IN);
+  private AnalogButton btn_COLLECTOR_OUT = new AnalogButton(oj, Constants.OI.Operator.AXIS_COLLECTOR_OUT);
   // private JoystickButton btn_MECHZERO_KEY2 = new JoystickButton(oj, Constants.OI.Operator.BTN_MECHZERO);
   // private POVButton btn_COLLECTOR_UP = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_UP);
   // private POVButton btn_COLLECTOR_DOWN = new POVButton(oj, Constants.OI.Operator.DPAD_COLLECTOR_DOWN);
