@@ -279,7 +279,7 @@ public class Constants {
          * Constants for the Operator controller
          */
         public static final class Operator {
-            public final static int AXIS_CLIMB = Logitech.AXIS_LV; //Axis that controls the climber up and down
+            public final static int AXIS_CLIMB = Logitech.AXIS_RV; //Axis that controls the climber up and down
             // public final static int AXIS_TURN = Logitech.AXIS_LH; 
             public final static int AXIS_COLLECTOR_IN = Logitech.AXIS_RT;
             public final static int AXIS_COLLECTOR_OUT = Logitech.AXIS_LT; //Axis that runs the collector out (actually a trigger button)
