@@ -43,6 +43,7 @@ public class Constants {
      * Constants for the Climber subsystem
      */
     public static final class Climber {
+        public final static boolean CLIMBER_USE_DEADBAND = true; //use deadband on climber control joystick
         public final static int CLIMBER1_MC_ID = 9; //ID of the Climber talon1
         public final static int CLIMBER2_MC_ID = 10; //ID of Climber talon2
         public final static double CLIMBER_SPEED = 1.0; //Speed for the Climber talon

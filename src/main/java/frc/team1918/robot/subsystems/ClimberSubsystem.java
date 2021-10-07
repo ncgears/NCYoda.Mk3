@@ -38,6 +38,10 @@ public class ClimberSubsystem extends SubsystemBase {
     return m_antigrav_engaged;
   }
 
+  public boolean isAllowedToClimb() {
+    return true; //should check FMS for time to see if in last 30 seconds
+  }
+
   public void setClimberDirection(String direction) {
     switch(direction) {
       case "up":
