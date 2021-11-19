@@ -114,9 +114,9 @@ public class Constants {
         public static final boolean USE_OPTIMIZATION = true; //false to disable shortest path optimization
         public static final boolean USE_DRIVE_PID = true; //true to enable PID based drive control
         public static final boolean DISABLE_FL = false; //Disable FL Module
-        public static final boolean DISABLE_FR = false; //Disable FR Module
-        public static final boolean DISABLE_RL = false; //Disable RL Module
-        public static final boolean DISABLE_RR = false; //Disable RR Module
+        public static final boolean DISABLE_FR = true; //Disable FR Module
+        public static final boolean DISABLE_RL = true; //Disable RL Module
+        public static final boolean DISABLE_RR = true; //Disable RR Module
         // swerve control definitions
         public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
         public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
@@ -134,7 +134,7 @@ public class Constants {
          * Constants for Front Left Swerve Module
          */
         public static final class FL {  //TODO: PID Tuning
-            public static final int DRIVE_MC_ID = 2; //SparkMAX Motor Controller ID
+            public static final int DRIVE_MC_ID = 33; //Falcon500 Motor Controller ID
             public static final int TURN_MC_ID = 7; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
@@ -149,7 +149,7 @@ public class Constants {
          * Constants for Front Right Swerve Module
          */
         public static final class FR {
-            public static final int DRIVE_MC_ID = 16; //SparkMAX Motor Controller ID
+            public static final int DRIVE_MC_ID = 31; //Falcon500 Motor Controller ID
             public static final int TURN_MC_ID = 4; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
@@ -164,7 +164,7 @@ public class Constants {
          * Constants for Rear Left Swerve Module
          */
         public static final class RL {
-            public static final int DRIVE_MC_ID = 3; //SparkMAX Motor Controller ID
+            public static final int DRIVE_MC_ID = 34; //Falcon500 Motor Controller ID
             public static final int TURN_MC_ID = 8; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
@@ -179,7 +179,7 @@ public class Constants {
          * Constants for Rear Right Swerve Module
          */
         public static final class RR { //Rear Right
-            public static final int DRIVE_MC_ID = 1; //SparkMAX Motor Controller ID
+            public static final int DRIVE_MC_ID = 32; //Falcon500 Motor Controller ID
             public static final int TURN_MC_ID = 11; //TalonSRX Motor Controller ID
             public static final boolean TURN_sensorPhase = true; //When forward/reverse of controller doesn't match forward/reverse of sensor, set to true
             public static final boolean TURN_isInverted = true; //Once sensor phase is correct, we can invert these so fwd always is green, reverse is always is red
@@ -208,7 +208,7 @@ public class Constants {
         public final static double DT_TURN_MULT_STATIONARY = 0.5; //Turn speed multiplier while not moving
         public final static double DT_TURN_MULT_MOVING = 0.9; //Turn speed multiplier while moving
         public final static boolean DT_TURN_MULT_BEFORE_DB = true; //Apply turn multiplier before deadband
-        public final static double DT_TURN_ENCODER_FULL_ROTATION = 4096d;
+        public final static double DT_TURN_ENCODER_FULL_ROTATION = 2048d;
         public final static boolean DT_USE_FIELD_CENTRIC = true; //Set to true to use field-centric drive
         ////Drive Tuning
         public final static double DT_FWD_MULT = 1.0; //Fwd throttle multiplier

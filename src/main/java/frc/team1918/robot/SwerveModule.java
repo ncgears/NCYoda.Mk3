@@ -3,13 +3,9 @@ package frc.team1918.robot;
 
 // import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
-//Spark MAX
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 //Talon SRX
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -19,7 +15,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 
 public class SwerveModule {
     private WPI_TalonSRX turn;
-    private CANSparkMax drive;
+    private WPI_TalonFX drive;
     private final double FULL_ROTATION = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
     private final double TURN_P, TURN_I, TURN_D;
     private final int TURN_IZONE;
@@ -47,7 +43,7 @@ public class SwerveModule {
 	 * @param homePos The home position of this swerve module
 	 */
     public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, int tAllowedError, double wheelOffsetMM, boolean sensorPhase, boolean inverted, int homePos){
-        drive = new CANSparkMax(driveMC_ID, MotorType.kBrushless);
+        drive = new WPI_TalonFX(driveMC_ID);
         turn = new WPI_TalonSRX(turnMC_ID);
         moduleName = name;
         isDrivePowerInverted = false;
@@ -60,7 +56,7 @@ public class SwerveModule {
         turn.configFactoryDefault(); //Reset controller to factory defaults to avoid wierd stuff
         turn.set(ControlMode.PercentOutput, 0); //Set controller to disabled
         turn.setNeutralMode(NeutralMode.Brake); //Set controller to brake mode
-        turn.configSelectedFeedbackSensor(  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
+        turn.configSelectedFeedbackSensor(  FeedbackDevice.PulseWidthEncodedPosition, //  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
                                             Constants.Global.PID_PRIMARY,				// PID Slot for Source [0, 1]
                                             Constants.Global.kTimeoutMs);				// Configuration Timeout
         turn.configFeedbackNotContinuous(Constants.Global.SWERVE_SENSOR_NONCONTINUOUS, 0); //Disable continuous feedback tracking (so 0 and 4096 are effectively one and the same)
@@ -72,15 +68,22 @@ public class SwerveModule {
         turn.config_IntegralZone(0, TURN_IZONE);
         turn.configAllowableClosedloopError(0, TURN_ALLOWED_ERROR); 
 
-        drive.restoreFactoryDefaults();
-        drive.setIdleMode(IdleMode.kBrake);
-        m_drive_pidController = drive.getPIDController();
-        m_drive_pidController.setP(0.0005); //PID P
-        m_drive_pidController.setI(0.0); //PID I
-        m_drive_pidController.setD(0.00005); //PID D
-        // m_drive_pidController.setIZone(0); //IZone
-        m_drive_pidController.setFF(1/4740); //Feed forward
-        m_drive_pidController.setOutputRange(-1, 1);
+        drive.configFactoryDefault();
+        drive.set(ControlMode.PercentOutput, 0);
+        drive.setNeutralMode(NeutralMode.Brake);
+        drive.setInverted(inverted);
+        drive.config_kP(0, 0.0005);
+        drive.config_kI(0, 0.0);
+        drive.config_kD(0, 0.00005);
+        drive.config_IntegralZone(0, 4740);
+
+        // m_drive_pidController = drive.getPIDController();
+        // m_drive_pidController.setP(0.0005); //PID P
+        // m_drive_pidController.setI(0.0); //PID I
+        // m_drive_pidController.setD(0.00005); //PID D
+        // // m_drive_pidController.setIZone(0); //IZone
+        // m_drive_pidController.setFF(1/4740); //Feed forward
+        // m_drive_pidController.setOutputRange(-1, 1);
     }
 
     /**
@@ -89,7 +92,7 @@ public class SwerveModule {
      * @return The current state of the module.
      */
     public SwerveModuleState getState() {
-        double rawRpm = drive.getEncoder().getVelocity();
+        double rawRpm = drive.getSelectedSensorVelocity();  //getEncoder().getVelocity();
         double wheelRpm = Helpers.General.gearCalcDouble(rawRpm,Constants.DriveTrain.DT_DRIVE_FIRST_GEARONE,
             Constants.DriveTrain.DT_DRIVE_FIRST_GEARTWO,
             Constants.DriveTrain.DT_DRIVE_SECOND_GEARONE,
@@ -127,7 +130,8 @@ public class SwerveModule {
         if (Constants.Swerve.USE_DRIVE_PID) {
             double motorRpm = (Helpers.General.metersPerSecondToRPM(state.speedMetersPerSecond, wheelDiam) / Constants.DriveTrain.DT_DRIVE_CONVERSION_FACTOR);
             // Helpers.Debug.debug(moduleName+" desired mps: "+state.speedMetersPerSecond+" motorRpm: "+motorRpm);
-            m_drive_pidController.setReference(motorRpm, ControlType.kVelocity);
+            //m_drive_pidController.setReference(motorRpm, ControlType.kVelocity);
+            drive.set(motorRpm);
         } else {
             drive.set(state.speedMetersPerSecond);
         }
@@ -360,11 +364,11 @@ public class SwerveModule {
                     turn.setNeutralMode(NeutralMode.Coast);
                 }
                 break;
-            case "drive": //drive is a SparkMAX
+            case "drive": //drive is a TalonFX
                 if (brake) {
-                    drive.setIdleMode(CANSparkMax.IdleMode.kBrake);
+                    drive.setNeutralMode(NeutralMode.Brake);
                 } else {
-                    drive.setIdleMode(CANSparkMax.IdleMode.kCoast);
+                    drive.setNeutralMode(NeutralMode.Coast);
                 }
                 break;
         }

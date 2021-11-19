@@ -417,10 +417,10 @@ public class DriveSubsystem extends SubsystemBase {
 				}
 				line = br.readLine(); //beg for more bread
 			}
-			m_dtFL.setHomePos(flHome);
-			m_dtFR.setHomePos(frHome);
-			m_dtRL.setHomePos(rlHome);
-			m_dtRR.setHomePos(rrHome);
+			m_dtFL.setHomePos(0); //flHome);
+			m_dtFR.setHomePos(0); //frHome);
+			m_dtRL.setHomePos(0); //rlHome);
+			m_dtRR.setHomePos(0); //rrHome);
 
 			br.close();
 			fr.close();
