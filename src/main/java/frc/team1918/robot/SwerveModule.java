@@ -2,7 +2,7 @@
 package frc.team1918.robot;
 
 // import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+// import com.revrobotics.CANPIDController;
 //Talon SRX
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -23,10 +23,9 @@ public class SwerveModule {
     private boolean isDrivePowerInverted = false;
     private String moduleName;
     private double wheelOffsetMM = 0;
-    private int homePos = 0;
     private boolean absEncoderEnabled = false;
     private int debug_ticks1, debug_ticks2;
-    private CANPIDController m_drive_pidController;
+    // private CANPIDController m_drive_pidController;
 
 //SparkMAX Java API Doc: https://www.revrobotics.com/content/sw/max/sw-docs/java/index.html
 
@@ -40,9 +39,8 @@ public class SwerveModule {
 	 * @param tIZone The IZone value (int) for the turning PID
 	 * @param name The name of this module instance
 	 * @param wheelOffsetMM Adjustment to size of the wheel to account for wear
-	 * @param homePos The home position of this swerve module
 	 */
-    public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, int tAllowedError, double wheelOffsetMM, boolean sensorPhase, boolean inverted, int homePos){
+    public SwerveModule(String name, int driveMC_ID, int turnMC_ID, double tP, double tI, double tD, int tIZone, int tAllowedError, double wheelOffsetMM, boolean sensorPhase, boolean inverted){
         drive = new WPI_TalonFX(driveMC_ID);
         turn = new WPI_TalonSRX(turnMC_ID);
         moduleName = name;

@@ -9,13 +9,6 @@ import frc.team1918.robot.Dashboard;
 import frc.team1918.robot.Helpers;
 import frc.team1918.robot.SwerveModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//file read/write operations
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
 //kinematics and odometry
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -28,15 +21,6 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 public class DriveSubsystem extends SubsystemBase {
 
 	private static DriveSubsystem instance;
-	private static int flHome = Constants.DriveTrain.DT_FL_MECHZERO;
-	private static int frHome = Constants.DriveTrain.DT_FR_MECHZERO;
-	private static int rlHome = Constants.DriveTrain.DT_RL_MECHZERO;
-	private static int rrHome = Constants.DriveTrain.DT_RR_MECHZERO;
-	private File f;
-	private BufferedWriter bw;
-	private FileWriter fw;
-	private BufferedReader br;
-	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
 	private int debug_ticks, dash_gyro_ticks, dash_dt_ticks;
@@ -49,29 +33,25 @@ public class DriveSubsystem extends SubsystemBase {
 		Constants.Swerve.FL.TURN_kP, Constants.Swerve.FL.TURN_kI, Constants.Swerve.FL.TURN_kD, Constants.Swerve.FL.TURN_kIZone,
 		Constants.Swerve.FL.TURN_ALLOWED_ERROR,
 		Constants.Swerve.FL.DRIVE_wheelDiamOffsetMM,
-		Constants.Swerve.FL.TURN_sensorPhase, Constants.Swerve.FL.TURN_isInverted,
-		flHome); // Front Left
+		Constants.Swerve.FL.TURN_sensorPhase, Constants.Swerve.FL.TURN_isInverted); // Front Left
 	private static SwerveModule m_dtFR = new SwerveModule("dtFR",
 		Constants.Swerve.FR.DRIVE_MC_ID, Constants.Swerve.FR.TURN_MC_ID,
 		Constants.Swerve.FR.TURN_kP, Constants.Swerve.FR.TURN_kI, Constants.Swerve.FR.TURN_kD, Constants.Swerve.FR.TURN_kIZone,
 		Constants.Swerve.FR.TURN_ALLOWED_ERROR,
 		Constants.Swerve.FR.DRIVE_wheelDiamOffsetMM,
-		Constants.Swerve.FR.TURN_sensorPhase, Constants.Swerve.FR.TURN_isInverted,
-		frHome); // Front Right
+		Constants.Swerve.FR.TURN_sensorPhase, Constants.Swerve.FR.TURN_isInverted); // Front Right
 	private static SwerveModule m_dtRL = new SwerveModule("dtRL",
 		Constants.Swerve.RL.DRIVE_MC_ID, Constants.Swerve.RL.TURN_MC_ID,
 		Constants.Swerve.RL.TURN_kP, Constants.Swerve.RL.TURN_kI, Constants.Swerve.RL.TURN_kD, Constants.Swerve.RL.TURN_kIZone,
 		Constants.Swerve.RL.TURN_ALLOWED_ERROR,
 		Constants.Swerve.RL.DRIVE_wheelDiamOffsetMM,
-		Constants.Swerve.RL.TURN_sensorPhase, Constants.Swerve.RL.TURN_isInverted,
-		rlHome); // Rear Left
+		Constants.Swerve.RL.TURN_sensorPhase, Constants.Swerve.RL.TURN_isInverted); // Rear Left
 	private static SwerveModule m_dtRR = new SwerveModule("dtRR",
 		Constants.Swerve.RR.DRIVE_MC_ID, Constants.Swerve.RR.TURN_MC_ID,
 		Constants.Swerve.RR.TURN_kP, Constants.Swerve.RR.TURN_kI, Constants.Swerve.RR.TURN_kD, Constants.Swerve.RR.TURN_kIZone,
 		Constants.Swerve.RR.TURN_ALLOWED_ERROR,
 		Constants.Swerve.RR.DRIVE_wheelDiamOffsetMM,
-		Constants.Swerve.RR.TURN_sensorPhase, Constants.Swerve.RR.TURN_isInverted,
-		rrHome); // Rear Right
+		Constants.Swerve.RR.TURN_sensorPhase, Constants.Swerve.RR.TURN_isInverted); // Rear Right
 	//initialize gyro object
 	private static AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 	//intialize odometry class for tracking robot pose
@@ -309,21 +289,6 @@ public class DriveSubsystem extends SubsystemBase {
 	}
 	//#endregion GYRO STUFF
 
-	//#region ENCODER STUFF
-	public void getAllAbsPos() {
-		flHome = m_dtFL.getTurnAbsPos();
-		frHome = m_dtFR.getTurnAbsPos();
-		rlHome = m_dtRL.getTurnAbsPos();
-		rrHome = m_dtRR.getTurnAbsPos();
-
-		String outString = "flHome:"+flHome;
-		outString += " frHome:"+frHome;
-		outString += " rlHome:"+rlHome;
-		outString += " rrHome:"+rrHome;
-		System.out.println("getAllAbsPos: " + outString);
-	}
-	//#endregion ENCODER STUFF
-
 	//#region MOTOR CONTROLLER STUFF
 	public static void setAllConversionFactor() {
 		m_dtFL.setDriveConversionFactor();
@@ -359,83 +324,6 @@ public class DriveSubsystem extends SubsystemBase {
 	//#endregion USER CONTROLS
 
 	//#region HOMING AND CALIBRATION
-	public void saveAllHomes() {
-		try {
-			f = new File(Constants.DriveTrain.DT_HOMES_FILE);
-			if(!f.exists()){
-				f.createNewFile();
-			}
-			fw = new FileWriter(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		bw = new BufferedWriter(fw);
-		String outString = "flHome:"+flHome+"\n";
-		outString += "frHome:"+frHome+"\n";
-		outString += "rlHome:"+rlHome+"\n";
-		outString += "rrHome:"+rrHome+"\n";
-		Helpers.Debug.debug("saveAllHomes: " + outString);
-
-		// m_dtFL.setHomePos(flHome);
-		// m_dtFR.setHomePos(frHome);
-		// m_dtRL.setHomePos(rlHome);
-		// m_dtRR.setHomePos(rrHome);
-
-		try {
-			bw.write(outString+"\n");
-			bw.close();
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void readAllHomes() {
-		//Read values from file and store in private variables
-		f = new File(Constants.DriveTrain.DT_HOMES_FILE);
-		if(!f.exists()){
-			saveAllHomes();
-		}
-		try {
-			fr = new FileReader(f);
-			br = new BufferedReader(fr);
-			String line = br.readLine(); //read all the lines from the file and beg for bread
-			while (line != null) {
-				// System.out.print("readAllHomes line="+line+"\n");
-				String part[] = line.split(":",2);
-				// System.out.print("readAllHomes part0="+part[0]+"\n");
-				switch (part[0]) {
-					case "flHome":
-						flHome = Integer.parseInt(part[1]);
-						Helpers.Debug.debug("readAllHomes: flHome="+flHome);
-						break;
-					case "frHome":
-						frHome = Integer.parseInt(part[1]);
-						Helpers.Debug.debug("readAllHomes: frHome="+frHome);
-						break;
-					case "rlHome":
-						rlHome = Integer.parseInt(part[1]);
-						Helpers.Debug.debug("readAllHomes: rlHome="+rlHome);
-						break;
-					case "rrHome":
-						rrHome = Integer.parseInt(part[1]);
-						Helpers.Debug.debug("readAllHomes: rrHome="+rrHome);
-						break;
-				}
-				line = br.readLine(); //beg for more bread
-			}
-			// m_dtFL.setHomePos(0); //flHome);
-			// m_dtFR.setHomePos(0); //frHome);
-			// m_dtRL.setHomePos(0); //rlHome);
-			// m_dtRR.setHomePos(0); //rrHome);
-
-			br.close();
-			fr.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void startCalibrationMode() {
 		Helpers.Debug.debug("startCalibrationMode");
 		lockDriveControls(true);
@@ -450,19 +338,16 @@ public class DriveSubsystem extends SubsystemBase {
 		Helpers.Debug.debug("stopCalibrationMode");
 		//resetAllAbsEnc(); //reset rotation counter
 		//getAllAbsPos(); //get absolute positions
-		//saveAllHomes();
-		// readAllHomes();
 		setAllTurnBrakeMode(true);
 		lockDriveControls(false);
 	}
 
 	public void moveAllToHomes() {
 		Helpers.Debug.debug("moveAllToHomes");
-		readAllHomes();
-		m_dtFL.setTurnLocationInEncoderTicks(flHome);
-		m_dtFR.setTurnLocationInEncoderTicks(frHome);
-		m_dtRL.setTurnLocationInEncoderTicks(rlHome);
-		m_dtRR.setTurnLocationInEncoderTicks(rrHome);
+		m_dtFL.setTurnLocationInEncoderTicks(0);
+		m_dtFR.setTurnLocationInEncoderTicks(0);
+		m_dtRL.setTurnLocationInEncoderTicks(0);
+		m_dtRR.setTurnLocationInEncoderTicks(0);
 	}
 
 	public void resetAllAbsEnc() {
