@@ -39,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 	private FileReader fr;
 	private static double l = Constants.Global.ROBOT_LENGTH, w = Constants.Global.ROBOT_WIDTH, r = Math.sqrt((l * l) + (w * w));
 	private static boolean driveControlsLocked = false; //true while homing operation
-	private int debug_ticks, dash_gyro_ticks;
+	private int debug_ticks, dash_gyro_ticks, dash_dt_ticks;
 	private static double desiredAngle; //Used for driveStraight function
 	private static boolean angleLocked = false;
 
@@ -99,8 +99,15 @@ public class DriveSubsystem extends SubsystemBase {
 		);
 		if(dash_gyro_ticks % 5 == 0) {
 			Dashboard.Gyro.setGyroAngle(Helpers.General.roundDouble(m_gyro.getAngle(),3)); 
-		}
+		} 
 		dash_gyro_ticks++;
+		if(dash_dt_ticks % 5 == 0) {
+			Dashboard.DriveTrain.setDTAngle("FL", m_dtFL.getTurnAbsPos());
+			Dashboard.DriveTrain.setDTAngle("FR", m_dtFR.getTurnAbsPos());
+			Dashboard.DriveTrain.setDTAngle("RL", m_dtRL.getTurnAbsPos());
+			Dashboard.DriveTrain.setDTAngle("RR", m_dtRR.getTurnAbsPos());
+		}
+		dash_dt_ticks++;
 	}
 
 	/**
@@ -369,10 +376,10 @@ public class DriveSubsystem extends SubsystemBase {
 		outString += "rrHome:"+rrHome+"\n";
 		Helpers.Debug.debug("saveAllHomes: " + outString);
 
-		m_dtFL.setHomePos(flHome);
-		m_dtFR.setHomePos(frHome);
-		m_dtRL.setHomePos(rlHome);
-		m_dtRR.setHomePos(rrHome);
+		// m_dtFL.setHomePos(flHome);
+		// m_dtFR.setHomePos(frHome);
+		// m_dtRL.setHomePos(rlHome);
+		// m_dtRR.setHomePos(rrHome);
 
 		try {
 			bw.write(outString+"\n");
@@ -417,10 +424,10 @@ public class DriveSubsystem extends SubsystemBase {
 				}
 				line = br.readLine(); //beg for more bread
 			}
-			m_dtFL.setHomePos(0); //flHome);
-			m_dtFR.setHomePos(0); //frHome);
-			m_dtRL.setHomePos(0); //rlHome);
-			m_dtRR.setHomePos(0); //rrHome);
+			// m_dtFL.setHomePos(0); //flHome);
+			// m_dtFR.setHomePos(0); //frHome);
+			// m_dtRL.setHomePos(0); //rlHome);
+			// m_dtRR.setHomePos(0); //rrHome);
 
 			br.close();
 			fr.close();
@@ -441,9 +448,9 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public void stopCalibrationMode() {
 		Helpers.Debug.debug("stopCalibrationMode");
-		resetAllAbsEnc(); //reset rotation counter
-		getAllAbsPos(); //get absolute positions
-		saveAllHomes();
+		//resetAllAbsEnc(); //reset rotation counter
+		//getAllAbsPos(); //get absolute positions
+		//saveAllHomes();
 		// readAllHomes();
 		setAllTurnBrakeMode(true);
 		lockDriveControls(false);
@@ -467,30 +474,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public boolean isAllTurnAtHome() {
 		if (
-			m_dtFL.isTurnAtHome(flHome) &&
-			m_dtFR.isTurnAtHome(frHome) &&
-			m_dtRL.isTurnAtHome(rlHome) &&
-			m_dtRR.isTurnAtHome(rrHome)
-			) {
-				return true;
-			}
-		return false;
-	}
-
-	public void moveAllToMechZero() {
-		Helpers.Debug.debug("moveAllToMechZero");
-		m_dtFL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FL_MECHZERO);
-		m_dtFR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_FR_MECHZERO);
-		m_dtRL.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RL_MECHZERO);
-		m_dtRR.setTurnLocationInEncoderTicks(Constants.DriveTrain.DT_RR_MECHZERO);
-	}
-
-	public boolean isAllTurnAtMechZero() {
-		if (
-			m_dtFL.isTurnAtHome(Constants.DriveTrain.DT_FL_MECHZERO) &&
-			m_dtFR.isTurnAtHome(Constants.DriveTrain.DT_FR_MECHZERO) &&
-			m_dtRL.isTurnAtHome(Constants.DriveTrain.DT_RL_MECHZERO) &&
-			m_dtRR.isTurnAtHome(Constants.DriveTrain.DT_RR_MECHZERO)
+			m_dtFL.isTurnAtHome() &&
+			m_dtFR.isTurnAtHome() &&
+			m_dtRL.isTurnAtHome() &&
+			m_dtRR.isTurnAtHome()
 			) {
 				return true;
 			}

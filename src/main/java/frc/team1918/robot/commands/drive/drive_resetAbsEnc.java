@@ -22,7 +22,7 @@ public class drive_resetAbsEnc extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_drive.resetAllAbsEnc();
+    //m_drive.resetAllAbsEnc();
   }
 
   @Override

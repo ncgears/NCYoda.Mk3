@@ -30,7 +30,7 @@ public class drive_startCalibration extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.startCalibrationMode();
+    //m_drive.startCalibrationMode();
   }
 
   @Override

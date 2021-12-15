@@ -24,7 +24,7 @@ public class drive_stopCalibration extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.stopCalibrationMode();
+    //m_drive.stopCalibrationMode();
   }
 
   @Override

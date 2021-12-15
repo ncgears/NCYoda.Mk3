@@ -24,12 +24,12 @@ import frc.team1918.robot.subsystems.AutonSubsystem;
 // import frc.team1918.robot.subsystems.ClimberSubsystem;
 import frc.team1918.robot.subsystems.CollectorSubsystem;
 import frc.team1918.robot.subsystems.DriveSubsystem;
-import frc.team1918.robot.subsystems.ShooterSubsystem;
+// import frc.team1918.robot.subsystems.ShooterSubsystem;
 import frc.team1918.robot.subsystems.MixerSubsystem;
 //Commands imports
 import frc.team1918.robot.commands.helpers.helpers_toggleDebug;
 import frc.team1918.robot.commands.drive.*;
-import frc.team1918.robot.commands.shooter.*;
+// import frc.team1918.robot.commands.shooter.*;
 import frc.team1918.robot.commands.mixer.*;
 import frc.team1918.robot.commands.collector.*;
 //CommandGroup imports
@@ -48,7 +48,7 @@ public class RobotContainer {
   // private final ClimberSubsystem m_climber = new ClimberSubsystem();
   private final CollectorSubsystem m_collector = new CollectorSubsystem();
   private final MixerSubsystem m_mixer = new MixerSubsystem();
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  // private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final DriveSubsystem m_drive = new DriveSubsystem();
   //other subsystems
   private final AutonSubsystem m_auton = new AutonSubsystem();
@@ -138,10 +138,10 @@ public class RobotContainer {
     // btn_CALIBRATE_STOP.whenPressed(new drive_stopCalibration(m_drive));
     btn_GYRO_RESET.whenPressed(new drive_resetGyro(m_drive));
     btn_TOGGLE_DEBUG.whenPressed(new helpers_toggleDebug());
-    btn_SHOOT_WALL.whenPressed(new shooter_shootWall(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
-    btn_SHOOT_LINE.whenPressed(new shooter_shootLine(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
-    btn_SHOOT_SHORT.whenPressed(new shooter_shootShort(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
-    btn_SHOOT_TRENCH.whenPressed(new shooter_shootTrench(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    // btn_SHOOT_WALL.whenPressed(new shooter_shootWall(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    // btn_SHOOT_LINE.whenPressed(new shooter_shootLine(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    // btn_SHOOT_SHORT.whenPressed(new shooter_shootShort(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
+    // btn_SHOOT_TRENCH.whenPressed(new shooter_shootTrench(m_shooter)).whenReleased(new shooter_stopShooter(m_shooter));
     btn_MIXER_FEED.whileHeld(new mixer_mixerForward(m_mixer));
     btn_MIXER_FEEDSTUCK.whileHeld(new mixer_mixerReverse(m_mixer));
     btn_COLLECTOR_IN.whileHeld(new collector_intakeForward(m_collector)).whenReleased(new collector_intakeStop(m_collector));
@@ -154,11 +154,11 @@ public class RobotContainer {
     // btn_ANTIGRAV.whenPressed(new engageAntiBackdrive(m_climber)).whenReleased(new disengageAntiBackdrive(m_climber));
 
     //bind all 3 up and all 3 down for shooter throttle up/down
-    orbtn_THROTUP.whenPressed(new shooter_increaseThrottle(m_shooter));
-    orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle(m_shooter));
+    // orbtn_THROTUP.whenPressed(new shooter_increaseThrottle(m_shooter));
+    // orbtn_THROTDN.whenPressed(new shooter_decreaseThrottle(m_shooter));
 
     //bind both buttons requirement
-    andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
+    // andbtn_MECHZERO.whenPressed(new drive_moveAllToMechZero(m_drive));
   }
 
   // These functions return the commands, this is only needed for things that happen during robot init in Robot.java

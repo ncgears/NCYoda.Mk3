@@ -56,10 +56,11 @@ public class SwerveModule {
         turn.configFactoryDefault(); //Reset controller to factory defaults to avoid wierd stuff
         turn.set(ControlMode.PercentOutput, 0); //Set controller to disabled
         turn.setNeutralMode(NeutralMode.Brake); //Set controller to brake mode
-        turn.configSelectedFeedbackSensor(  FeedbackDevice.PulseWidthEncodedPosition, //  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
+        turn.configSelectedFeedbackSensor(  FeedbackDevice.Analog, //  FeedbackDevice.CTRE_MagEncoder_Absolute, // Local Feedback Source
                                             Constants.Global.PID_PRIMARY,				// PID Slot for Source [0, 1]
                                             Constants.Global.kTimeoutMs);				// Configuration Timeout
         turn.configFeedbackNotContinuous(Constants.Global.SWERVE_SENSOR_NONCONTINUOUS, 0); //Disable continuous feedback tracking (so 0 and 4096 are effectively one and the same)
+        turn.setSelectedSensorPosition(0);
         turn.setSensorPhase(sensorPhase);
         turn.setInverted(inverted);
         turn.config_kP(0, TURN_P);
@@ -137,7 +138,7 @@ public class SwerveModule {
         }
         //Calculate the turn (always optimize turn direction)
         int cur_ticks = getTurnAbsPos();
-        int min_ticks = minTurnTicks(Helpers.General.radiansToTicks(state.angle.getRadians(),this.homePos), cur_ticks);
+        int min_ticks = minTurnTicks(Helpers.General.radiansToTicks(state.angle.getRadians()), cur_ticks);
         int turn_ticks = min_ticks + cur_ticks;
         turn.set(ControlMode.Position, turn_ticks);
         if(Helpers.Debug.debugThrottleMet(debug_ticks1)) {
@@ -151,7 +152,7 @@ public class SwerveModule {
      * It uses the encoder wrap-around to determine if we should turn negative past 0
      * @param desiredTicks encoder count of desired target
      * @param curTicks encoder count of current position
-     * @return An encoder count between -4095..0..4095 of the new target
+     * @return An encoder count between -2047..0..2047 of the new target
      */
     public int minTurnTicks(int desiredTicks, int curTicks) {
         int wrap = (int) Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION;
@@ -186,22 +187,14 @@ public class SwerveModule {
         }
     }
 
-    /**
-     * Gets the position of the relative encoder in encoder ticks
-     * @return Integer of relative encoder ticks
-     */
-    public int getTurnRelPos(){
-        return turn.getSensorCollection().getQuadraturePosition();
-        //https://github.com/CrossTheRoadElec/Phoenix-Documentation/blob/master/Legacy/Migration%20Guide.md
-    }
 
     /**
      * Gets the position of the absolute encoder in encoder ticks
      * @return Integer of absolute encoder ticks
      */
     public int getTurnAbsPos(){
-        return turn.getSensorCollection().getPulseWidthPosition(); //We reset rotation counter when saving to adjust to 0-4095, so get the full value
-        // return (turn.getSensorCollection().getPulseWidthPosition() & 0xFFF); //This gets only the most significant bits (0-4095)
+        //return turn.getSensorCollection().getPulseWidthPosition(); //We reset rotation counter when saving to adjust to 0-4095, so get the full value
+        return (turn.getSensorCollection().getAnalogIn()); //This gets only the most significant bits (0-2047)
         //Explanation: & is a bitwise "AND" operator, and 0xFFF is 4095 in Hex, consider "0101010101 AND 1111 = 0101"
     }
 
@@ -210,38 +203,27 @@ public class SwerveModule {
      * @return Rotation2d object of the current position
      */
     public Rotation2d getTurnAbsPosAsRotation2d(){
-        return new Rotation2d(Helpers.General.ticksToRadians(getTurnAbsPos() - homePos));
+        return new Rotation2d(Helpers.General.ticksToRadians(getTurnAbsPos()));
     }
-    /**
-     * Stores the home position for this module
-     * @param homePos Absolute encoder value of the home position
-     */
-    public void setHomePos(int pos) {
-		this.homePos = pos;
-	}
 
     /**
      * Returns a boolean indicating if the module is at home position within the margin of error defined in constants by DriveTrain.DT_HOME_MARGIN_OF_ERROR
-     * @param pos Absolute encoder value of the target home position.
      * @return Boolean value indicating if this swerve module is at the home position.
      */
-    public boolean isTurnAtHome(int pos) {
+    public boolean isTurnAtHome() {
         int currentPos = getTurnAbsPos();
         int marginErr = Constants.DriveTrain.DT_HOME_MARGIN_OF_ERROR;
-        int offset = 0; //(pos < marginErr || pos > 4095 - marginErr) ? 1024 : 0;
+        
+        int lowHome = Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION - marginErr;
+        int highHome = 0 + marginErr;
 
-        int lowHome = pos + offset - marginErr; //could use this value % 4096
-        int highHome = pos + offset + marginErr;
+        currentPos -= (currentPos >= Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION) ? Constants.DriveTrain.DT_TURN_ENCODER_FULL_ROTATION : 0;
 
-        lowHome -= (lowHome > 4095) ? 4096 : 0;
-        highHome -= (highHome > 4095) ? 4096 : 0;
-        currentPos -= (currentPos + offset > 4095) ? 4096 : 0;
-
-        if (currentPos + offset <= highHome && currentPos + offset >= lowHome) {
-            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=true; current="+currentPos+"; target="+pos+";",debug_ticks2);
+        if (currentPos <= highHome && currentPos >= lowHome) {
+            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=true; current="+currentPos+"; target=0;",debug_ticks2);
             return true;
         } else {
-            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=false; current="+currentPos+"; target="+pos+";",debug_ticks2);
+            debug_ticks2 = Helpers.Debug.debug(moduleName + " isTurnAtHome=false; current="+currentPos+"; target=0;",debug_ticks2);
             return false;
         }
     }
@@ -251,19 +233,19 @@ public class SwerveModule {
      */
     public void resetTurnEnc() {
         Helpers.Debug.debug(moduleName + " resetTurnEnc");
-		turn.getSensorCollection().setQuadraturePosition(0,10);
+		//turn.getSensorCollection().setQuadraturePosition(0,10);
     }
 
     public void resetTurnAbsEnc() {
         Helpers.Debug.debug(moduleName + " resetTurnAbsEnc");
-	    turn.getSensorCollection().setPulseWidthPosition(0, 10);
+	    //turn.getSensorCollection().setPulseWidthPosition(0, 10);
     }
     /**
      * Sets the relative encoder to a specific value
      * @param value Integer from 0 to 4095 indicating the relative encoder position to set
      */
     public void setEncPos(int value) {
-        turn.getSensorCollection().setQuadraturePosition(value,10);
+        //turn.getSensorCollection().setQuadraturePosition(value,10);
     }
 
     /**

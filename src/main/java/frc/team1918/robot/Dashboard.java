@@ -11,6 +11,7 @@ public class Dashboard {
     private static final String dash_shooter_target = "Shooter Target Speed"; //Target shooter speed
     private static final String dash_hood_pos = "HoodPosition"; //Hood position (up/down)
     private static final String dash_gyro_angle = "GyroAngle"; //Gyro angle
+    private static final String dash_angle = " Angle"; //debugging FL encoder angle
 
     public static final class Shooter {
         public static final void setCurrentSpeed(double speed) {
@@ -29,6 +30,11 @@ public class Dashboard {
     public static final class Gyro {
         public static final void setGyroAngle(double angle) {
             SmartDashboard.putNumber(dash_gyro_angle,angle);
+        }
+    }
+    public static final class DriveTrain {
+        public static final void setDTAngle(String module, int angle) {
+            SmartDashboard.putNumber(module + dash_angle, angle);
         }
     }
 }
